@@ -42,7 +42,7 @@
       .interest-list li { padding: 14px 16px; background: var(--wash); border: 1px solid #edf0f4; border-radius: 11px; font-size: 14px; line-height: 1.8; }
       .interest-list strong { color: var(--blue); font-family: ui-monospace, Consolas, monospace; font-weight: 600; }
       .edu-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
-      .edu-list li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 14px; padding: 14px 16px; background: var(--wash); border: 1px solid #edf0f4; border-radius: 11px; }
+      .edu-list li { display: grid; grid-template-columns: 80px 200px auto; align-items: baseline; column-gap: 16px; row-gap: 6px; padding: 14px 16px; background: var(--wash); border: 1px solid #edf0f4; border-radius: 11px; }
       .edu-period { font: 12px ui-monospace, Consolas, monospace; color: #737d8e; }
       .edu-school { font-weight: 600; color: var(--ink); font-size: 14px; }
       .edu-degree { color: var(--muted); font-size: 13px; }
@@ -65,6 +65,8 @@
         .nav-contact { display: none; }
         .eyebrow { margin-top: 18px; }
         .about-block p { font-size: 14px; }
+        .edu-list li { grid-template-columns: 72px 1fr; }
+        .edu-list .edu-degree { grid-column: 2; }
         .footer-inner { min-height: 70px; font-size: 11px; }
       }
     </style>
@@ -108,7 +110,7 @@
             <li>
               <span class="edu-period">2027 级</span>
               <span class="edu-school">吉林大学 · 人工智能</span>
-              <span class="edu-degree">硕士研究生</span>
+              <span class="edu-degree">硕士研究生（研0）</span>
             </li>
             <li>
               <span class="edu-period">2023 级</span>
