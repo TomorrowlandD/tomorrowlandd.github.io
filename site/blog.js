@@ -102,7 +102,7 @@
     if (post.summary) article.append(element('p', 'article-summary', post.summary));
     if (post.tags.length) {
       const tags = element('div', 'article-tags');
-      post.tags.forEach(tag => tags.append(element('span', '', '#' + tag)));
+      post.tags.forEach(tag => tags.append(element('span', '', tag)));
       article.append(tags);
     }
     item.append(article);

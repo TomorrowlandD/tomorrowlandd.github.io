@@ -1,6 +1,6 @@
 # 博客维护说明
 
-双击 `index.html` 打开个人主页，点击“博客”进入 `blog.html`。也可以直接双击博客页。全部文件都使用相对路径，可一起上传到 GitHub Pages，无需安装依赖或构建。
+本站以 `content/posts/*.md` 为文章原稿。`site/` 存放网页源文件，构建脚本会生成文章 HTML 和博客清单到 `dist/`。博客园可使用同一份 Markdown 手动发表。
 
 ## 当前功能
 
@@ -9,41 +9,80 @@
 - 搜索标题、摘要和标签；多个关键词以空格分隔，需同时匹配，英文不区分大小写。
 - 搜索与分类可以组合使用，支持清空关键词、恢复全部文章。
 - 按发布日期从新到旧排序，每次显示 10 篇，更多文章可继续加载。
-- 目前没有已发布文章，页面显示真实空状态，不包含示例文章。
+- 文章详情页从二级、三级标题自动生成目录，并显示阅读进度。
+- 目前有一篇 SubAgent 文章；没有匹配的文章时，页面会显示空状态。
 
 ## 添加文章
 
-文章清单集中在 `blog-data.js` 的 `posts` 数组里。先准备好实际文章页面或已有文章链接，再添加清单项。下面仅为格式说明，不是已经存在的文章：
+复制 `content/posts/_article-template.md`，另存为英文文件名，例如 `content/posts/agent-basics.md`。每篇文章只需要编辑这一份 Markdown：
 
-```js
-{
-  title: '填写真实文章标题',
-  summary: '填写一两句文章摘要。',
-  date: '2026-10-18', // YYYY-MM-DD，改成实际发布日期
-  category: 'Agent',
-  tags: ['填写标签'],
-  url: './posts/your-article.html', // 必须指向已创建的文章，也可以填写 HTTPS 文章链接
-  draft: false,
-}
+```markdown
+---
+title: "我的 Agent 学习笔记"
+date: "2026-10-19"
+category: "Agent"
+tags: ["Agent", "学习笔记"]
+summary: "记录 Agent 的基本组成。"
+slug: "agent-basics"
+draft: false
+---
+
+## 开始
+
+这里写正文。
 ```
 
-把条目放入 `posts: [ ... ]` 中，各条目之间使用英文逗号。`title`、`date`、`category`、`url` 为必要信息；缺少这些信息的条目不展示。标签和摘要可省略。
+`title`、`date`、`category`、`summary` 是必填项。`date` 用真实日期，`slug` 决定网址 `/posts/agent-basics.html`，只能使用小写英文、数字和连字符，发布后应保持不变。`tags` 可以留空为 `[]`。如果不填写 `slug`，使用 Markdown 文件名。分类会从已发布文章自动汇总，目前默认保留 `Agent`。
 
-`draft: true` 的条目不会显示在列表或搜索结果里，但这个标记不是访问保护：上传的文件和 `blog-data.js` 本身仍可读取。尚不打算公开的正文不要上传。
+`draft: true` 的文章不生成页面，也不显示在博客列表。若仓库是公开的，上传到 GitHub 的 Markdown 原稿仍可被看到；私密草稿不要提交到公开仓库。
 
-目前没有文章编辑后台，也不自动把 Markdown 转成网页。发布第一篇文章时，可以再加入文章详情页模板；现阶段可以先使用已有文章的链接。搜索只覆盖清单中的标题、摘要和标签，不抓取文章正文。
+文章图片放在 `content/images/`，Markdown 中写相对地址，例如 `![示意图](../images/diagram.png)`。构建后图片地址仍然有效。把 Markdown 复制到博客园时，博客园不能直接读取这些本地相对地址；需要在博客园上传图片并替换链接，或使用两边都能访问的绝对图片网址。
+
+搜索覆盖标题、摘要和标签，不检索正文。
+
+## 本地预览
+
+安装 Python 3.10 或更新版本后，在仓库根目录执行：
+
+```powershell
+python -m pip install -r requirements.txt
+python scripts/build.py
+```
+
+然后可以直接双击 `dist/index.html` 或 `dist/blog.html` 预览。当前网站支持这种本地打开方式；注意应打开构建生成的 `dist/`，而不是 `site/` 中的源文件。
+
+如需通过本地 HTTP 地址预览，再运行：
+
+```powershell
+python -m http.server 9000 --bind 127.0.0.1 --directory dist
+```
+
+浏览器打开 `http://127.0.0.1:9000/`，检查首页、博客列表和文章正文。每次修改 Markdown 后重新运行 `python scripts/build.py` 并刷新页面。`dist/` 是生成结果，不提交到 Git。若在本地预览中删除或改名了文章，旧页面可能仍留在本机的 `dist/` 中；GitHub Actions 每次从全新检出的源码构建，不会把旧页面继续发布。
+
+## 发布到 GitHub Pages
+
+仓库的 `Settings → Pages → Build and deployment → Source` 选择 **GitHub Actions**。推送 `main` 分支后，`.github/workflows/pages.yml` 会自动安装依赖、执行构建，并把 `dist/` 发布为网站。首次上线需要先创建 GitHub 仓库并关联本地仓库；目前本地仓库还没有远程地址。
+
+博客园由你手动复制同一份 Markdown 并发布。本站构建与 GitHub Pages 发布不需要博客园账号或授权令牌。
 
 ## 修改分类
 
-编辑 `blog-data.js` 中的 `categories` 数组即可调整分类及顺序。分类数量、文章计数随数据自动更新；已发布文章使用的新分类也会自动出现在筛选区。
+修改文章 Markdown 中的 `category` 字段即可。分类数量、文章计数在构建后自动更新。
 
 首页仅展示博客简介和入口，具体分类在博客页管理。
 
 ## 文件用途
 
-- `index.html`：个人主页及博客入口。
-- `blog.html`：博客页面和样式。
-- `blog-data.js`：分类与文章清单。
-- `blog.js`：文章列表、分类、搜索和分批显示逻辑。
+- `site/index.html`：个人主页及博客入口。
+- `site/blog.html`：博客页面和样式。
+- `site/about.html`：关于页。
+- `site/figures/`：网页使用的图片。
+- `site/projects-data.js`：项目清单。
+- `content/posts/*.md`：文章原稿，也是文章信息的唯一维护入口。
+- `scripts/build.py`：把 Markdown 转为文章 HTML，同时生成 `dist/blog-data.js`。
+- `templates/article.html`：文章详情页模板。
+- `site/article.css`：文章正文样式。
+- `dist/`：本地构建结果，也是发布到 GitHub Pages 的文件夹。
+- `site/blog.js`：文章列表、分类、搜索和分批显示逻辑。
 
-预览更新时刷新浏览器即可。将网站上传时需要包含上述四个文件，以及所有实际文章和图片。
+构建会在 `dist/` 中生成博客列表数据。请预览 `dist/` 网站，不要手动编辑生成结果。

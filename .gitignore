@@ -8,3 +8,5 @@ desktop.ini
 # 依赖与构建产物（未来若引入构建工具）
 node_modules/
 dist/
+__pycache__/
+*.pyc
