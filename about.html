@@ -41,11 +41,12 @@
       .interest-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
       .interest-list li { padding: 14px 16px; background: var(--wash); border: 1px solid #edf0f4; border-radius: 11px; font-size: 14px; line-height: 1.8; }
       .interest-list strong { color: var(--blue); font-family: ui-monospace, Consolas, monospace; font-weight: 600; }
-      .edu-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
-      .edu-list li { display: grid; grid-template-columns: 80px 230px auto; align-items: baseline; column-gap: 16px; row-gap: 6px; padding: 14px 16px; background: var(--wash); border: 1px solid #edf0f4; border-radius: 11px; }
+      .edu-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+      .edu-list li { display: flex; align-items: center; gap: 16px; padding: 16px 18px; background: var(--wash); border: 1px solid #edf0f4; border-radius: 12px; }
+      .edu-logo { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; flex-shrink: 0; border: 1px solid var(--line); }
+      .edu-info { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
       .edu-period { font: 12px ui-monospace, Consolas, monospace; color: #737d8e; }
-      .edu-school { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; color: var(--ink); font-size: 14px; min-width: 0; }
-      .edu-logo { width: 26px; height: 26px; border-radius: 50%; object-fit: cover; flex-shrink: 0; border: 1px solid var(--line); }
+      .edu-school { font-weight: 600; color: var(--ink); font-size: 15px; }
       .edu-degree { color: var(--muted); font-size: 13px; }
       .skills { display: flex; flex-wrap: wrap; gap: 10px; }
       .tag-chip { padding: 4px 12px; background: #edf3ff; color: #2456b7; border-radius: 7px; font-size: 13px; }
@@ -66,8 +67,6 @@
         .nav-contact { display: none; }
         .eyebrow { margin-top: 18px; }
         .about-block p { font-size: 14px; }
-        .edu-list li { grid-template-columns: 72px 1fr; }
-        .edu-list .edu-degree { grid-column: 2; }
         .footer-inner { min-height: 70px; font-size: 11px; }
       }
     </style>
@@ -109,20 +108,20 @@
           <h2 id="edu-heading">教育经历</h2>
           <ul class="edu-list">
             <li>
-              <span class="edu-period">2027 级</span>
-              <span class="edu-school">
-                <img class="edu-logo" src="./figures/jlu-logo.jpg" alt="吉林大学校徽" loading="lazy">
-                <span>吉林大学 · 人工智能</span>
-              </span>
-              <span class="edu-degree">硕士研究生（研0）</span>
+              <img class="edu-logo" src="./figures/jlu-logo.jpg" alt="吉林大学校徽" loading="lazy">
+              <div class="edu-info">
+                <span class="edu-period">2027 级</span>
+                <span class="edu-school">吉林大学 · 人工智能</span>
+                <span class="edu-degree">硕士研究生（研0）</span>
+              </div>
             </li>
             <li>
-              <span class="edu-period">2023 级</span>
-              <span class="edu-school">
-                <img class="edu-logo" src="./figures/jxust-logo.jpeg" alt="江西理工大学校徽" loading="lazy">
-                <span>江西理工大学 · 软件工程</span>
-              </span>
-              <span class="edu-degree">本科</span>
+              <img class="edu-logo" src="./figures/jxust-logo.jpeg" alt="江西理工大学校徽" loading="lazy">
+              <div class="edu-info">
+                <span class="edu-period">2023 级</span>
+                <span class="edu-school">江西理工大学 · 软件工程</span>
+                <span class="edu-degree">本科</span>
+              </div>
             </li>
           </ul>
         </section>
