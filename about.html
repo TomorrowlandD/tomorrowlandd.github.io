@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="关于 xkgc__：个人简介、研究方向、教育经历与技能。">
+    <meta name="theme-color" content="#ffffff">
+    <title>关于我 · xkgc__</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%232563eb'/%3E%3Cpath d='m20 20 24 24m0-24L20 44' stroke='white' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E">
+    <style>
+      :root { color-scheme: light; --ink: #171a20; --muted: #656c78; --line: #e7e9ee; --blue: #2563eb; --wash: #f6f8fb; }
+      * { box-sizing: border-box; }
+      [hidden] { display: none !important; }
+      body { margin: 0; min-height: 100svh; display: flex; flex-direction: column; color: var(--ink); background: #fff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+      ::selection { background: #e1eaff; }
+      a { color: inherit; text-decoration: none; }
+      svg { display: block; flex-shrink: 0; }
+      a:focus-visible { outline: 3px solid #8fb2ff; outline-offset: 4px; }
+      .container { width: min(1080px, calc(100% - 64px)); margin-inline: auto; }
+      .skip-link { position: absolute; left: 20px; top: -80px; z-index: 5; padding: 10px 16px; background: var(--ink); color: #fff; }
+      .skip-link:focus { top: 12px; }
+      .header { border-bottom: 1px solid var(--line); }
+      .header-inner { min-height: 82px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+      .brand { display: inline-flex; align-items: center; gap: 11px; font: 700 21px ui-monospace, Consolas, monospace; letter-spacing: -.8px; }
+      .brand-mark { width: 27px; height: 27px; display: grid; place-items: center; background: var(--blue); border-radius: 8px; color: #fff; font-size: 21px; font-weight: 400; }
+      .navigation { display: flex; align-items: center; gap: 30px; font-size: 14px; color: var(--muted); }
+      .navigation a { padding-block: 12px; }
+      .navigation a:hover, .navigation [aria-current="page"] { color: var(--blue); }
+      .navigation [aria-current="page"] { font-weight: 600; }
+      main { flex: 1; }
+      .about-heading { padding-block: 24px 8px; }
+      .back-link { color: var(--muted); font-size: 13px; }
+      .back-link:hover { color: var(--blue); }
+      .eyebrow { color: #737d8e; font: 11px ui-monospace, Consolas, monospace; letter-spacing: .13em; margin: 22px 0 8px; }
+      h1 { margin: 0; font-size: clamp(36px, 4.5vw, 48px); line-height: 1.25; letter-spacing: -.04em; }
+      .lead { color: var(--muted); font-size: 15px; margin: 10px 0 0; }
+      .about-layout { max-width: 740px; padding-block: 16px 56px; display: grid; gap: 32px; }
+      .about-block { display: grid; gap: 10px; }
+      .about-block h2 { margin: 0; font-size: 20px; line-height: 1.5; letter-spacing: -.02em; }
+      .about-block p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.9; }
+      .interest-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+      .interest-list li { padding: 14px 16px; background: var(--wash); border: 1px solid #edf0f4; border-radius: 11px; font-size: 14px; line-height: 1.8; }
+      .interest-list strong { color: var(--blue); font-family: ui-monospace, Consolas, monospace; font-weight: 600; }
+      .edu-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+      .edu-list li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 14px; padding: 14px 16px; background: var(--wash); border: 1px solid #edf0f4; border-radius: 11px; }
+      .edu-period { font: 12px ui-monospace, Consolas, monospace; color: #737d8e; }
+      .edu-school { font-weight: 600; color: var(--ink); font-size: 14px; }
+      .edu-degree { color: var(--muted); font-size: 13px; }
+      .skills { display: flex; flex-wrap: wrap; gap: 10px; }
+      .tag-chip { padding: 4px 12px; background: #edf3ff; color: #2456b7; border-radius: 7px; font-size: 13px; }
+      footer { border-top: 1px solid var(--line); }
+      .footer-inner { min-height: 75px; display: flex; align-items: center; justify-content: space-between; gap: 20px; color: var(--muted); font-size: 12px; }
+      .footer-inner a:hover { color: var(--blue); }
+      @media (max-width: 760px) {
+        .container { width: calc(100% - 40px); }
+        .header-inner { min-height: 72px; gap: 14px; }
+        .navigation { gap: 20px; font-size: 13px; }
+        .about-heading { padding-block: 22px 6px; }
+        .about-layout { padding-block: 12px 40px; gap: 26px; }
+      }
+      @media (max-width: 540px) {
+        .brand { font-size: 18px; gap: 8px; }
+        .brand-mark { width: 24px; height: 24px; border-radius: 7px; }
+        .navigation { gap: 16px; }
+        .nav-contact { display: none; }
+        .eyebrow { margin-top: 18px; }
+        .about-block p { font-size: 14px; }
+        .footer-inner { min-height: 70px; font-size: 11px; }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">跳到主要内容</a>
+    <header class="header">
+      <div class="container header-inner">
+        <a class="brand" href="./index.html" aria-label="xkgc__，返回主页"><span class="brand-mark" aria-hidden="true">×</span>xkgc__</a>
+        <nav class="navigation" aria-label="主导航">
+          <a href="./index.html">首页</a>
+          <a href="./about.html" aria-current="page">关于</a>
+          <a href="./blog.html">博客</a>
+          <a class="nav-contact" href="./index.html#contact">联系我 <span aria-hidden="true">↗</span></a>
+        </nav>
+      </div>
+    </header>
+    <main class="container" id="main">
+      <section class="about-heading" aria-labelledby="about-title">
+        <a class="back-link" href="./index.html"><span aria-hidden="true">←</span> 返回主页</a>
+        <p class="eyebrow">ABOUT</p>
+        <h1 id="about-title">关于我</h1>
+        <p class="lead">我的背景、研究兴趣与技能。</p>
+      </section>
+      <div class="about-layout">
+        <section class="about-block" aria-labelledby="bio-heading">
+          <h2 id="bio-heading">简介</h2>
+          <p>我是 xkgc__，吉林大学人工智能专业硕士研究生（研0）。目前专注于大模型（LLM）的 Agent、持续学习与后训练方向，希望在大模型的能力边界与实用落地之间做一些有意思的探索。平时喜欢动手实践，把学到的知识和踩过的坑沉淀成文字。这个主页记录我的技术学习、项目实践与思考，也欢迎同好交流。</p>
+        </section>
+        <section class="about-block" aria-labelledby="interests-heading">
+          <h2 id="interests-heading">研究方向</h2>
+          <ul class="interest-list">
+            <li><strong>Agent</strong> · 关注大模型智能体的推理、规划与工具调用，以及多智能体协作。</li>
+            <li><strong>Continual Learning</strong> · 关注模型在动态数据流上的持续学习，缓解灾难性遗忘。</li>
+            <li><strong>Post-training</strong> · 关注大模型的对齐与后训练技术，提升模型能力与可控性。</li>
+          </ul>
+        </section>
+        <section class="about-block" aria-labelledby="edu-heading">
+          <h2 id="edu-heading">教育经历</h2>
+          <ul class="edu-list">
+            <li>
+              <span class="edu-period">2026 级</span>
+              <span class="edu-school">吉林大学 · 人工智能</span>
+              <span class="edu-degree">硕士研究生（研0）</span>
+            </li>
+          </ul>
+        </section>
+        <section class="about-block" aria-labelledby="skills-heading">
+          <h2 id="skills-heading">技能</h2>
+          <div class="skills">
+            <span class="tag-chip">Python</span>
+            <span class="tag-chip">PyTorch</span>
+            <span class="tag-chip">Hugging Face</span>
+            <span class="tag-chip">Linux</span>
+            <span class="tag-chip">Docker</span>
+          </div>
+        </section>
+      </div>
+    </main>
+    <footer><div class="container footer-inner"><span>© 2026 xkgc__</span><a href="./index.html">返回个人主页 <span aria-hidden="true">↗</span></a></div></footer>
+  </body>
+</html>
