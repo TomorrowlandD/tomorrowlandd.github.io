@@ -50,6 +50,8 @@
       h1 { margin: 21px 0 20px; font-size: clamp(40px, 4.7vw, 62px); line-height: 1.24; letter-spacing: -.045em; font-weight: 750; }
       h1 span { color: var(--blue); font-family: ui-monospace, Consolas, monospace; letter-spacing: -.065em; }
       .intro { max-width: 440px; color: var(--muted); font-size: 16px; margin: 0; line-height: 1.95; }
+      .hero-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+      .tag-chip { padding: 3px 11px; background: #edf3ff; color: #2456b7; border-radius: 7px; font-size: 13px; }
       .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 13px; margin-top: 29px; }
       .button { display: inline-flex; justify-content: center; align-items: center; gap: 18px; min-height: 44px; padding: 9px 19px; border-radius: 10px; font-size: 14px; font-weight: 550; transition: background .16s ease, transform .16s ease; }
       .button:hover { transform: translateY(-2px); }
@@ -93,6 +95,16 @@
       .project-empty-icon { color: #8ba0c0; margin-bottom: 14px; }
       .project-empty h3 { font-size: 16px; margin: 0 0 7px; }
       .project-empty p { color: var(--muted); font-size: 14px; margin: 0; }
+      .about-section { display: grid; grid-template-columns: 1fr 1.7fr; align-items: start; gap: 42px; padding-block: 42px 56px; border-top: 1px solid var(--line); }
+      .about-body { display: grid; gap: 22px; }
+      .about-bio { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.9; }
+      .about-block h3 { font-size: 13px; color: #737d8e; font-weight: 600; margin: 0 0 10px; }
+      .about-edu { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+      .about-edu li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 14px; padding: 13px 15px; background: var(--wash); border: 1px solid #edf0f4; border-radius: 10px; }
+      .edu-period { font: 12px ui-monospace, Consolas, monospace; color: #737d8e; }
+      .edu-school { font-weight: 600; color: var(--ink); font-size: 14px; }
+      .edu-degree { color: var(--muted); font-size: 13px; }
+      .about-skills { display: flex; flex-wrap: wrap; gap: 10px; }
       .contact { border-top: 1px solid var(--line); padding-block: 37px 40px; display: grid; grid-template-columns: 1fr 1.7fr; align-items: start; gap: 42px; }
       .contact h2 { font-size: 22px; margin-bottom: 6px; }
       .contact p { margin: 0; font-size: 14px; color: var(--muted); }
@@ -128,7 +140,7 @@
         .identity-scene::before { width: 170px; height: 170px; }
         .monogram { font-size: 75px; }
         .identity-caption { gap: 8px; font-size: 10px; }
-        .blog-section, .projects-section { gap: 24px; }
+        .blog-section, .projects-section, .about-section { gap: 24px; }
         .contact { grid-template-columns: 1fr; gap: 18px; }
       }
       @media (max-width: 540px) {
@@ -139,7 +151,7 @@
         h1 { font-size: 44px; }
         .intro { font-size: 15px; }
         .identity-scene { display: none; }
-        .blog-section, .projects-section { grid-template-columns: 1fr; padding-block: 32px 36px; gap: 19px; }
+        .blog-section, .projects-section, .about-section { grid-template-columns: 1fr; padding-block: 32px 36px; gap: 19px; }
         .blog-entry { min-height: 142px; padding: 22px; }
         h2 { font-size: 23px; }
         .contact { padding-block: 30px; }
@@ -168,11 +180,16 @@
       </div>
     </header>
     <main id="main" class="container">
-      <section class="hero" id="about" aria-labelledby="intro-title">
+      <section class="hero" aria-labelledby="intro-title">
         <div>
           <div class="eyebrow"><span class="status-dot" aria-hidden="true"></span>欢迎来到我的个人主页</div>
           <h1 id="intro-title">你好，我是<br><span>xkgc__</span>。</h1>
-          <p class="intro">目前研0，即将开启研究生阶段的学习。<br>在这里记录技术学习、实践过程和一些想法。</p>
+          <p class="intro">吉林大学 · 人工智能专业 · 硕士研究生<br>关注大模型 Agent、持续学习与后训练。</p>
+          <div class="hero-tags" aria-label="研究方向">
+            <span class="tag-chip">Agent</span>
+            <span class="tag-chip">Continual Learning</span>
+            <span class="tag-chip">Post-training</span>
+          </div>
           <div class="hero-actions">
             <a class="button button-primary" href="./blog.html">阅读博客 <span aria-hidden="true">→</span></a>
             <a class="button button-secondary" href="mailto:tomorrowland_todo@163.com">联系我 <span aria-hidden="true">↗</span></a>
@@ -185,6 +202,35 @@
             <div class="identity-caption"><strong>xkgc__</strong><span>我的互联网一角</span></div>
           </div>
           <span class="little-star">✳</span>
+        </div>
+      </section>
+      <section class="about-section" id="about" aria-labelledby="about-title">
+        <div>
+          <p class="section-kicker">ABOUT</p>
+          <h2 id="about-title">关于我</h2>
+        </div>
+        <div class="about-body">
+          <p class="about-bio">吉林大学人工智能专业硕士研究生，目前专注于大模型（LLM）的 Agent、持续学习与后训练方向。喜欢动手实践，把学到的知识和踩过的坑沉淀成文字。这里记录我的技术学习、项目实践与思考。</p>
+          <div class="about-block">
+            <h3>教育经历</h3>
+            <ul class="about-edu">
+              <li>
+                <span class="edu-period">2026 级</span>
+                <span class="edu-school">吉林大学 · 人工智能</span>
+                <span class="edu-degree">硕士研究生（研0）</span>
+              </li>
+            </ul>
+          </div>
+          <div class="about-block">
+            <h3>技能</h3>
+            <div class="about-skills">
+              <span class="tag-chip">Python</span>
+              <span class="tag-chip">PyTorch</span>
+              <span class="tag-chip">Hugging Face</span>
+              <span class="tag-chip">Linux</span>
+              <span class="tag-chip">Docker</span>
+            </div>
+          </div>
         </div>
       </section>
       <section class="projects-section" id="projects" aria-labelledby="projects-title">
