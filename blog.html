@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="xkgc__ 的博客，记录技术学习、实践与思考。按分类浏览文章，或搜索标题、摘要和标签。">
+    <meta name="theme-color" content="#ffffff">
+    <title>博客 · xkgc__</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%232563eb'/%3E%3Cpath d='m20 20 24 24m0-24L20 44' stroke='white' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E">
+    <style>
+      :root { color-scheme: light; --ink: #171a20; --muted: #656c78; --line: #e7e9ee; --blue: #2563eb; --wash: #f6f8fb; }
+      * { box-sizing: border-box; }
+      [hidden] { display: none !important; }
+      body { margin: 0; min-height: 100svh; display: flex; flex-direction: column; color: var(--ink); background: #fff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+      ::selection { background: #e1eaff; }
+      a { color: inherit; text-decoration: none; }
+      button, input { font: inherit; }
+      button { cursor: pointer; }
+      button:disabled { cursor: default; }
+      svg { display: block; flex-shrink: 0; }
+      a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid #8fb2ff; outline-offset: 4px; }
+      .container { width: min(1080px, calc(100% - 64px)); margin-inline: auto; }
+      .skip-link { position: absolute; left: 20px; top: -80px; z-index: 5; padding: 10px 16px; background: var(--ink); color: #fff; }
+      .skip-link:focus { top: 12px; }
+      .header { border-bottom: 1px solid var(--line); }
+      .header-inner { min-height: 82px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+      .brand { display: inline-flex; align-items: center; gap: 11px; font: 700 21px ui-monospace, Consolas, monospace; letter-spacing: -.8px; }
+      .brand-mark { width: 27px; height: 27px; display: grid; place-items: center; background: var(--blue); border-radius: 8px; color: #fff; font-size: 21px; font-weight: 400; }
+      .navigation { display: flex; align-items: center; gap: 30px; font-size: 14px; color: var(--muted); }
+      .navigation a { padding-block: 12px; }
+      .navigation a:hover, .navigation [aria-current="page"] { color: var(--blue); }
+      .navigation [aria-current="page"] { font-weight: 600; }
+      main { flex: 1; }
+      .blog-heading { padding-block: 24px 22px; }
+      .back-link { color: var(--muted); font-size: 13px; }
+      .back-link:hover { color: var(--blue); }
+      .heading-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-top: 20px; }
+      .eyebrow { color: #737d8e; font: 11px ui-monospace, Consolas, monospace; letter-spacing: .13em; margin: 0 0 8px; }
+      h1 { margin: 0; font-size: clamp(36px, 4.5vw, 48px); line-height: 1.25; letter-spacing: -.04em; }
+      .lead { color: var(--muted); font-size: 15px; margin: 10px 0 0; }
+      .notebook-icon { width: 68px; height: 68px; display: grid; place-items: center; background: #edf3ff; color: var(--blue); border-radius: 19px; transform: rotate(6deg); margin: 0 7px 7px 0; }
+      .search-form { margin-top: 22px; display: flex; align-items: center; gap: 12px; padding: 5px 6px 5px 17px; border: 1px solid #dce1e9; border-radius: 12px; min-height: 56px; }
+      .search-form:focus-within { border-color: #8fb2ff; box-shadow: 0 0 0 3px #edf3ff; }
+      .search-icon { color: #818b9a; }
+      .search-input { min-width: 0; flex: 1; width: 100%; border: 0; background: transparent; color: var(--ink); outline: none; padding: 9px 0; font-size: 14px; appearance: none; }
+      .search-input:focus-visible { outline: none; }
+      .search-input::-webkit-search-cancel-button { display: none; }
+      .search-input::placeholder { color: #7c8593; }
+      .clear-search { width: 34px; height: 34px; display: grid; place-items: center; border: 0; border-radius: 7px; background: transparent; color: var(--muted); }
+      .clear-search:hover { background: var(--wash); }
+      .search-submit { border: 0; border-radius: 8px; min-height: 42px; padding: 8px 19px; color: #fff; background: var(--ink); font-size: 13px; }
+      .search-submit:hover { background: #303744; }
+      .blog-layout { display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 36px; padding-block: 4px 48px; }
+      .categories-title { font-size: 13px; color: var(--muted); font-weight: 500; margin: 0 0 10px 12px; }
+      .category-list { display: flex; flex-direction: column; gap: 7px; }
+      .category-button { display: flex; align-items: center; justify-content: space-between; gap: 14px; min-height: 45px; padding: 10px 12px; border: 0; border-radius: 8px; background: transparent; color: var(--muted); text-align: left; font-size: 14px; }
+      .category-button:hover { background: var(--wash); }
+      .category-button[aria-pressed="true"] { background: #edf3ff; color: #2456b7; font-weight: 600; }
+      .category-count { font: 12px ui-monospace, Consolas, monospace; min-width: 17px; text-align: right; }
+      .results { min-width: 0; }
+      .results-header { display: flex; align-items: baseline; justify-content: space-between; gap: 15px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+      .results-header h2 { font-size: 20px; line-height: 1.5; margin: 0; overflow-wrap: anywhere; }
+      .result-count { color: var(--muted); font-size: 12px; margin: 0; flex-shrink: 0; }
+      .empty-state { margin-top: 16px; min-height: 200px; padding: 28px 24px; border: 1px solid #edf0f4; border-radius: 15px; background: #fafbfd; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+      .empty-icon { color: #8ba0c0; margin-bottom: 14px; }
+      .empty-state h3 { font-size: 17px; margin: 0 0 8px; font-weight: 600; }
+      .empty-state p { color: var(--muted); font-size: 14px; margin: 0; max-width: 400px; }
+      .reset-button { margin-top: 19px; color: #2456b7; background: #edf3ff; border: 1px solid #dce7fb; border-radius: 8px; padding: 8px 14px; min-height: 40px; font-size: 13px; }
+      .article-list { list-style: none; padding: 0; margin: 0; }
+      .article-card { padding: 20px 0; border-bottom: 1px solid var(--line); }
+      .article-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+      .article-category { padding: 2px 8px; background: #edf3ff; color: #2456b7; border-radius: 5px; }
+      .article-card h3 { margin: 0; font-size: 21px; line-height: 1.5; overflow-wrap: anywhere; }
+      .article-card h3 a:hover { color: var(--blue); }
+      .article-summary { margin: 10px 0 0; color: var(--muted); font-size: 14px; overflow-wrap: anywhere; }
+      .article-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 13px; color: #737d8e; font-size: 12px; overflow-wrap: anywhere; }
+      .load-more { display: block; margin: 26px auto 0; border: 1px solid var(--line); border-radius: 9px; background: white; color: var(--muted); padding: 9px 20px; min-height: 42px; font-size: 13px; }
+      .load-more:hover { background: var(--wash); }
+      .noscript { padding: 18px; background: var(--wash); color: var(--muted); font-size: 14px; border-radius: 10px; }
+      footer { border-top: 1px solid var(--line); }
+      .footer-inner { min-height: 75px; display: flex; align-items: center; justify-content: space-between; gap: 20px; color: var(--muted); font-size: 12px; }
+      .footer-inner a:hover { color: var(--blue); }
+      @media (max-width: 760px) {
+        .container { width: calc(100% - 40px); }
+        .header-inner { min-height: 72px; gap: 14px; }
+        .navigation { gap: 20px; font-size: 13px; }
+        .blog-layout { grid-template-columns: 1fr; gap: 22px; padding-bottom: 32px; }
+        .category-list { flex-direction: row; flex-wrap: wrap; gap: 8px; }
+        .categories-title { margin-left: 0; margin-bottom: 10px; }
+        .category-button { border: 1px solid var(--line); min-height: 40px; padding: 7px 12px; }
+        .category-button[aria-pressed="true"] { border-color: #dce7fb; }
+        .blog-heading { padding-block: 22px 18px; }
+        .heading-row { margin-top: 18px; }
+      }
+      @media (max-width: 540px) {
+        .brand { font-size: 18px; gap: 8px; }
+        .brand-mark { width: 24px; height: 24px; border-radius: 7px; }
+        .navigation { gap: 17px; }
+        .nav-contact { display: none; }
+        .notebook-icon { width: 54px; height: 54px; border-radius: 15px; }
+        .notebook-icon svg { width: 26px; height: 26px; }
+        .lead { font-size: 14px; }
+        .search-form { margin-top: 18px; gap: 8px; padding-left: 12px; }
+        .search-input { font-size: 13px; }
+        .search-submit { padding-inline: 12px; }
+        .clear-search { width: 28px; flex-shrink: 0; }
+        .empty-state { min-height: 200px; padding: 24px 20px; }
+        .empty-state p { font-size: 13px; }
+        .results-header h2 { font-size: 19px; }
+        .article-card h3 { font-size: 19px; }
+        .footer-inner { min-height: 70px; font-size: 11px; }
+      }
+    </style>
+    <script src="./blog-data.js" defer></script>
+    <script src="./blog.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">跳到主要内容</a>
+    <header class="header">
+      <div class="container header-inner">
+        <a class="brand" href="./index.html" aria-label="xkgc__，返回主页"><span class="brand-mark" aria-hidden="true">×</span>xkgc__</a>
+        <nav class="navigation" aria-label="主导航">
+          <a href="./index.html">首页</a>
+          <a href="./blog.html" aria-current="page">博客</a>
+          <a class="nav-contact" href="./index.html#contact">联系我 <span aria-hidden="true">↗</span></a>
+        </nav>
+      </div>
+    </header>
+    <main class="container" id="main">
+      <section class="blog-heading" aria-labelledby="blog-title">
+        <a class="back-link" href="./index.html"><span aria-hidden="true">←</span> 返回主页</a>
+        <div class="heading-row">
+          <div><p class="eyebrow">BLOG &amp; NOTES</p><h1 id="blog-title">博客</h1><p class="lead">记录学到的东西，也记录思考的过程。</p></div>
+          <div class="notebook-icon" aria-hidden="true"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4M3 7h4M3 12h4M3 17h4"/></svg></div>
+        </div>
+        <form class="search-form" id="search-form" role="search" aria-label="搜索博客文章">
+          <svg class="search-icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>
+          <input class="search-input" id="search-input" type="search" placeholder="搜索标题、摘要或标签" aria-label="搜索文章标题、摘要或标签" autocomplete="off" disabled>
+          <button class="clear-search" id="clear-search" type="button" aria-label="清空搜索关键词" hidden><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+          <button class="search-submit" id="search-submit" type="submit" disabled>搜索</button>
+        </form>
+      </section>
+      <noscript><p class="noscript">请启用 JavaScript，以加载文章列表并使用分类和搜索。</p></noscript>
+      <div class="blog-layout">
+        <aside aria-labelledby="categories-title">
+          <h2 class="categories-title" id="categories-title">文章分类</h2>
+          <div class="category-list" id="category-list" role="group" aria-labelledby="categories-title"></div>
+        </aside>
+        <section class="results" aria-labelledby="results-title">
+          <div class="results-header"><h2 id="results-title">全部文章</h2><p class="result-count" id="result-count" role="status" aria-live="polite" aria-atomic="true">正在加载…</p></div>
+          <ul class="article-list" id="article-list"></ul>
+          <div class="empty-state" id="empty-state">
+            <svg class="empty-icon" width="38" height="38" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="5" width="17" height="23" rx="3"/><path d="M13 12h7M13 17h7M13 22h4M5 8v15"/></svg>
+            <h3 id="empty-title">文章正在整理中</h3>
+            <p id="empty-description">学习与实践的记录，会陆续更新在这里。</p>
+            <button class="reset-button" id="reset-filters" type="button" hidden>查看全部文章</button>
+          </div>
+          <button class="load-more" id="load-more" type="button" hidden>显示更多文章</button>
+        </section>
+      </div>
+    </main>
+    <footer><div class="container footer-inner"><span>© 2026 xkgc__</span><a href="./index.html">返回个人主页 <span aria-hidden="true">↗</span></a></div></footer>
+  </body>
+</html>

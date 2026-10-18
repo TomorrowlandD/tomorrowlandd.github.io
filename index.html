@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="xkgc__ 的个人主页：研0，记录技术学习、实践与思考。">
+    <meta name="theme-color" content="#ffffff">
+    <title>xkgc__ · 个人主页</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%232563eb'/%3E%3Cpath d='m20 20 24 24m0-24L20 44' stroke='white' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E">
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #171a20;
+        --muted: #656c78;
+        --line: #e7e9ee;
+        --blue: #2563eb;
+        --wash: #f6f8fb;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: #fff;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+        line-height: 1.7;
+        -webkit-font-smoothing: antialiased;
+      }
+      ::selection { background: #e1eaff; }
+      a { color: inherit; text-decoration: none; }
+      button { font: inherit; }
+      a, button { -webkit-tap-highlight-color: transparent; }
+      a:focus-visible, button:focus-visible { outline: 3px solid #8fb2ff; outline-offset: 5px; }
+      svg { display: block; }
+      .container { width: min(1080px, calc(100% - 64px)); margin-inline: auto; }
+      .skip-link { position: absolute; left: 20px; top: -80px; z-index: 5; padding: 10px 16px; background: var(--ink); color: #fff; }
+      .skip-link:focus { top: 12px; }
+      .header { border-bottom: 1px solid var(--line); }
+      .header-inner { min-height: 82px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+      .brand { display: inline-flex; align-items: center; gap: 11px; font: 700 21px ui-monospace, Consolas, monospace; letter-spacing: -.8px; }
+      .brand-mark { width: 27px; height: 27px; display: grid; place-items: center; background: var(--blue); border-radius: 8px; color: #fff; font-size: 21px; font-weight: 400; }
+      .navigation { display: flex; align-items: center; gap: 30px; font-size: 14px; color: var(--muted); }
+      .navigation a { padding-block: 12px; transition: color .16s ease; }
+      .navigation a:hover { color: var(--blue); }
+      .navigation .nav-contact { color: var(--ink); }
+      .hero { display: grid; grid-template-columns: 1.6fr 1fr; align-items: center; gap: 70px; padding-block: 78px 76px; }
+      .eyebrow { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: 13px; letter-spacing: .04em; }
+      .status-dot { width: 7px; height: 7px; background: var(--blue); border-radius: 50%; box-shadow: 0 0 0 4px #edf2ff; margin-right: 3px; }
+      h1 { margin: 21px 0 20px; font-size: clamp(40px, 4.7vw, 62px); line-height: 1.24; letter-spacing: -.045em; font-weight: 750; }
+      h1 span { color: var(--blue); font-family: ui-monospace, Consolas, monospace; letter-spacing: -.065em; }
+      .intro { max-width: 440px; color: var(--muted); font-size: 16px; margin: 0; line-height: 1.95; }
+      .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 13px; margin-top: 29px; }
+      .button { display: inline-flex; justify-content: center; align-items: center; gap: 18px; min-height: 44px; padding: 9px 19px; border-radius: 10px; font-size: 14px; font-weight: 550; transition: background .16s ease, transform .16s ease; }
+      .button:hover { transform: translateY(-2px); }
+      .button-primary { color: white; background: var(--ink); }
+      .button-primary:hover { background: #303744; }
+      .button-secondary { border: 1px solid var(--line); background: white; }
+      .button-secondary:hover { background: var(--wash); }
+      .identity-scene { position: relative; min-height: 288px; display: grid; place-items: center; isolation: isolate; }
+      .identity-scene::before { content: ""; position: absolute; width: 232px; height: 232px; border-radius: 50%; background: #edf3ff; right: 7px; top: 5px; z-index: -2; }
+      .identity-scene::after { content: ""; position: absolute; width: 12px; height: 12px; background: #f1bd91; border-radius: 50%; left: 23px; top: 26px; }
+      .identity-card { width: 246px; padding: 27px 25px 22px; background: #fff; border: 1px solid #e2e6ed; border-radius: 22px; transform: rotate(-5deg); box-shadow: 0 18px 40px -22px #243c6838; }
+      .card-label { font: 10px ui-monospace, Consolas, monospace; color: #737d8e; letter-spacing: .16em; }
+      .monogram { font: 500 95px ui-monospace, Consolas, monospace; color: var(--blue); letter-spacing: -.12em; line-height: 1.35; padding: 12px 0 19px; }
+      .identity-caption { border-top: 1px solid var(--line); padding-top: 14px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--muted); }
+      .identity-caption strong { color: var(--ink); font-family: ui-monospace, Consolas, monospace; font-size: 14px; }
+      .little-star { position: absolute; right: 6px; bottom: 25px; color: #7f9aca; font-size: 42px; font-family: Georgia, serif; }
+      .blog-section { display: grid; grid-template-columns: 1fr 1.7fr; align-items: start; gap: 42px; padding-block: 42px 56px; border-top: 1px solid var(--line); }
+      .section-kicker { margin: 0 0 7px; color: #737d8e; font: 11px ui-monospace, Consolas, monospace; letter-spacing: .13em; }
+      h2 { margin: 0; font-size: 25px; line-height: 1.4; letter-spacing: -.04em; }
+      .blog-entry { display: block; min-height: 138px; background: var(--wash); border: 1px solid #edf0f4; border-radius: 15px; padding: 24px; transition: background .16s ease, border-color .16s ease; }
+      .blog-entry:hover { background: #f0f5ff; border-color: #c9d9fb; }
+      .blog-entry-top { display: flex; align-items: center; gap: 12px; margin-bottom: 11px; }
+      .blog-entry-icon { color: #70839f; }
+      .blog-entry-arrow { margin-left: auto; color: var(--blue); font-size: 20px; }
+      h3 { margin: 0; font-size: 15px; font-weight: 600; }
+      .blog-entry p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.85; }
+      .contact { border-top: 1px solid var(--line); padding-block: 37px 40px; display: grid; grid-template-columns: 1fr 1.7fr; align-items: start; gap: 42px; }
+      .contact h2 { font-size: 22px; margin-bottom: 6px; }
+      .contact p { margin: 0; font-size: 14px; color: var(--muted); }
+      .contact-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; min-width: 0; }
+      .contact-row { display: flex; align-items: center; gap: 12px; min-height: 44px; }
+      .contact-link { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; min-width: 0; color: #50545d; font-size: 16px; border-radius: 4px; }
+      a.contact-link:hover { color: var(--blue); }
+      .contact-icon { width: 21px; height: 21px; flex: 0 0 21px; }
+      .email-icon { color: #53565b; }
+      .scholar-icon { color: #69b9fa; }
+      .github-icon { color: #202124; }
+      .contact-text { display: grid; gap: 1px; min-width: 0; }
+      .contact-detail { color: var(--muted); font-size: 13px; overflow-wrap: anywhere; }
+      .contact-pending { flex-wrap: wrap; column-gap: 12px; row-gap: 3px; }
+      .link-status { color: var(--muted); font-size: 11px; padding: 1px 7px; border-radius: 5px; background: var(--wash); white-space: nowrap; }
+      .copy-button { flex-shrink: 0; width: 42px; height: 42px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 10px; background: white; color: var(--muted); cursor: pointer; }
+      .copy-button:hover { background: var(--wash); color: var(--blue); }
+      footer { border-top: 1px solid var(--line); }
+      .footer-inner { min-height: 70px; display: flex; align-items: center; justify-content: space-between; gap: 20px; color: var(--muted); font-size: 12px; }
+      .preview-label { display: flex; align-items: center; gap: 7px; }
+      .preview-label::before { content: ""; width: 5px; height: 5px; background: #adb6c6; border-radius: 50%; }
+      .toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 12px); width: max-content; max-width: calc(100vw - 32px); padding: 11px 18px; border-radius: 10px; background: var(--ink); color: white; font-size: 13px; text-align: center; opacity: 0; pointer-events: none; transition: opacity .16s, transform .16s; }
+      .toast.visible { opacity: 1; transform: translate(-50%, 0); }
+      @media (max-width: 760px) {
+        .container { width: calc(100% - 40px); }
+        .header-inner { min-height: 72px; gap: 14px; }
+        .navigation { gap: 20px; font-size: 13px; }
+        .nav-about { display: none; }
+        .hero { gap: 25px; padding-block: 54px; }
+        h1 { font-size: 43px; }
+        .identity-card { width: 190px; padding: 23px 19px 17px; }
+        .identity-scene { min-height: 240px; }
+        .identity-scene::before { width: 170px; height: 170px; }
+        .monogram { font-size: 75px; }
+        .identity-caption { gap: 8px; font-size: 10px; }
+        .blog-section { gap: 24px; }
+        .contact { grid-template-columns: 1fr; gap: 18px; }
+      }
+      @media (max-width: 540px) {
+        .brand { font-size: 18px; gap: 8px; }
+        .brand-mark { width: 24px; height: 24px; border-radius: 7px; }
+        .navigation { gap: 17px; }
+        .hero { grid-template-columns: 1fr; padding-block: 48px 42px; gap: 30px; }
+        h1 { font-size: 44px; }
+        .intro { font-size: 15px; }
+        .identity-scene { display: none; }
+        .blog-section { grid-template-columns: 1fr; padding-block: 32px 36px; gap: 19px; }
+        .blog-entry { min-height: 142px; padding: 22px; }
+        h2 { font-size: 23px; }
+        .contact { padding-block: 30px; }
+        .footer-inner { min-height: 76px; gap: 8px; flex-wrap: wrap; padding-block: 18px; font-size: 11px; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        *, *::before, *::after { transition: none !important; }
+        .button:hover { transform: none; }
+      }
+    </style>
+  </head>
+  <body id="top">
+    <a class="skip-link" href="#main">跳到主要内容</a>
+    <header class="header">
+      <div class="container header-inner">
+        <a class="brand" href="#top" aria-label="xkgc__，返回页首"><span class="brand-mark" aria-hidden="true">×</span>xkgc__</a>
+        <nav class="navigation" aria-label="主导航">
+          <a class="nav-about" href="#about">关于</a>
+          <a href="./blog.html">博客</a>
+          <a class="nav-contact" href="#contact">联系我 <span aria-hidden="true">↗</span></a>
+        </nav>
+      </div>
+    </header>
+    <main id="main" class="container">
+      <section class="hero" id="about" aria-labelledby="intro-title">
+        <div>
+          <div class="eyebrow"><span class="status-dot" aria-hidden="true"></span>欢迎来到我的个人主页</div>
+          <h1 id="intro-title">你好，我是<br><span>xkgc__</span>。</h1>
+          <p class="intro">目前研0，即将开启研究生阶段的学习。<br>在这里记录技术学习、实践过程和一些想法。</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="./blog.html">阅读博客 <span aria-hidden="true">→</span></a>
+            <a class="button button-secondary" href="mailto:tomorrowland_todo@163.com">联系我 <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+        <div class="identity-scene" aria-hidden="true">
+          <div class="identity-card">
+            <div class="card-label">A LITTLE SPACE OF MY OWN</div>
+            <div class="monogram">xk_</div>
+            <div class="identity-caption"><strong>xkgc__</strong><span>我的互联网一角</span></div>
+          </div>
+          <span class="little-star">✳</span>
+        </div>
+      </section>
+      <section class="blog-section" id="blog" aria-labelledby="blog-title">
+        <div>
+          <p class="section-kicker">BLOG &amp; NOTES</p>
+          <h2 id="blog-title">博客</h2>
+        </div>
+        <a class="blog-entry" href="./blog.html" aria-label="进入博客，阅读技术笔记与实践记录">
+          <div class="blog-entry-top">
+            <svg class="blog-entry-icon" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>
+            <h3>进入博客</h3>
+            <span class="blog-entry-arrow" aria-hidden="true">→</span>
+          </div>
+          <p>分享技术笔记、实践经验，以及学习过程中的思考。</p>
+        </a>
+      </section>
+      <section class="contact" id="contact" aria-labelledby="contact-title">
+        <div><h2 id="contact-title">交流与分享</h2><p>欢迎交流学习心得、技术问题与新的想法。</p></div>
+        <ul class="contact-list" aria-label="联系与个人主页">
+          <li class="contact-row">
+            <a class="contact-link" href="mailto:tomorrowland_todo@163.com">
+              <svg class="contact-icon email-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 4h18a1 1 0 0 1 1 1v.5l-10 7-10-7V5a1 1 0 0 1 1-1Zm-1 3.9 9.43 6.6a1 1 0 0 0 1.14 0L22 7.9V19a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7.9Z"/></svg>
+              <span class="contact-text"><span>Email</span><span class="contact-detail">tomorrowland_todo@163.com</span></span>
+            </a>
+            <button class="copy-button" id="copy-email" type="button" aria-label="复制邮箱地址" title="复制邮箱地址">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M15 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h3"/></svg>
+            </button>
+          </li>
+          <li class="contact-row">
+            <!-- 创建 Google Scholar 主页后，将下面的 span 改成带真实地址的 a。 -->
+            <span class="contact-link contact-pending">
+              <svg class="contact-icon scholar-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 12 5-12 5L2 7.83V16H0V7l12-5Z"/><path d="M5 11v7c0 1.66 3.13 3 7 3s7-1.34 7-3v-7l-7 2.92L5 11Z"/></svg>
+              <span>Google Scholar</span><span class="link-status">待添加</span>
+            </span>
+          </li>
+          <li class="contact-row">
+            <a class="contact-link" href="https://github.com/TomorrowlandD" target="_blank" rel="noopener noreferrer" aria-label="GitHub：TomorrowlandD，在新标签页打开">
+              <svg class="contact-icon github-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297C5.37.297 0 5.67 0 12.297c0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.043-1.61-4.043-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.729.083-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.418-1.305.762-1.605-2.665-.305-5.467-1.334-5.467-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.62-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+              <span>GitHub</span>
+            </a>
+          </li>
+        </ul>
+      </section>
+    </main>
+    <footer>
+      <div class="container footer-inner"><span>© 2026 xkgc__</span><span class="preview-label">MVP 预览 · 博客内容正在整理中</span></div>
+    </footer>
+    <div class="toast" id="copy-status" role="status" aria-live="polite" aria-atomic="true"></div>
+    <script>
+      const copyButton = document.getElementById('copy-email');
+      const copyStatus = document.getElementById('copy-status');
+      let messageTimer;
+      copyButton.addEventListener('click', async () => {
+        let copied = false;
+        const email = 'tomorrowland_todo@163.com';
+        try {
+          await navigator.clipboard.writeText(email);
+          copied = true;
+        } catch {
+          // 某些浏览器直接打开本地文件时没有 Clipboard API。
+          const temporaryInput = document.createElement('textarea');
+          temporaryInput.value = email;
+          temporaryInput.setAttribute('readonly', '');
+          temporaryInput.style.cssText = 'position:fixed;left:-9999px;top:0';
+          document.body.append(temporaryInput);
+          temporaryInput.select();
+          try { copied = document.execCommand('copy'); } catch { copied = false; }
+          temporaryInput.remove();
+          copyButton.focus({ preventScroll: true });
+        }
+        copyStatus.textContent = copied ? '邮箱已复制' : '未能自动复制，请选中邮箱地址手动复制';
+        copyStatus.classList.add('visible');
+        clearTimeout(messageTimer);
+        messageTimer = setTimeout(() => copyStatus.classList.remove('visible'), 4000);
+      });
+    </script>
+  </body>
+</html>
