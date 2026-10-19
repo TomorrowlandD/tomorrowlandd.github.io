@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="关于 xkgc__：个人简介、研究方向、教育经历与技能。">
+    <meta name="description" content="关于 xkgc__：个人简介、研究方向与教育经历。">
     <meta name="theme-color" content="#ffffff">
     <title>关于我 · xkgc__</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%232563eb'/%3E%3Cpath d='m20 20 24 24m0-24L20 44' stroke='white' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E">
@@ -48,10 +48,11 @@
       .edu-period { font: 12px ui-monospace, Consolas, monospace; color: #737d8e; }
       .edu-school { font-weight: 600; color: var(--ink); font-size: 15px; }
       .edu-degree { color: var(--muted); font-size: 13px; }
-      .skills { display: flex; flex-wrap: wrap; gap: 10px; }
-      .tag-chip { padding: 4px 12px; background: #edf3ff; color: #2456b7; border-radius: 7px; font-size: 13px; }
+      .internship-placeholder { display: grid; gap: 4px; padding: 16px 18px; background: var(--wash); border: 1px dashed #d5dbe5; border-radius: 12px; }
+      .internship-status { color: var(--muted); font-size: 15px; font-weight: 600; }
+      .internship-placeholder p { font-size: 13px; }
       footer { border-top: 1px solid var(--line); }
-      .footer-inner { min-height: 75px; display: flex; align-items: center; justify-content: space-between; gap: 20px; color: var(--muted); font-size: 12px; }
+      .footer-inner { min-height: 75px; display: flex; align-items: center; justify-content: flex-end; gap: 20px; color: var(--muted); font-size: 12px; }
       .footer-inner a:hover { color: var(--blue); }
       @media (max-width: 760px) {
         .container { width: calc(100% - 40px); }
@@ -90,7 +91,7 @@
         <a class="back-link" href="./index.html"><span aria-hidden="true">←</span> 返回主页</a>
         <p class="eyebrow">ABOUT</p>
         <h1 id="about-title">关于我</h1>
-        <p class="lead">我的背景、研究兴趣与技能。</p>
+        <p class="lead">我的背景、研究兴趣与教育经历。</p>
       </section>
       <div class="about-layout">
         <section class="about-block" aria-labelledby="bio-heading">
@@ -126,18 +127,15 @@
             </li>
           </ul>
         </section>
-        <section class="about-block" aria-labelledby="skills-heading">
-          <h2 id="skills-heading">技能</h2>
-          <div class="skills">
-            <span class="tag-chip">Python</span>
-            <span class="tag-chip">PyTorch</span>
-            <span class="tag-chip">Hugging Face</span>
-            <span class="tag-chip">Linux</span>
-            <span class="tag-chip">Docker</span>
+        <section class="about-block" aria-labelledby="internship-heading">
+          <h2 id="internship-heading">实习经历</h2>
+          <div class="internship-placeholder">
+            <span class="internship-status">正在准备中</span>
+            <p>期待开启第一段实习，未来将在这里记录实践与收获。</p>
           </div>
         </section>
       </div>
     </main>
-    <footer><div class="container footer-inner"><span>© 2026 xkgc__</span><a href="./index.html">返回个人主页 <span aria-hidden="true">↗</span></a></div></footer>
+    <footer><div class="container footer-inner"><a href="./index.html">返回个人主页 <span aria-hidden="true">↗</span></a></div></footer>
   </body>
 </html>

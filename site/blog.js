@@ -12,7 +12,7 @@
   const emptyTitle = document.getElementById('empty-title');
   const emptyDescription = document.getElementById('empty-description');
   const resetFilters = document.getElementById('reset-filters');
-  const loadMore = document.getElementById('load-more');
+  const pagination = document.getElementById('pagination');
   const data = window.BLOG_DATA;
 
   if (!data || !Array.isArray(data.posts) || !Array.isArray(data.categories)) {
@@ -26,7 +26,7 @@
   const normalize = value => value.normalize('NFKC').toLocaleLowerCase();
   const pageSize = 10;
   let selectedCategory = null;
-  let visibleLimit = pageSize;
+  let currentPage = 1;
 
   function articleUrl(value) {
     if (!cleanText(value)) return null;
@@ -44,7 +44,6 @@
     .filter(post => post && post.draft !== true)
     .map(post => ({
       title: cleanText(post.title),
-      summary: cleanText(post.summary),
       date: cleanText(post.date),
       category: cleanText(post.category),
       tags: Array.isArray(post.tags) ? post.tags.map(cleanText).filter(Boolean) : [],
@@ -57,6 +56,36 @@
     ...data.categories.map(cleanText).filter(Boolean),
     ...posts.map(post => post.category),
   ])];
+
+  function readUrlState() {
+    const params = new URL(window.location.href).searchParams;
+    const category = params.get('category');
+    selectedCategory = categories.includes(category) ? category : null;
+    search.value = params.get('q') || '';
+    const page = params.get('page') || '';
+    const number = Number(page);
+    currentPage = /^\d+$/.test(page) && Number.isSafeInteger(number) && number > 0 ? number : 1;
+  }
+
+  function writeUrlState(mode) {
+    const url = new URL(window.location.href);
+    const values = { page: currentPage > 1 ? String(currentPage) : '', category: selectedCategory || '', q: search.value.trim() };
+    Object.entries(values).forEach(([key, value]) => {
+      if (value) url.searchParams.set(key, value);
+      else url.searchParams.delete(key);
+    });
+    if (url.href === window.location.href) return;
+    try {
+      window.history[mode === 'push' ? 'pushState' : 'replaceState'](null, '', url.href);
+    } catch {
+      // Some browsers restrict history updates on file://. In-page controls still work.
+    }
+  }
+
+  function update(mode = 'replace') {
+    render();
+    writeUrlState(mode);
+  }
 
   function element(tag, className, text) {
     const node = document.createElement(tag);
@@ -73,8 +102,8 @@
     button.append(element('span', '', label), element('span', 'category-count', String(count)));
     button.addEventListener('click', () => {
       selectedCategory = name;
-      visibleLimit = pageSize;
-      render();
+      currentPage = 1;
+      update('push');
     });
     categoryButtons.push({ name, button });
     categoryList.append(button);
@@ -82,6 +111,43 @@
 
   addCategory(null, '全部文章', posts.length);
   categories.forEach(category => addCategory(category, category, posts.filter(post => post.category === category).length));
+
+  function renderPagination(totalPages) {
+    pagination.replaceChildren();
+    pagination.hidden = totalPages <= 1;
+    if (totalPages <= 1) return;
+
+    function addPage(label, page, disabled = false, isCurrent = false) {
+      const button = element('button', 'page-button', label);
+      button.type = 'button';
+      button.disabled = disabled;
+      if (/^\d+$/.test(label)) button.setAttribute('aria-label', `第 ${page} 页`);
+      if (isCurrent) button.setAttribute('aria-current', 'page');
+      button.addEventListener('click', () => {
+        if (currentPage === page) return;
+        currentPage = page;
+        update('push');
+        resultTitle.focus({ preventScroll: true });
+        resultTitle.scrollIntoView({ block: 'start', behavior: 'instant' });
+      });
+      pagination.append(button);
+    }
+
+    addPage('上一页', currentPage - 1, currentPage === 1);
+    const pages = totalPages <= 7
+      ? Array.from({ length: totalPages }, (_, index) => index + 1)
+      : [...new Set([1, currentPage - 1, currentPage, currentPage + 1, totalPages])]
+        .filter(page => page >= 1 && page <= totalPages).sort((a, b) => a - b);
+    pages.forEach((page, index) => {
+      if (index > 0 && page - pages[index - 1] > 1) {
+        const gap = element('span', 'page-ellipsis', '…');
+        gap.setAttribute('aria-hidden', 'true');
+        pagination.append(gap);
+      }
+      addPage(String(page), page, false, page === currentPage);
+    });
+    addPage('下一页', currentPage + 1, currentPage === totalPages);
+  }
 
   function renderArticle(post) {
     const item = element('li');
@@ -99,7 +165,6 @@
     }
     heading.append(link);
     article.append(meta, heading);
-    if (post.summary) article.append(element('p', 'article-summary', post.summary));
     if (post.tags.length) {
       const tags = element('div', 'article-tags');
       post.tags.forEach(tag => tags.append(element('span', '', tag)));
@@ -114,19 +179,22 @@
     const keywords = query.split(/\s+/).filter(Boolean);
     const matches = posts.filter(post => {
       if (selectedCategory !== null && post.category !== selectedCategory) return false;
-      const text = normalize([post.title, post.summary, ...post.tags].join(' '));
+      const text = normalize([post.title, ...post.tags].join(' '));
       return keywords.every(keyword => text.includes(keyword));
     });
-    const visible = matches.slice(0, visibleLimit);
+    const totalPages = Math.ceil(matches.length / pageSize);
+    currentPage = Math.min(currentPage, Math.max(1, totalPages));
+    const start = (currentPage - 1) * pageSize;
+    const visible = matches.slice(start, start + pageSize);
     categoryButtons.forEach(({ name, button }) => button.setAttribute('aria-pressed', String(name === selectedCategory)));
     resultTitle.textContent = selectedCategory === null ? '全部文章' : selectedCategory;
-    resultCount.textContent = matches.length > visible.length
-      ? `已显示 ${visible.length} / ${matches.length} 篇`
-      : `${keywords.length ? '找到 ' : '共 '}${matches.length} 篇文章`;
+    resultCount.textContent = `${keywords.length ? '找到 ' : '共 '}${matches.length} 篇文章`
+      + (totalPages ? ` · 第 ${currentPage} / ${totalPages} 页` : '');
+    if (totalPages) resultCount.append(element('span', 'result-range', `本页显示第 ${start + 1}–${start + visible.length} 篇文章`));
     clearSearch.hidden = search.value.length === 0;
     articleList.replaceChildren(...visible.map(renderArticle));
     emptyState.hidden = matches.length !== 0;
-    loadMore.hidden = matches.length <= visible.length;
+    renderPagination(totalPages);
     resetFilters.hidden = !keywords.length && selectedCategory === null;
 
     if (keywords.length) {
@@ -143,31 +211,30 @@
 
   search.disabled = false;
   searchSubmit.disabled = false;
-  search.addEventListener('input', () => { visibleLimit = pageSize; render(); });
+  search.addEventListener('input', () => { currentPage = 1; update(); });
   document.getElementById('search-form').addEventListener('submit', event => {
     event.preventDefault();
-    visibleLimit = pageSize;
-    render();
+    currentPage = 1;
+    update();
   });
   clearSearch.addEventListener('click', () => {
     search.value = '';
-    visibleLimit = pageSize;
-    render();
+    currentPage = 1;
+    update();
     search.focus();
   });
   resetFilters.addEventListener('click', () => {
     selectedCategory = null;
     search.value = '';
-    visibleLimit = pageSize;
-    render();
+    currentPage = 1;
+    update('push');
     categoryButtons[0].button.focus();
   });
-  loadMore.addEventListener('click', () => {
-    const firstNewIndex = visibleLimit;
-    visibleLimit += pageSize;
-    render();
-    articleList.children[firstNewIndex]?.querySelector('h3 a')?.focus();
+  window.addEventListener('popstate', () => {
+    readUrlState();
+    update();
   });
 
-  render();
+  readUrlState();
+  update();
 })();

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="xkgc__ 的博客，记录技术学习、实践与思考。按分类浏览文章，或搜索标题、摘要和标签。">
+    <meta name="description" content="xkgc__ 的博客，记录技术学习、实践与思考。按分类浏览文章，或搜索标题和标签。">
     <meta name="theme-color" content="#ffffff">
     <title>博客 · xkgc__</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%232563eb'/%3E%3Cpath d='m20 20 24 24m0-24L20 44' stroke='white' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E">
@@ -58,9 +58,12 @@
       .category-button[aria-pressed="true"] { background: #edf3ff; color: #2456b7; font-weight: 600; }
       .category-count { font: 12px ui-monospace, Consolas, monospace; min-width: 17px; text-align: right; }
       .results { min-width: 0; }
-      .results-header { display: flex; align-items: baseline; justify-content: space-between; gap: 15px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+      .results-header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 10px 15px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
       .results-header h2 { font-size: 20px; line-height: 1.5; margin: 0; overflow-wrap: anywhere; }
-      .result-count { color: var(--muted); font-size: 12px; margin: 0; flex-shrink: 0; }
+      .result-count { color: var(--muted); font-size: 12px; margin: 0; }
+      .result-range { display: block; margin-top: 2px; }
+      #results-title { scroll-margin-top: 24px; }
+      #results-title:focus-visible { outline: 3px solid #8fb2ff; outline-offset: 5px; }
       .empty-state { margin-top: 16px; min-height: 200px; padding: 28px 24px; border: 1px solid #edf0f4; border-radius: 15px; background: #fafbfd; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; }
       .empty-icon { color: #8ba0c0; margin-bottom: 14px; }
       .empty-state h3 { font-size: 17px; margin: 0 0 8px; font-weight: 600; }
@@ -72,13 +75,16 @@
       .article-category { padding: 2px 8px; background: #edf3ff; color: #2456b7; border-radius: 5px; }
       .article-card h3 { margin: 0; font-size: 21px; line-height: 1.5; overflow-wrap: anywhere; }
       .article-card h3 a:hover { color: var(--blue); }
-      .article-summary { margin: 10px 0 0; color: var(--muted); font-size: 14px; overflow-wrap: anywhere; }
       .article-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 13px; color: #737d8e; font-size: 12px; overflow-wrap: anywhere; }
-      .load-more { display: block; margin: 26px auto 0; border: 1px solid var(--line); border-radius: 9px; background: white; color: var(--muted); padding: 9px 20px; min-height: 42px; font-size: 13px; }
-      .load-more:hover { background: var(--wash); }
+      .pagination { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; margin-top: 26px; }
+      .page-button { border: 1px solid var(--line); border-radius: 9px; background: white; color: var(--muted); padding: 8px 12px; min-width: 42px; min-height: 44px; font-size: 13px; }
+      .page-button:hover:not(:disabled) { background: var(--wash); }
+      .page-button[aria-current="page"] { background: #edf3ff; border-color: #c9d9fb; color: #2456b7; font-weight: 600; }
+      .page-button:disabled { opacity: .45; cursor: default; }
+      .page-ellipsis { color: var(--muted); padding-inline: 3px; }
       .noscript { padding: 18px; background: var(--wash); color: var(--muted); font-size: 14px; border-radius: 10px; }
       footer { border-top: 1px solid var(--line); }
-      .footer-inner { min-height: 75px; display: flex; align-items: center; justify-content: space-between; gap: 20px; color: var(--muted); font-size: 12px; }
+      .footer-inner { min-height: 75px; display: flex; align-items: center; justify-content: flex-end; gap: 20px; color: var(--muted); font-size: 12px; }
       .footer-inner a:hover { color: var(--blue); }
       @media (max-width: 760px) {
         .container { width: calc(100% - 40px); }
@@ -137,7 +143,7 @@
         </div>
         <form class="search-form" id="search-form" role="search" aria-label="搜索博客文章">
           <svg class="search-icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>
-          <input class="search-input" id="search-input" type="search" placeholder="搜索标题、摘要或标签" aria-label="搜索文章标题、摘要或标签" autocomplete="off" disabled>
+          <input class="search-input" id="search-input" type="search" placeholder="搜索标题或标签" aria-label="搜索文章标题或标签" autocomplete="off" disabled>
           <button class="clear-search" id="clear-search" type="button" aria-label="清空搜索关键词" hidden><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
           <button class="search-submit" id="search-submit" type="submit" disabled>搜索</button>
         </form>
@@ -149,7 +155,7 @@
           <div class="category-list" id="category-list" role="group" aria-labelledby="categories-title"></div>
         </aside>
         <section class="results" aria-labelledby="results-title">
-          <div class="results-header"><h2 id="results-title">全部文章</h2><p class="result-count" id="result-count" role="status" aria-live="polite" aria-atomic="true">正在加载…</p></div>
+          <div class="results-header"><h2 id="results-title" tabindex="-1">全部文章</h2><p class="result-count" id="result-count" role="status" aria-live="polite" aria-atomic="true">正在加载…</p></div>
           <ul class="article-list" id="article-list"></ul>
           <div class="empty-state" id="empty-state">
             <svg class="empty-icon" width="38" height="38" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="5" width="17" height="23" rx="3"/><path d="M13 12h7M13 17h7M13 22h4M5 8v15"/></svg>
@@ -157,10 +163,10 @@
             <p id="empty-description">学习与实践的记录，会陆续更新在这里。</p>
             <button class="reset-button" id="reset-filters" type="button" hidden>查看全部文章</button>
           </div>
-          <button class="load-more" id="load-more" type="button" hidden>显示更多文章</button>
+          <nav class="pagination" id="pagination" aria-label="文章分页" hidden></nav>
         </section>
       </div>
     </main>
-    <footer><div class="container footer-inner"><span>© 2026 xkgc__</span><a href="./index.html">返回个人主页 <span aria-hidden="true">↗</span></a></div></footer>
+    <footer><div class="container footer-inner"><a href="./index.html">返回个人主页 <span aria-hidden="true">↗</span></a></div></footer>
   </body>
 </html>

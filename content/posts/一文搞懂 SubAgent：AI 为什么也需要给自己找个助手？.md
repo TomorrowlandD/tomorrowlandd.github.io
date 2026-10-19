@@ -3,7 +3,6 @@ title: "一文搞懂 SubAgent：AI 为什么也需要给自己找个助手？"
 date: "2026-10-19"
 category: "Agent"
 tags: ["Agent"]
-summary: "本文介绍的是SubAgent的原理"
 slug: "subagent-intro"
 draft: false
 ---

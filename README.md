@@ -34,7 +34,7 @@ dist/                       构建结果，由脚本生成，不提交 Git
 | 修改个人介绍或联系方式 | `site/index.html`、`site/about.html` |
 | 调整所有文章的阅读页 | `templates/article.html`、`site/article.css` |
 
-构建脚本从 Markdown 读取标题、日期、分类、标签和摘要，生成 `dist/posts/*.html` 及 `dist/blog-data.js`。文章正文中的二级、三级标题会自动形成右侧目录；阅读进度随滚动更新。不要手工修改 `dist/` 中的文件。
+构建脚本从 Markdown 读取标题、日期、分类和标签，生成 `dist/posts/*.html` 及 `dist/blog-data.js`。文章正文中的二级、三级标题会自动形成右侧目录；阅读进度随滚动更新。不要手工修改 `dist/` 中的文件。
 
 ## 本地运行
 
@@ -63,7 +63,7 @@ python -m http.server 9000 --bind 127.0.0.1 --directory dist
 ## 新增文章
 
 1. 复制 [文章模板](content/posts/_article-template.md)，另存为 `content/posts/agent-basics.md` 这类英文文件名。
-2. 填写文首的 `title`、`date`、`category`、`summary` 等信息，并在下方写 Markdown 正文。
+2. 填写文首的 `title`、`date`、`category` 等信息，并在下方写 Markdown 正文。
 3. 将 `draft` 改为 `false`，运行 `python scripts/build.py`，检查博客列表和文章页面。
 4. 提交并推送改动；网站上线后，推送到 `main` 会触发 GitHub Pages 重新构建。
 
@@ -75,4 +75,4 @@ python -m http.server 9000 --bind 127.0.0.1 --directory dist
 
 本站无需数据库或常驻服务器。博客园不由 GitHub 工作流自动发布：把同一份 Markdown 复制到博客园并检查排版即可。若文章使用 `content/images/` 中的相对图片地址，博客园还需要单独上传图片或替换为双方都可访问的绝对地址。
 
-当前搜索范围为文章标题、摘要和标签，不包括正文。新增文章后无需手工维护博客清单；构建脚本会按日期生成列表。
+当前搜索范围为文章标题和标签，不包括正文。博客每页显示 10 篇文章，提供页码、上一页和下一页；搜索和分类对全部文章生效，修改筛选条件会回到第一页。网址通过 `page`、`category`、`q` 参数保存状态，支持分享、刷新和浏览器前进后退。新增文章后无需手工维护博客清单或页数；构建脚本会按日期生成列表。部分浏览器限制本地文件的网址更新，此时仍可在页面内分页，完整状态恢复可通过 HTTP 预览验证。

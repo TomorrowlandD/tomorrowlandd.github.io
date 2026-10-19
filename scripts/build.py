@@ -39,7 +39,7 @@ def parse_post(path: Path) -> dict | None:
         raise fail(path, "draft 必须是 true 或 false")
     if draft:
         return None
-    for field in ("title", "summary", "category"):
+    for field in ("title", "category"):
         if not isinstance(metadata.get(field), str) or not metadata[field].strip():
             raise fail(path, f"{field} 必须填写非空文本")
     slug = metadata.get("slug", path.stem)
@@ -62,7 +62,6 @@ def parse_post(path: Path) -> dict | None:
         raise fail(path, "文章正文不能为空")
     return {
         "title": metadata["title"].strip(),
-        "summary": metadata["summary"].strip(),
         "date": published,
         "category": metadata["category"].strip(),
         "tags": [tag.strip() for tag in tags],
@@ -72,7 +71,7 @@ def parse_post(path: Path) -> dict | None:
 
 
 def render_post(post: dict) -> str:
-    escaped = {key: html.escape(str(post[key]), quote=True) for key in ("title", "summary", "date", "category")}
+    escaped = {key: html.escape(str(post[key]), quote=True) for key in ("title", "date", "category")}
     parser = MarkdownIt("commonmark", {"html": False}).enable("table").enable("strikethrough")
     tokens = parser.parse(post["body"])
     toc_items = []
@@ -120,7 +119,7 @@ def build() -> None:
     index = []
     for post in posts:
         (OUTPUT / "posts" / f"{post['slug']}.html").write_text(render_post(post), encoding="utf-8")
-        index.append({key: post[key] for key in ("title", "summary", "date", "category", "tags")}
+        index.append({key: post[key] for key in ("title", "date", "category", "tags")}
                      | {"url": f"./posts/{post['slug']}.html"})
     index.sort(key=lambda item: item["date"], reverse=True)
     categories = ["Agent", *(post["category"] for post in index if post["category"] != "Agent")]

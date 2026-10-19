@@ -113,10 +113,6 @@
       .link-status { color: var(--muted); font-size: 11px; padding: 1px 7px; border-radius: 5px; background: var(--wash); white-space: nowrap; }
       .copy-button { flex-shrink: 0; width: 42px; height: 42px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 10px; background: white; color: var(--muted); cursor: pointer; }
       .copy-button:hover { background: var(--wash); color: var(--blue); }
-      footer { border-top: 1px solid var(--line); }
-      .footer-inner { min-height: 70px; display: flex; align-items: center; justify-content: space-between; gap: 20px; color: var(--muted); font-size: 12px; }
-      .preview-label { display: flex; align-items: center; gap: 7px; }
-      .preview-label::before { content: ""; width: 5px; height: 5px; background: #adb6c6; border-radius: 50%; }
       .toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 12px); width: max-content; max-width: calc(100vw - 32px); padding: 11px 18px; border-radius: 10px; background: var(--ink); color: white; font-size: 13px; text-align: center; opacity: 0; pointer-events: none; transition: opacity .16s, transform .16s; }
       .toast.visible { opacity: 1; transform: translate(-50%, 0); }
       @media (max-width: 760px) {
@@ -146,7 +142,6 @@
         .blog-entry { min-height: 142px; padding: 22px; }
         h2 { font-size: 23px; }
         .contact { padding-block: 30px; }
-        .footer-inner { min-height: 76px; gap: 8px; flex-wrap: wrap; padding-block: 18px; font-size: 11px; }
       }
       @media (prefers-reduced-motion: reduce) {
         html { scroll-behavior: auto; }
@@ -175,7 +170,7 @@
         <div>
           <div class="eyebrow"><span class="status-dot" aria-hidden="true"></span>欢迎来到我的个人主页</div>
           <h1 id="intro-title">你好，我是<br><span>xkgc__</span>。</h1>
-          <p class="intro">985 · 人工智能 · 研0<br>关注大模型 Agent、持续学习与后训练。</p>
+          <p class="intro">985 · 人工智能 · 研0<br>关注大模型 Agent、持续学习与后训练。<br>践行薄肌理论，大睡理论</p>
           <div class="hero-tags" aria-label="研究方向">
             <span class="tag-chip">Agent</span>
             <span class="tag-chip">Continual Learning</span>
@@ -259,9 +254,6 @@
         </ul>
       </section>
     </main>
-    <footer>
-      <div class="container footer-inner"><span>© 2026 xkgc__</span><span class="preview-label">MVP 预览 · 博客内容正在整理中</span></div>
-    </footer>
     <div class="toast" id="copy-status" role="status" aria-live="polite" aria-atomic="true"></div>
     <script>
       const copyButton = document.getElementById('copy-email');
