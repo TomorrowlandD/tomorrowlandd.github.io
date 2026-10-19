@@ -19,7 +19,7 @@
       button:disabled { cursor: default; }
       svg { display: block; flex-shrink: 0; }
       a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid #8fb2ff; outline-offset: 4px; }
-      .container { width: min(1080px, calc(100% - 64px)); margin-inline: auto; }
+      .container { width: min(1280px, calc(100% - 64px)); margin-inline: auto; }
       .skip-link { position: absolute; left: 20px; top: -80px; z-index: 5; padding: 10px 16px; background: var(--ink); color: #fff; }
       .skip-link:focus { top: 12px; }
       .header { border-bottom: 1px solid var(--line); }
@@ -27,7 +27,7 @@
       .brand { display: inline-flex; align-items: center; gap: 11px; font: 700 21px ui-monospace, Consolas, monospace; letter-spacing: -.8px; }
       .brand-mark { width: 27px; height: 27px; display: grid; place-items: center; background: var(--blue); border-radius: 8px; color: #fff; font-size: 21px; font-weight: 400; }
       .navigation { display: flex; align-items: center; gap: 30px; font-size: 14px; color: var(--muted); }
-      .navigation a { padding-block: 12px; }
+      .navigation a { white-space: nowrap; padding-block: 12px; }
       .navigation a:hover, .navigation [aria-current="page"] { color: var(--blue); }
       .navigation [aria-current="page"] { font-weight: 600; }
       main { flex: 1; }
@@ -50,7 +50,7 @@
       .clear-search:hover { background: var(--wash); }
       .search-submit { border: 0; border-radius: 8px; min-height: 42px; padding: 8px 19px; color: #fff; background: var(--ink); font-size: 13px; }
       .search-submit:hover { background: #303744; }
-      .blog-layout { display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 36px; padding-block: 4px 48px; }
+      .blog-layout { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 28px; padding-block: 4px 48px; }
       .categories-title { font-size: 13px; color: var(--muted); font-weight: 500; margin: 0 0 10px 12px; }
       .category-list { display: flex; flex-direction: column; gap: 7px; }
       .category-button { display: flex; align-items: center; justify-content: space-between; gap: 14px; min-height: 45px; padding: 10px 12px; border: 0; border-radius: 8px; background: transparent; color: var(--muted); text-align: left; font-size: 14px; }
@@ -116,6 +116,10 @@
         .article-card h3 { font-size: 19px; }
         .footer-inner { min-height: 70px; font-size: 11px; }
       }
+      @media (max-width: 380px) {
+        .header-inner { flex-wrap: wrap; padding-block: 10px; gap: 0 14px; }
+        .navigation { margin-left: auto; }
+      }
     </style>
     <script src="./blog-data.js" defer></script>
     <script src="./blog.js" defer></script>
@@ -125,12 +129,12 @@
     <header class="header">
       <div class="container header-inner">
         <a class="brand" href="./index.html" aria-label="xkgc__，返回主页"><span class="brand-mark" aria-hidden="true">×</span>xkgc__</a>
-        <nav class="navigation" aria-label="主导航">
-          <a href="./index.html">首页</a>
-          <a href="./about.html">关于</a>
-          <a href="./index.html#projects">项目</a>
-          <a href="./blog.html" aria-current="page">博客</a>
-          <a class="nav-contact" href="./index.html#contact">联系我 <span aria-hidden="true">↗</span></a>
+        <nav class="navigation" aria-label="主导航" lang="en">
+          <a href="./index.html">Home</a>
+          <a href="./about.html">About</a>
+          <a href="./index.html#projects">Projects</a>
+          <a href="./blog.html" aria-current="page">Blog</a>
+          <a class="nav-contact" href="./index.html#contact">Contact <span aria-hidden="true">↗</span></a>
         </nav>
       </div>
     </header>

@@ -41,7 +41,7 @@
       .brand { display: inline-flex; align-items: center; gap: 11px; font: 700 21px ui-monospace, Consolas, monospace; letter-spacing: -.8px; }
       .brand-mark { width: 27px; height: 27px; display: grid; place-items: center; background: var(--blue); border-radius: 8px; color: #fff; font-size: 21px; font-weight: 400; }
       .navigation { display: flex; align-items: center; gap: 30px; font-size: 14px; color: var(--muted); }
-      .navigation a { padding-block: 12px; transition: color .16s ease; }
+      .navigation a { white-space: nowrap; padding-block: 12px; transition: color .16s ease; }
       .navigation a:hover { color: var(--blue); }
       .navigation .nav-contact { color: var(--ink); }
       .hero { display: grid; grid-template-columns: 1.6fr 1fr; align-items: center; gap: 70px; padding-block: 78px 76px; }
@@ -148,6 +148,10 @@
         *, *::before, *::after { transition: none !important; }
         .button:hover { transform: none; }
       }
+      @media (max-width: 380px) {
+        .header-inner { flex-wrap: wrap; padding-block: 10px; gap: 0 14px; }
+        .navigation { margin-left: auto; }
+      }
     </style>
     <script src="./projects-data.js" defer></script>
     <script src="./projects.js" defer></script>
@@ -157,11 +161,11 @@
     <header class="header">
       <div class="container header-inner">
         <a class="brand" href="#top" aria-label="xkgc__，返回页首"><span class="brand-mark" aria-hidden="true">×</span>xkgc__</a>
-        <nav class="navigation" aria-label="主导航">
-          <a class="nav-about" href="./about.html">关于</a>
-          <a href="#projects">项目</a>
-          <a href="./blog.html">博客</a>
-          <a class="nav-contact" href="#contact">联系我 <span aria-hidden="true">↗</span></a>
+        <nav class="navigation" aria-label="主导航" lang="en">
+          <a class="nav-about" href="./about.html">About</a>
+          <a href="#projects">Projects</a>
+          <a href="./blog.html">Blog</a>
+          <a class="nav-contact" href="#contact">Contact <span aria-hidden="true">↗</span></a>
         </nav>
       </div>
     </header>
