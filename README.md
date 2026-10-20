@@ -2,7 +2,7 @@
 
 个人介绍、论文展示、项目展示和技术博客组成的静态网站，已通过 GitHub Pages 发布到 [tomorrowlandd.github.io](https://tomorrowlandd.github.io/)。博客文章以 Markdown 为唯一原稿：构建时自动生成本站的文章页面、分类和文章列表。博客园使用同一份原稿，由作者手动预览和发表。
 
-目前页面和自动发布流程已搭建，`content/posts/` 中有一篇 `draft: false` 的 SubAgent 文章，可用于验证构建和阅读页。本地 `main` 已关联并推送到 [GitHub 仓库](https://github.com/TomorrowlandD/tomorrowlandd.github.io)。
+目前页面和自动发布流程已搭建，`content/posts/` 中有 12 篇 `draft: false` 的 Agent 文章，覆盖工具调用、执行循环、记忆、上下文工程、运行模式、任务管理、沙箱及多 Agent 协作。本地 `main` 已关联并推送到 [GitHub 仓库](https://github.com/TomorrowlandD/tomorrowlandd.github.io)。
 
 ## 项目结构
 

@@ -12,7 +12,7 @@
 - 分类和搜索先筛选全部文章，再分页；修改筛选条件会回到第一页。
 - 页码、分类和搜索词保存在网址的 `page`、`category`、`q` 参数中，例如 `blog.html?page=2&category=Agent&q=工具`，支持分享、刷新恢复和浏览器前进后退。搜索输入更新当前历史记录，不为每个字新增记录。
 - 文章详情页从二级、三级标题自动生成目录，并显示阅读进度。
-- 目前有一篇 SubAgent 文章；没有匹配的文章时，页面会显示空状态。
+- 目前有 12 篇已发布的 Agent 文章；没有匹配的文章时，页面会显示空状态。
 
 ## 添加文章
 
@@ -77,7 +77,7 @@ python -m http.server 9001 --bind 127.0.0.1 --directory dist-preview
 
 ## 发布到 GitHub Pages
 
-仓库的 `Settings → Pages → Build and deployment → Source` 选择 **GitHub Actions**。推送 `main` 分支后，`.github/workflows/pages.yml` 会自动安装依赖、执行构建，并把 `dist/` 发布为网站。首次上线需要先创建 GitHub 仓库并关联本地仓库；目前本地仓库还没有远程地址。
+仓库的 `Settings → Pages → Build and deployment → Source` 选择 **GitHub Actions**。推送 `main` 分支后，`.github/workflows/pages.yml` 会自动安装依赖、执行构建，并把 `dist/` 发布为网站。本地 `main` 已关联远程仓库 `https://github.com/TomorrowlandD/tomorrowlandd.github.io.git`，推送后可在仓库 Actions 页面查看发布结果。
 
 博客园由你手动复制同一份 Markdown 并发布。本站构建与 GitHub Pages 发布不需要博客园账号或授权令牌。
 
