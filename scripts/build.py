@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
+import argparse
 import html
 import json
 import re
 import shutil
 from string import Template
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from pathlib import Path
 
 import yaml
@@ -17,9 +18,9 @@ from markdown_it import MarkdownIt
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "site"
 CONTENT = ROOT / "content" / "posts"
-OUTPUT = ROOT / "dist"
+PREVIEW = ROOT / "preview"
 SLUG = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
-SOURCE_FILES = ("index.html", "about.html", "blog.html", "blog.js", "projects.js", "projects-data.js", "article.js")
+SOURCE_FILES = ("index.html", "about.html", "blog.html", "blog.js", "projects.js", "projects-data.js", "publications.js", "publications-data.js", "article.js")
 
 
 def fail(path: Path, message: str) -> ValueError:
@@ -95,39 +96,70 @@ def render_post(post: dict) -> str:
     )
 
 
-def build() -> None:
+def build(preview_posts: int = 0, preview: bool = False) -> None:
+    preview = preview or preview_posts > 0
+    output = ROOT / ("dist-preview" if preview else "dist")
     posts: list[dict] = []
     slugs: set[str] = set()
-    for path in sorted(CONTENT.glob("*.md")) if CONTENT.exists() else []:
-        post = parse_post(path)
-        if post is None:
-            continue
-        if post["slug"] in slugs:
-            raise fail(path, f"slug 重复：{post['slug']}")
-        slugs.add(post["slug"])
-        posts.append(post)
+    sources = [CONTENT, *([PREVIEW / "posts"] if preview else [])]
+    for source in sources:
+        for path in sorted(source.glob("*.md")) if source.exists() else []:
+            post = parse_post(path)
+            if post is None:
+                continue
+            if post["slug"] in slugs:
+                raise fail(path, f"slug 重复：{post['slug']}")
+            slugs.add(post["slug"])
+            posts.append(post)
 
-    OUTPUT.mkdir(exist_ok=True)
+    for number in range(1, preview_posts + 1):
+        slug = f"preview-pagination-{number:03d}"
+        if slug in slugs:
+            raise ValueError(f"临时预览文章的 slug 与正式文章重复：{slug}")
+        slugs.add(slug)
+        posts.append({
+            "title": f"【临时测试】文章 {number:03d}：分页预览",
+            "date": (date(2026, 1, 1) + timedelta(days=number - 1)).isoformat(),
+            "category": "临时预览",
+            "tags": ["临时测试", "分页"],
+            "slug": slug,
+            "body": "## 临时预览文章\n\n此文章只用于本地检查博客分页、分类和搜索。\n",
+        })
+
+    output.mkdir(exist_ok=True)
     for name in SOURCE_FILES + ("article.css",):
-        shutil.copy2(SITE / name, OUTPUT / name)
+        shutil.copy2(SITE / name, output / name)
     if (SITE / "figures").exists():
-        shutil.copytree(SITE / "figures", OUTPUT / "figures", dirs_exist_ok=True)
+        shutil.copytree(SITE / "figures", output / "figures", dirs_exist_ok=True)
     if (ROOT / "content" / "images").exists():
-        shutil.copytree(ROOT / "content" / "images", OUTPUT / "images", dirs_exist_ok=True)
-    (OUTPUT / "posts").mkdir(exist_ok=True)
+        shutil.copytree(ROOT / "content" / "images", output / "images", dirs_exist_ok=True)
+    (output / "posts").mkdir(exist_ok=True)
 
     index = []
     for post in posts:
-        (OUTPUT / "posts" / f"{post['slug']}.html").write_text(render_post(post), encoding="utf-8")
+        (output / "posts" / f"{post['slug']}.html").write_text(render_post(post), encoding="utf-8")
         index.append({key: post[key] for key in ("title", "date", "category", "tags")}
                      | {"url": f"./posts/{post['slug']}.html"})
     index.sort(key=lambda item: item["date"], reverse=True)
     categories = ["Agent", *(post["category"] for post in index if post["category"] != "Agent")]
     data = json.dumps({"categories": list(dict.fromkeys(categories)), "posts": index}, ensure_ascii=False, indent=2)
     safe_data = data.replace("<", "\\u003c")
-    (OUTPUT / "blog-data.js").write_text(f"window.BLOG_DATA = {safe_data};\n", encoding="utf-8")
-    print(f"已生成 {len(posts)} 篇文章：{OUTPUT}")
+    (output / "blog-data.js").write_text(f"window.BLOG_DATA = {safe_data};\n", encoding="utf-8")
+    if preview and (PREVIEW / "overrides").exists():
+        for source in (PREVIEW / "overrides").rglob("*"):
+            if source.is_file():
+                target = output / source.relative_to(PREVIEW / "overrides")
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(source, target)
+    print(f"已生成 {len(posts)} 篇文章：{output}")
 
 
 if __name__ == "__main__":
-    build()
+    parser = argparse.ArgumentParser(description="构建个人主页和 Markdown 博客")
+    parser.add_argument("--preview", action="store_true", help="使用 preview/ 中的测试素材，输出到 dist-preview/")
+    parser.add_argument("--preview-posts", type=int, default=0, metavar="数量",
+                        help="另外生成指定数量的临时分页文章，并启用预览模式")
+    args = parser.parse_args()
+    if args.preview_posts < 0:
+        parser.error("--preview-posts 不能为负数")
+    build(args.preview_posts, args.preview)

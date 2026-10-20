@@ -99,10 +99,10 @@
         .heading-row { margin-top: 18px; }
       }
       @media (max-width: 540px) {
+        .header-inner { flex-wrap: wrap; padding-block: 10px; gap: 0 14px; }
         .brand { font-size: 18px; gap: 8px; }
         .brand-mark { width: 24px; height: 24px; border-radius: 7px; }
-        .navigation { gap: 17px; }
-        .nav-contact { display: none; }
+        .navigation { width: 100%; justify-content: space-between; flex-wrap: wrap; gap: 0 12px; }
         .notebook-icon { width: 54px; height: 54px; border-radius: 15px; }
         .notebook-icon svg { width: 26px; height: 26px; }
         .lead { font-size: 14px; }
@@ -118,7 +118,7 @@
       }
       @media (max-width: 380px) {
         .header-inner { flex-wrap: wrap; padding-block: 10px; gap: 0 14px; }
-        .navigation { margin-left: auto; }
+        .navigation { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 10px; margin-left: 0; }
       }
     </style>
     <script src="./blog-data.js" defer></script>
@@ -132,6 +132,7 @@
         <nav class="navigation" aria-label="主导航" lang="en">
           <a href="./index.html">Home</a>
           <a href="./about.html">About</a>
+          <a href="./index.html#publications">Publications</a>
           <a href="./index.html#projects">Projects</a>
           <a href="./blog.html" aria-current="page">Blog</a>
           <a class="nav-contact" href="./index.html#contact">Contact <span aria-hidden="true">↗</span></a>

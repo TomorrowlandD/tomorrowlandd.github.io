@@ -1,6 +1,6 @@
 # xkgc__ 个人主页
 
-个人介绍、项目展示和技术博客组成的静态网站，计划使用 GitHub Pages 发布。博客文章以 Markdown 为唯一原稿：构建时自动生成本站的文章页面、分类和文章列表。博客园使用同一份原稿，由作者手动预览和发表。
+个人介绍、论文展示、项目展示和技术博客组成的静态网站，计划使用 GitHub Pages 发布。博客文章以 Markdown 为唯一原稿：构建时自动生成本站的文章页面、分类和文章列表。博客园使用同一份原稿，由作者手动预览和发表。
 
 目前页面和发布流程已搭建，`content/posts/` 中有一篇 `draft: false` 的 SubAgent 文章，可用于验证构建和阅读页；本地 Git 仓库尚未关联 GitHub 远程仓库。
 
@@ -12,6 +12,7 @@ site/                       网站源文件
   about.html                关于页
   blog.html                 博客列表页
   blog.js                   分类、搜索和列表交互
+  publications-data.js      论文展示数据
   projects-data.js          项目展示数据
   figures/                  页面使用的图片
 content/
@@ -19,9 +20,11 @@ content/
   images/                   文章图片，需要时创建
 templates/article.html      文章详情页模板
 scripts/build.py            生成静态网站的脚本
+preview/                    仅供本地测试的虚拟素材与使用说明
 requirements.txt            构建脚本的 Python 依赖
 .github/workflows/pages.yml GitHub Pages 自动构建与部署
 dist/                       构建结果，由脚本生成，不提交 Git
+dist-preview/               虚拟素材预览结果，不提交 Git
 ```
 
 日常更新的入口：
@@ -30,6 +33,7 @@ dist/                       构建结果，由脚本生成，不提交 Git
 | --- | --- |
 | 新增或修改博客文章 | `content/posts/` 中对应的 Markdown |
 | 添加文章图片 | `content/images/` |
+| 更新论文展示 | `site/publications-data.js` |
 | 更新项目展示 | `site/projects-data.js` |
 | 修改个人介绍或联系方式 | `site/index.html`、`site/about.html` |
 | 调整所有文章的阅读页 | `templates/article.html`、`site/article.css` |
@@ -51,6 +55,10 @@ python scripts/build.py
 ```
 
 构建后，可以在文件管理器里直接双击 `dist/index.html` 打开首页，点击“博客”阅读文章；也可以直接双击 `dist/blog.html`。当前网站的脚本和链接在这种方式下可以正常工作。不要直接打开 `site/blog.html`，因为它所需的 `blog-data.js` 只在构建时生成。
+
+逐页复测顶部导航时，安装可选的 `websocket-client`，并在构建后运行 `python scripts/test-navigation.py`。该脚本使用本机 Chrome，检查首页、关于页、博客页和所有已生成文章页在 1440、760、390、320px 宽度下的导航显示，并实际点击桌面和手机宽度下的所有导航链接。可用 `CHROME_PATH` 指定 Chrome 路径；浏览器临时配置保留在被忽略的 `dist/` 中。
+
+需要用虚拟文章、项目数据或页面替换素材做长期本地测试时，参见 [本地虚拟预览说明](preview/README.md)。预览构建输出到被 Git 忽略的 `dist-preview/`，不会改变正式构建结果。
 
 如果需要用本地 HTTP 地址预览，再运行：
 

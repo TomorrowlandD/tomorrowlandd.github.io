@@ -78,8 +78,17 @@
       .blog-entry-arrow { margin-left: auto; color: var(--blue); font-size: 20px; }
       h3 { margin: 0; font-size: 15px; font-weight: 600; }
       .blog-entry p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.85; }
-      .projects-section { display: grid; grid-template-columns: 1fr 1.7fr; align-items: start; gap: 42px; padding-block: 42px 56px; border-top: 1px solid var(--line); }
-      .projects-intro { margin: 10px 0 0; color: var(--muted); font-size: 14px; }
+      .publications-section, .projects-section { display: grid; grid-template-columns: 1fr 1.7fr; align-items: start; gap: 42px; padding-block: 42px 56px; border-top: 1px solid var(--line); }
+      .section-intro { margin: 10px 0 0; color: var(--muted); font-size: 14px; }
+      .publication-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+      .publication-card { background: var(--wash); border: 1px solid #edf0f4; border-radius: 15px; padding: 22px 24px; }
+      .publication-meta { margin: 0 0 8px; color: #737d8e; font-size: 12px; }
+      .publication-title { margin: 0; font-size: 17px; font-weight: 600; line-height: 1.5; overflow-wrap: anywhere; }
+      .publication-authors, .publication-venue { margin: 7px 0 0; color: var(--muted); font-size: 14px; line-height: 1.7; overflow-wrap: anywhere; }
+      .publication-links { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 12px; color: var(--blue); font-size: 13px; }
+      .publication-links a:hover { text-decoration: underline; }
+      .publication-empty { min-height: 112px; padding: 24px; border: 1px solid #edf0f4; border-radius: 15px; background: #fafbfd; }
+      .publication-empty p { margin: 0; color: var(--muted); font-size: 14px; }
       .project-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
       .project-card { background: var(--wash); border: 1px solid #edf0f4; border-radius: 15px; padding: 22px 24px; transition: background .16s ease, border-color .16s ease; }
       .project-card:hover { background: #f0f5ff; border-color: #c9d9fb; }
@@ -119,7 +128,6 @@
         .container { width: calc(100% - 40px); }
         .header-inner { min-height: 72px; gap: 14px; }
         .navigation { gap: 20px; font-size: 13px; }
-        .nav-about { display: none; }
         .hero { gap: 25px; padding-block: 54px; }
         h1 { font-size: 43px; }
         .identity-card { width: 190px; padding: 23px 19px 17px; }
@@ -127,18 +135,19 @@
         .identity-scene::before { width: 170px; height: 170px; }
         .monogram { font-size: 75px; }
         .identity-caption { gap: 8px; font-size: 10px; }
-        .blog-section, .projects-section { gap: 24px; }
+        .blog-section, .publications-section, .projects-section { gap: 24px; }
         .contact { grid-template-columns: 1fr; gap: 18px; }
       }
       @media (max-width: 540px) {
         .brand { font-size: 18px; gap: 8px; }
         .brand-mark { width: 24px; height: 24px; border-radius: 7px; }
-        .navigation { gap: 17px; }
+        .header-inner { flex-wrap: wrap; padding-block: 10px; gap: 0 14px; }
+        .navigation { width: 100%; justify-content: space-between; flex-wrap: wrap; gap: 0 12px; }
         .hero { grid-template-columns: 1fr; padding-block: 48px 42px; gap: 30px; }
         h1 { font-size: 44px; }
         .intro { font-size: 15px; }
         .identity-scene { display: none; }
-        .blog-section, .projects-section { grid-template-columns: 1fr; padding-block: 32px 36px; gap: 19px; }
+        .blog-section, .publications-section, .projects-section { grid-template-columns: 1fr; padding-block: 32px 36px; gap: 19px; }
         .blog-entry { min-height: 142px; padding: 22px; }
         h2 { font-size: 23px; }
         .contact { padding-block: 30px; }
@@ -150,9 +159,11 @@
       }
       @media (max-width: 380px) {
         .header-inner { flex-wrap: wrap; padding-block: 10px; gap: 0 14px; }
-        .navigation { margin-left: auto; }
+        .navigation { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 10px; margin-left: 0; }
       }
     </style>
+    <script src="./publications-data.js" defer></script>
+    <script src="./publications.js" defer></script>
     <script src="./projects-data.js" defer></script>
     <script src="./projects.js" defer></script>
   </head>
@@ -163,6 +174,7 @@
         <a class="brand" href="#top" aria-label="xkgc__，返回页首"><span class="brand-mark" aria-hidden="true">×</span>xkgc__</a>
         <nav class="navigation" aria-label="主导航" lang="en">
           <a class="nav-about" href="./about.html">About</a>
+          <a href="#publications">Publications</a>
           <a href="#projects">Projects</a>
           <a href="./blog.html">Blog</a>
           <a class="nav-contact" href="#contact">Contact <span aria-hidden="true">↗</span></a>
@@ -195,18 +207,31 @@
           <span class="little-star">✳</span>
         </div>
       </section>
+      <section class="publications-section" id="publications" aria-labelledby="publications-title">
+        <div>
+          <p class="section-kicker">ACADEMIC OUTPUT</p>
+          <h2 id="publications-title">Publications</h2>
+          <p class="section-intro">我的论文与研究成果。</p>
+        </div>
+        <div>
+          <ul class="publication-list" id="publication-list"></ul>
+          <div class="publication-empty" id="publication-empty" hidden>
+            <p>论文成果将陆续更新在这里。</p>
+          </div>
+        </div>
+      </section>
       <section class="projects-section" id="projects" aria-labelledby="projects-title">
         <div>
-          <p class="section-kicker">RESEARCH &amp; PROJECTS</p>
-          <h2 id="projects-title">研究 / 项目</h2>
-          <p class="projects-intro">记录我参与过的研究课题与项目。</p>
+          <p class="section-kicker">PRACTICAL WORK</p>
+          <h2 id="projects-title">Projects</h2>
+          <p class="section-intro">记录我参与过的项目实践。</p>
         </div>
         <div>
           <ul class="project-list" id="project-list"></ul>
           <div class="project-empty" id="project-empty" hidden>
             <svg class="project-empty-icon" width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
             <h3>项目正在整理中</h3>
-            <p>参与过的研究课题与项目，会陆续整理在这里。</p>
+            <p>参与过的项目实践，会陆续整理在这里。</p>
           </div>
         </div>
       </section>

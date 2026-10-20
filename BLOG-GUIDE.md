@@ -64,6 +64,17 @@ python -m http.server 9000 --bind 127.0.0.1 --directory dist
 
 浏览器打开 `http://127.0.0.1:9000/`，检查首页、博客列表和文章正文。每次修改 Markdown 后重新运行 `python scripts/build.py` 并刷新页面。`dist/` 是生成结果，不提交到 Git。若在本地预览中删除或改名了文章，旧页面可能仍留在本机的 `dist/` 中；GitHub Actions 每次从全新检出的源码构建，不会把旧页面继续发布。
 
+若想用虚拟文章查看分页效果，可以单独生成本地预览站点：
+
+```powershell
+python scripts/build.py --preview --preview-posts 75
+python -m http.server 9001 --bind 127.0.0.1 --directory dist-preview
+```
+
+浏览器打开 `http://127.0.0.1:9001/blog.html`。自动生成的虚拟文章统一归入“临时预览”分类，标题带有“临时测试”；75 篇足以查看多页及省略号。也可以双击 `dist-preview/blog.html` 查看页面内分页。预览结果只写入被 Git 忽略的 `dist-preview/`，正式构建和 GitHub Pages 工作流仍使用 `dist/`。结束预览后，按 Ctrl+C 停止本地服务器即可。
+
+长期使用的虚拟文章、项目数据和页面替换素材放在 [`preview/`](preview/README.md)。只需要这些自定义素材时运行 `python scripts/build.py --preview`；添加或修改素材后重新构建。
+
 ## 发布到 GitHub Pages
 
 仓库的 `Settings → Pages → Build and deployment → Source` 选择 **GitHub Actions**。推送 `main` 分支后，`.github/workflows/pages.yml` 会自动安装依赖、执行构建，并把 `dist/` 发布为网站。首次上线需要先创建 GitHub 仓库并关联本地仓库；目前本地仓库还没有远程地址。
