@@ -1,8 +1,8 @@
 # xkgc__ 个人主页
 
-个人介绍、论文展示、项目展示和技术博客组成的静态网站，计划使用 GitHub Pages 发布。博客文章以 Markdown 为唯一原稿：构建时自动生成本站的文章页面、分类和文章列表。博客园使用同一份原稿，由作者手动预览和发表。
+个人介绍、论文展示、项目展示和技术博客组成的静态网站，已通过 GitHub Pages 发布到 [tomorrowlandd.github.io](https://tomorrowlandd.github.io/)。博客文章以 Markdown 为唯一原稿：构建时自动生成本站的文章页面、分类和文章列表。博客园使用同一份原稿，由作者手动预览和发表。
 
-目前页面和发布流程已搭建，`content/posts/` 中有一篇 `draft: false` 的 SubAgent 文章，可用于验证构建和阅读页；本地 Git 仓库尚未关联 GitHub 远程仓库。
+目前页面和自动发布流程已搭建，`content/posts/` 中有一篇 `draft: false` 的 SubAgent 文章，可用于验证构建和阅读页。本地 `main` 已关联并推送到 [GitHub 仓库](https://github.com/TomorrowlandD/tomorrowlandd.github.io)。
 
 ## 项目结构
 
@@ -83,7 +83,7 @@ python -m http.server 9000 --bind 127.0.0.1 --directory dist
 
 ## 发布到 GitHub Pages
 
-首次发布需要在 GitHub 创建或选择仓库，把本地仓库关联为远程仓库，并推送 `main` 分支。然后到仓库的 **Settings → Pages → Build and deployment**，将 **Source** 设为 **GitHub Actions**。此后 [发布工作流](.github/workflows/pages.yml)会安装依赖、运行构建脚本，并发布 `dist/`。页面会使用相对链接，适用于账号主页仓库或项目仓库。
+本站的 Pages 发布来源已设置为 **GitHub Actions**。以后将修改提交并推送到 `main`，就会触发[发布工作流](.github/workflows/pages.yml)：安装依赖、运行构建脚本，并发布 `dist/`。公开网址为 [https://tomorrowlandd.github.io/](https://tomorrowlandd.github.io/)；可在仓库的 **Actions** 页面查看每次发布结果。
 
 本站无需数据库或常驻服务器。博客园不由 GitHub 工作流自动发布：把同一份 Markdown 复制到博客园并检查排版即可。若文章使用 `content/images/` 中的相对图片地址，博客园还需要单独上传图片或替换为双方都可访问的绝对地址。
 
