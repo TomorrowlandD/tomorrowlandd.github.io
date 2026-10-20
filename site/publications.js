@@ -2,19 +2,15 @@
   'use strict';
 
   const list = document.getElementById('publication-list');
-  const empty = document.getElementById('publication-empty');
   const data = window.PUBLICATIONS_DATA;
   const cleanText = value => typeof value === 'string' ? value.trim() : '';
 
-  if (!list || !empty) return;
+  if (!list) return;
   const publications = Array.isArray(data?.publications)
     ? data.publications.filter(item => item && cleanText(item.title))
     : [];
 
-  if (!publications.length) {
-    empty.hidden = false;
-    return;
-  }
+  if (!publications.length) return;
 
   function element(tag, className, value) {
     const node = document.createElement(tag);

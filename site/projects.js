@@ -2,16 +2,11 @@
   'use strict';
 
   const list = document.getElementById('project-list');
-  const empty = document.getElementById('project-empty');
   const data = window.PROJECTS_DATA;
 
   const cleanText = value => typeof value === 'string' ? value.trim() : '';
 
-  if (!list || !empty) return;
-  if (!data || !Array.isArray(data.projects)) {
-    empty.hidden = false;
-    return;
-  }
+  if (!list || !data || !Array.isArray(data.projects)) return;
 
   const projects = data.projects
     .filter(project => project && cleanText(project.title))
@@ -25,12 +20,7 @@
       urlLabel: cleanText(project.urlLabel),
     }));
 
-  if (!projects.length) {
-    empty.hidden = false;
-    return;
-  }
-
-  empty.hidden = true;
+  if (!projects.length) return;
 
   function element(tag, className, text) {
     const node = document.createElement(tag);

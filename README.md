@@ -10,6 +10,9 @@
 site/                       网站源文件
   index.html                首页
   about.html                关于页
+  publications.html         论文独立页面（当前为占位）
+  projects.html             项目独立页面（当前为占位）
+  collection-pages.css      论文与项目页面的共用样式
   blog.html                 博客列表页
   blog.js                   分类、搜索和列表交互
   publications-data.js      论文展示数据
@@ -33,8 +36,9 @@ dist-preview/               虚拟素材预览结果，不提交 Git
 | --- | --- |
 | 新增或修改博客文章 | `content/posts/` 中对应的 Markdown |
 | 添加文章图片 | `content/images/` |
-| 更新论文展示 | `site/publications-data.js` |
-| 更新项目展示 | `site/projects-data.js` |
+| 更新首页论文展示 | `site/publications-data.js` |
+| 更新首页项目展示 | `site/projects-data.js` |
+| 编辑论文、项目独立页面 | `site/publications.html`、`site/projects.html` |
 | 修改个人介绍或联系方式 | `site/index.html`、`site/about.html` |
 | 调整所有文章的阅读页 | `templates/article.html`、`site/article.css` |
 
@@ -56,7 +60,7 @@ python scripts/build.py
 
 构建后，可以在文件管理器里直接双击 `dist/index.html` 打开首页，点击“博客”阅读文章；也可以直接双击 `dist/blog.html`。当前网站的脚本和链接在这种方式下可以正常工作。不要直接打开 `site/blog.html`，因为它所需的 `blog-data.js` 只在构建时生成。
 
-逐页复测顶部导航时，安装可选的 `websocket-client`，并在构建后运行 `python scripts/test-navigation.py`。该脚本使用本机 Chrome，检查首页、关于页、博客页和所有已生成文章页在 1440、760、390、320px 宽度下的导航显示，并实际点击桌面和手机宽度下的所有导航链接。可用 `CHROME_PATH` 指定 Chrome 路径；浏览器临时配置保留在被忽略的 `dist/` 中。
+逐页复测顶部导航时，安装可选的 `websocket-client`，并在构建后运行 `python scripts/test-navigation.py`。该脚本使用本机 Chrome，检查首页、关于页、论文页、项目页、博客页和所有已生成文章页在 1440、760、390、320px 宽度下的导航显示，并实际点击桌面和手机宽度下的所有导航链接。可用 `CHROME_PATH` 指定 Chrome 路径；浏览器临时配置保留在被忽略的 `dist/` 中。
 
 需要用虚拟文章、项目数据或页面替换素材做长期本地测试时，参见 [本地虚拟预览说明](preview/README.md)。预览构建输出到被 Git 忽略的 `dist-preview/`，不会改变正式构建结果。
 

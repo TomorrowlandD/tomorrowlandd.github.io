@@ -46,7 +46,7 @@
       .navigation .nav-contact { color: var(--ink); }
       .hero { display: grid; grid-template-columns: 1.6fr 1fr; align-items: center; gap: 70px; padding-block: 78px 76px; }
       .eyebrow { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: 13px; letter-spacing: .04em; }
-      .status-dot { width: 7px; height: 7px; background: var(--blue); border-radius: 50%; box-shadow: 0 0 0 4px #edf2ff; margin-right: 3px; }
+      .welcome-spark { width: 13px; height: 13px; flex: 0 0 13px; color: var(--blue); }
       h1 { margin: 21px 0 20px; font-size: clamp(40px, 4.7vw, 62px); line-height: 1.24; letter-spacing: -.045em; font-weight: 750; }
       h1 span { color: var(--blue); font-family: ui-monospace, Consolas, monospace; letter-spacing: -.065em; }
       .intro { max-width: 440px; color: var(--muted); font-size: 16px; margin: 0; line-height: 1.95; }
@@ -71,6 +71,7 @@
       .blog-section { display: grid; grid-template-columns: 1fr 1.7fr; align-items: start; gap: 42px; padding-block: 42px 56px; border-top: 1px solid var(--line); }
       .section-kicker { margin: 0 0 7px; color: #737d8e; font: 11px ui-monospace, Consolas, monospace; letter-spacing: .13em; }
       h2 { margin: 0; font-size: 25px; line-height: 1.4; letter-spacing: -.04em; }
+      .section-intro { margin: 10px 0 0; color: var(--muted); font-size: 14px; line-height: 1.75; }
       .blog-entry { display: block; min-height: 138px; background: var(--wash); border: 1px solid #edf0f4; border-radius: 15px; padding: 24px; transition: background .16s ease, border-color .16s ease; }
       .blog-entry:hover { background: #f0f5ff; border-color: #c9d9fb; }
       .blog-entry-top { display: flex; align-items: center; gap: 12px; margin-bottom: 11px; }
@@ -79,16 +80,15 @@
       h3 { margin: 0; font-size: 15px; font-weight: 600; }
       .blog-entry p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.85; }
       .publications-section, .projects-section { display: grid; grid-template-columns: 1fr 1.7fr; align-items: start; gap: 42px; padding-block: 42px 56px; border-top: 1px solid var(--line); }
-      .section-intro { margin: 10px 0 0; color: var(--muted); font-size: 14px; }
       .publication-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+      .publication-list:not(:empty), .project-list:not(:empty) { margin-top: 14px; }
+      .publication-list:empty, .project-list:empty { display: none; }
       .publication-card { background: var(--wash); border: 1px solid #edf0f4; border-radius: 15px; padding: 22px 24px; }
       .publication-meta { margin: 0 0 8px; color: #737d8e; font-size: 12px; }
       .publication-title { margin: 0; font-size: 17px; font-weight: 600; line-height: 1.5; overflow-wrap: anywhere; }
       .publication-authors, .publication-venue { margin: 7px 0 0; color: var(--muted); font-size: 14px; line-height: 1.7; overflow-wrap: anywhere; }
       .publication-links { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 12px; color: var(--blue); font-size: 13px; }
       .publication-links a:hover { text-decoration: underline; }
-      .publication-empty { min-height: 112px; padding: 24px; border: 1px solid #edf0f4; border-radius: 15px; background: #fafbfd; }
-      .publication-empty p { margin: 0; color: var(--muted); font-size: 14px; }
       .project-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
       .project-card { background: var(--wash); border: 1px solid #edf0f4; border-radius: 15px; padding: 22px 24px; transition: background .16s ease, border-color .16s ease; }
       .project-card:hover { background: #f0f5ff; border-color: #c9d9fb; }
@@ -100,13 +100,7 @@
       .project-title { margin: 0; font-size: 17px; font-weight: 600; line-height: 1.5; overflow-wrap: anywhere; }
       .project-summary { margin: 7px 0 0; color: var(--muted); font-size: 14px; line-height: 1.85; }
       .project-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; color: #737d8e; font-size: 12px; overflow-wrap: anywhere; }
-      .project-empty { min-height: 150px; padding: 26px 22px; border: 1px solid #edf0f4; border-radius: 15px; background: #fafbfd; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-      .project-empty-icon { color: #8ba0c0; margin-bottom: 14px; }
-      .project-empty h3 { font-size: 16px; margin: 0 0 7px; }
-      .project-empty p { color: var(--muted); font-size: 14px; margin: 0; }
       .contact { border-top: 1px solid var(--line); padding-block: 37px 40px; display: grid; grid-template-columns: 1fr 1.7fr; align-items: start; gap: 42px; }
-      .contact h2 { font-size: 22px; margin-bottom: 6px; }
-      .contact p { margin: 0; font-size: 14px; color: var(--muted); }
       .contact-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; min-width: 0; }
       .contact-row { display: flex; align-items: center; gap: 12px; min-height: 44px; }
       .contact-link { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; min-width: 0; color: #50545d; font-size: 16px; border-radius: 4px; }
@@ -174,8 +168,8 @@
         <a class="brand" href="#top" aria-label="xkgc__，返回页首"><span class="brand-mark" aria-hidden="true">×</span>xkgc__</a>
         <nav class="navigation" aria-label="主导航" lang="en">
           <a class="nav-about" href="./about.html">About</a>
-          <a href="#publications">Publications</a>
-          <a href="#projects">Projects</a>
+          <a href="./publications.html">Publications</a>
+          <a href="./projects.html">Projects</a>
           <a href="./blog.html">Blog</a>
           <a class="nav-contact" href="#contact">Contact <span aria-hidden="true">↗</span></a>
         </nav>
@@ -184,7 +178,7 @@
     <main id="main" class="container">
       <section class="hero" aria-labelledby="intro-title">
         <div>
-          <div class="eyebrow"><span class="status-dot" aria-hidden="true"></span>欢迎来到我的个人主页</div>
+          <div class="eyebrow" lang="en"><svg class="welcome-spark" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1c.6 4.2 2.8 6.4 7 7-4.2.6-6.4 2.8-7 7-.6-4.2-2.8-6.4-7-7 4.2-.6 6.4-2.8 7-7Z"/></svg>Hey there! Welcome to my corner of the web ✨</div>
           <h1 id="intro-title">你好，我是<br><span>xkgc__</span>。</h1>
           <p class="intro">985 · 人工智能 · 研0<br>关注大模型 Agent、持续学习与后训练。<br>践行薄肌理论，大睡理论</p>
           <div class="hero-tags" aria-label="研究方向">
@@ -208,37 +202,46 @@
         </div>
       </section>
       <section class="publications-section" id="publications" aria-labelledby="publications-title">
-        <div>
+        <div lang="en">
           <p class="section-kicker">ACADEMIC OUTPUT</p>
           <h2 id="publications-title">Publications</h2>
-          <p class="section-intro">我的论文与研究成果。</p>
+          <p class="section-intro">Papers and research updates, collected here as they take shape.</p>
         </div>
         <div>
+          <a class="blog-entry" href="./publications.html" aria-label="进入论文页面">
+            <div class="blog-entry-top">
+              <svg class="blog-entry-icon" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>
+              <h3>进入论文页面</h3>
+              <span class="blog-entry-arrow" aria-hidden="true">→</span>
+            </div>
+            <p>论文与研究成果将在这里陆续更新。</p>
+          </a>
           <ul class="publication-list" id="publication-list"></ul>
-          <div class="publication-empty" id="publication-empty" hidden>
-            <p>论文成果将陆续更新在这里。</p>
-          </div>
         </div>
       </section>
       <section class="projects-section" id="projects" aria-labelledby="projects-title">
-        <div>
+        <div lang="en">
           <p class="section-kicker">PRACTICAL WORK</p>
           <h2 id="projects-title">Projects</h2>
-          <p class="section-intro">记录我参与过的项目实践。</p>
+          <p class="section-intro">Projects and experiments, from ideas to implementation.</p>
         </div>
         <div>
+          <a class="blog-entry" href="./projects.html" aria-label="进入项目页面">
+            <div class="blog-entry-top">
+              <svg class="blog-entry-icon" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+              <h3>进入项目页面</h3>
+              <span class="blog-entry-arrow" aria-hidden="true">→</span>
+            </div>
+            <p>项目实践将在这里陆续更新。</p>
+          </a>
           <ul class="project-list" id="project-list"></ul>
-          <div class="project-empty" id="project-empty" hidden>
-            <svg class="project-empty-icon" width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-            <h3>项目正在整理中</h3>
-            <p>参与过的项目实践，会陆续整理在这里。</p>
-          </div>
         </div>
       </section>
       <section class="blog-section" id="blog" aria-labelledby="blog-title">
-        <div>
+        <div lang="en">
           <p class="section-kicker">BLOG &amp; NOTES</p>
-          <h2 id="blog-title">博客</h2>
+          <h2 id="blog-title">Blog</h2>
+          <p class="section-intro">Notes on what I build, learn, and think about.</p>
         </div>
         <a class="blog-entry" href="./blog.html" aria-label="进入博客，阅读技术笔记与实践记录">
           <div class="blog-entry-top">
@@ -250,7 +253,11 @@
         </a>
       </section>
       <section class="contact" id="contact" aria-labelledby="contact-title">
-        <div><h2 id="contact-title">交流与分享</h2><p>欢迎交流学习心得、技术问题与新的想法。</p></div>
+        <div lang="en">
+          <p class="section-kicker">GET IN TOUCH</p>
+          <h2 id="contact-title">Contact</h2>
+          <p class="section-intro">Let's connect over research, technology, and new ideas.</p>
+        </div>
         <ul class="contact-list" aria-label="联系与个人主页">
           <li class="contact-row">
             <a class="contact-link" href="mailto:tomorrowland_todo@163.com">

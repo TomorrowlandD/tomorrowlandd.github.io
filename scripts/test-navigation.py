@@ -23,8 +23,8 @@ DIST = ROOT / "dist"
 TARGETS = {
     "Home": "index.html",
     "About": "about.html",
-    "Publications": "index.html#publications",
-    "Projects": "index.html#projects",
+    "Publications": "publications.html",
+    "Projects": "projects.html",
     "Blog": "blog.html",
     "Contact": "index.html#contact",
 }
@@ -120,7 +120,7 @@ class Browser:
 
 
 def main() -> None:
-    pages = [DIST / name for name in ("index.html", "about.html", "blog.html")]
+    pages = [DIST / name for name in ("index.html", "about.html", "publications.html", "projects.html", "blog.html")]
     pages.extend(sorted((DIST / "posts").glob("*.html")))
     if any(not page.is_file() for page in pages):
         raise SystemExit("Build the site before testing navigation.")
@@ -150,8 +150,12 @@ def main() -> None:
                 if actual != expected:
                     failures.append(f"{width}px {name}: links {actual}; expected {expected}")
 
-                expected_current = "About" if page.name == "about.html" else (
-                    "Blog" if page.name == "blog.html" or page.parent.name == "posts" else None)
+                expected_current = {
+                    "about.html": "About", "publications.html": "Publications",
+                    "projects.html": "Projects", "blog.html": "Blog",
+                }.get(page.name)
+                if page.parent.name == "posts":
+                    expected_current = "Blog"
                 current = [link["name"] for link in links if link["current"] == "page"]
                 if current != ([expected_current] if expected_current else []):
                     failures.append(f"{width}px {name}: active link {current}; expected {expected_current}")

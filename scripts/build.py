@@ -20,7 +20,11 @@ SITE = ROOT / "site"
 CONTENT = ROOT / "content" / "posts"
 PREVIEW = ROOT / "preview"
 SLUG = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
-SOURCE_FILES = ("index.html", "about.html", "blog.html", "blog.js", "projects.js", "projects-data.js", "publications.js", "publications-data.js", "article.js")
+SOURCE_FILES = (
+    "index.html", "about.html", "blog.html", "blog.js",
+    "publications.html", "projects.html", "collection-pages.css",
+    "projects.js", "projects-data.js", "publications.js", "publications-data.js", "article.js",
+)
 
 
 def fail(path: Path, message: str) -> ValueError:
