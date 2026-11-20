@@ -2,148 +2,41 @@
    1. 设计系统变量 (Warm Editorial × Swiss-Tech Lab)
    ========================================================================== */
 :root {
-  color-scheme: light;
-  --bg-page: #F7F6F2;
-  --bg-card: #FFFFFF;
   --bg-elevated: #FFFFFF;
-  --bg-tint: #EFECE6;
+  --page-motion: 280ms;
+  --nav-gap: 6px;
   --bg-glass: rgba(247, 246, 242, 0.82);
-
   --ink: #151514;
   --ink-secondary: #3A3936;
   --muted: #63625C;
-  --muted-soft: #8A8880;
-
+  --muted-soft: #69685f;
   --border: rgba(21, 21, 20, 0.09);
   --border-strong: rgba(21, 21, 20, 0.18);
-
-  --accent: #D94F2A;
   --accent-soft: rgba(217, 79, 42, 0.1);
   --sage: #2D8A61;
   --sage-soft: rgba(45, 138, 97, 0.12);
-
   --shadow-sm: 0 2px 8px rgba(21, 21, 20, 0.03), 0 1px 2px rgba(21, 21, 20, 0.04);
   --shadow-md: 0 12px 32px -12px rgba(21, 21, 20, 0.1), 0 2px 6px rgba(21, 21, 20, 0.04);
   --shadow-lg: 0 28px 60px -16px rgba(21, 21, 20, 0.22);
-
-  --font-sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", sans-serif;
-  --font-serif: Georgia, "Songti SC", "Noto Serif SC", serif;
   --font-mono: ui-monospace, "SFMono-Regular", "JetBrains Mono", Menlo, Consolas, monospace;
-
-  --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 20px;
-  --radius-full: 9999px;
-
-  --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* ==========================================================================
    2. 基础样式与排印规范
    ========================================================================== */
-*, *::before, *::after {
-  box-sizing: border-box;
-}
 
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 84px;
-  -webkit-text-size-adjust: 100%;
-}
-
-body {
-  margin: 0;
-  background-color: var(--bg-page);
-  color: var(--ink);
-  font-family: var(--font-sans);
-  line-height: 1.7;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  transition: background-color 280ms var(--ease), color 280ms var(--ease);
-
-}
-
-::selection {
-  background: var(--accent-soft);
-  color: var(--accent);
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-button {
-  font: inherit;
-  color: inherit;
-  background: transparent;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-
-a:focus-visible, button:focus-visible, input:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-}
-
-svg {
-  display: block;
-  flex-shrink: 0;
-}
-
-.mono {
-  font-family: var(--font-mono);
-  font-variant-numeric: tabular-nums;
-}
-
-.serif-accent {
-  font-family: var(--font-serif);
-  font-style: italic;
-}
+html { scroll-padding-top: 84px; }
 
 .container {
   width: min(1040px, calc(100% - 48px));
   margin-inline: auto;
 }
 
-.skip-link {
-  position: absolute;
-  left: 16px;
-  top: -80px;
-  z-index: 100;
-  padding: 10px 16px;
-  background: var(--ink);
-  color: var(--bg-page);
-  border-radius: var(--radius-sm);
-  font-size: 13px;
-  font-weight: 600;
-}
-.skip-link:focus { top: 16px; }
-
-
 /* ==========================================================================
    3. 顶部吸顶玻璃导航栏
    ========================================================================== */
-.topbar {
-  position: sticky;
-  top: 0;
-  z-index: 40;
-  background: var(--bg-glass);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
-  transition: background-color 280ms var(--ease), border-color 280ms var(--ease);
-}
-
-.topbar-inner {
-  min-height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-}
 
 .brand {
   display: inline-flex;
@@ -174,33 +67,6 @@ svg {
   transform: rotate(-3deg) scale(1.04);
   background: var(--accent);
   color: #FFFFFF;
-}
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.nav-link {
-  padding: 6px 12px;
-  border-radius: var(--radius-sm);
-  font-size: 13.5px;
-  color: var(--muted);
-  transition: color 180ms var(--ease), background-color 180ms var(--ease);
-  white-space: nowrap;
-}
-
-.nav-link:hover {
-  color: var(--ink);
-  background: var(--bg-tint);
-}
-
-.nav-link .en {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  opacity: 0.65;
-  margin-left: 3px;
 }
 
 .header-controls {
@@ -598,7 +464,6 @@ svg {
   flex-shrink: 0;
 }
 
-
 .section-block {
   padding: 56px 0;
   border-top: 1px solid var(--border);
@@ -637,7 +502,6 @@ svg {
   color: var(--muted);
 }
 
-
 .notes-list {
   display: grid;
   gap: 12px;
@@ -669,8 +533,6 @@ svg {
   font-size: 12.5px;
   color: var(--muted-soft);
 }
-
-
 
 .note-cat {
   font-family: var(--font-mono);
@@ -768,14 +630,6 @@ svg {
   color: var(--muted);
 }
 
-.footer-inner {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-}
-
 .back-to-top {
   display: inline-flex;
   align-items: center;
@@ -795,7 +649,6 @@ svg {
   color: var(--accent);
   transform: translateY(-2px);
 }
-
 
 .toast {
   position: fixed;
@@ -821,9 +674,6 @@ svg {
 }
 
 /* Homepage details */
-:root { --muted-soft: #69685f; }
-#theme-icon-sun, [data-theme="dark"] #theme-icon-moon { display: none; }
-[data-theme="dark"] #theme-icon-sun { display: block; }
 .card-kicker { margin-top: 0; font-weight: 500; font-size: .8rem; }
 .bento-research {
   justify-content: flex-start;
@@ -901,4 +751,20 @@ svg {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* Dark theme overrides for the homepage. */
+[data-theme="dark"] :is(.section-index, .research-panel-label) { color: var(--muted); }
+[data-theme="dark"] .keyword-chip {
+  background: var(--bg-tint);
+  color: var(--ink-secondary);
+}
+[data-theme="dark"] .research-tab.active {
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-color: var(--accent-border);
+  box-shadow: none;
+}
+[data-theme="dark"] :is(.brand:hover .brand-badge, .btn-primary:hover, .copy-pill:hover) {
+  color: var(--bg-page);
 }

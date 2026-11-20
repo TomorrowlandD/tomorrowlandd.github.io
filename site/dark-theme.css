@@ -28,37 +28,3 @@
 }
 
 [data-theme="dark"] :is(h1, h2, h3, h4) { color: var(--heading); }
-[data-theme="dark"] .interest-list strong { color: var(--heading); }
-[data-theme="dark"] :is(.category, .eyebrow, .section-index, .research-panel-label) { color: var(--muted); }
-[data-theme="dark"] :is(.keyword-chip, .series-badge, .tags span) {
-  background: var(--bg-tint);
-  color: var(--ink-secondary);
-}
-
-[data-theme="dark"] :is(.research-tab.active, .category-button[aria-pressed="true"], .page-button[aria-current="page"]) {
-  color: var(--accent);
-  background: var(--accent-soft);
-  border-color: var(--accent-border);
-  box-shadow: none;
-}
-
-/* Contrast for text and icons on a solid terracotta fill. */
-[data-theme="dark"] :is(.brand-mark, .brand:hover .brand-badge, .btn-primary:hover, .copy-pill:hover, .series-start-btn:hover, .reset-btn) {
-  color: var(--bg-page);
-}
-
-[data-theme="dark"] .prose blockquote {
-  border-left-color: var(--quote-rule);
-  color: var(--ink-secondary);
-}
-[data-theme="dark"] .reading-sidebar {
-  background: transparent;
-  border: 0;
-  border-left: 1px solid var(--border);
-  border-radius: 0;
-  box-shadow: none;
-}
-[data-theme="dark"] .toc-list a[aria-current="location"] {
-  background: transparent;
-  color: var(--heading);
-}

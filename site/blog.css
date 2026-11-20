@@ -462,3 +462,16 @@
 @media (max-width: 380px) {
   #results-title { scroll-margin-top: 145px; }
 }
+
+/* Dark theme overrides for the blog list. */
+[data-theme="dark"] .series-badge {
+  background: var(--bg-tint);
+  color: var(--ink-secondary);
+}
+[data-theme="dark"] :is(.category-button[aria-pressed="true"], .page-button[aria-current="page"]) {
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-color: var(--accent-border);
+  box-shadow: none;
+}
+[data-theme="dark"] :is(.series-start-btn:hover, .reset-btn) { color: var(--bg-page); }

@@ -8,6 +8,8 @@
 | --- | --- |
 | 改首页文字或按钮 | [site/index.html](site/index.html) |
 | 改首页配色、排版或交互 | [site/home.css](site/home.css)、[site/home.js](site/home.js) |
+| 改全站基础排版、导航样式或深色配色 | [site/base.css](site/base.css)、[site/dark-theme.css](site/dark-theme.css) |
+| 改首页快速搜索或邮箱复制 | [site/home-search.js](site/home-search.js)、[site/email-copy.js](site/email-copy.js) |
 | 改个人经历 | [site/about.html](site/about.html) |
 | 更新项目或论文 | [项目数据](site/projects-data.js)、[论文数据](site/publications-data.js) |
 | 写博客 | 在 [content/posts/](content/posts/) 编辑 Markdown，文章图片放在 `content/images/` |

@@ -84,3 +84,5 @@
   .about-layout { gap: 24px; }
   .interest-list, .edu-list { grid-template-columns: 1fr; }
 }
+
+[data-theme="dark"] .interest-list strong { color: var(--heading); }

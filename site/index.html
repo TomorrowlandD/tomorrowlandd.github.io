@@ -7,6 +7,7 @@
   <meta name="description" content="xkgc__ 的个人主页：985 · 人工智能 · 研0，关注大模型 Agent、持续学习与后训练，践行大水理论与大睡理论。" />
   <title>xkgc__ · 个人主页</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23151514'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' fill='%23D94F2A' font-family='monospace' font-weight='700' font-size='28'%3Exk_%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="./base.css">
   <link rel="stylesheet" href="./home.css">
   <link rel="stylesheet" href="./dark-theme.css">
   <script defer src="./blog-data.js"></script>
@@ -16,6 +17,8 @@
   <script defer src="./projects.js"></script>
   <script defer src="./theme.js"></script>
   <script defer src="./home.js"></script>
+  <script defer src="./home-search.js"></script>
+  <script defer src="./email-copy.js"></script>
 </head>
 <body id="top">
   <a class="skip-link" href="#main">跳到主要内容</a>
@@ -27,11 +30,11 @@
       </a>
 
       <nav class="nav-links" aria-label="主导航" lang="en">
-        <a class="nav-link" href="./about.html">About</a>
-        <a class="nav-link" href="./publications.html">Publications</a>
-        <a class="nav-link" href="./projects.html">Projects</a>
-        <a class="nav-link" href="./blog.html">Blog</a>
-        <a class="nav-link" href="#contact">Contact</a>
+        <a class="nav-link" href="./about.html" data-search-label="关于我">About</a>
+        <a class="nav-link" href="./publications.html" data-search-label="论文与研究成果">Publications</a>
+        <a class="nav-link" href="./projects.html" data-search-label="项目实践">Projects</a>
+        <a class="nav-link" href="./blog.html" data-search-label="博客笔记">Blog</a>
+        <a class="nav-link" href="#contact" data-search-label="保持联系">Contact</a>
       </nav>
 
       <div class="header-controls">
@@ -44,22 +47,7 @@
           <span class="cmd-kbd" id="search-shortcut">Ctrl K</span>
         </button>
 
-        <button type="button" class="icon-btn" id="theme-toggle-btn" aria-label="切换明暗主题" title="切换明暗主题">
-          <svg id="theme-icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" >
-            <circle cx="12" cy="12" r="5"></circle>
-            <line x1="12" y1="1" x2="12" y2="3"></line>
-            <line x1="12" y1="21" x2="12" y2="23"></line>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-            <line x1="1" y1="12" x2="3" y2="12"></line>
-            <line x1="21" y1="12" x2="23" y2="12"></line>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-          </svg>
-          <svg id="theme-icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-          </svg>
-        </button>
+        <button type="button" class="icon-btn theme-toggle" id="theme-toggle-btn" aria-label="切换明暗主题" title="切换明暗主题"></button>
       </div>
     </div>
   </header>
@@ -77,7 +65,7 @@
 
         <p class="hero-subtitle">
           <strong>吉林大学 · 人工智能</strong>，关注大模型 Agent、持续学习与后训练。<br />
-          在算力与梯度之外，认真践行 <span class="serif-accent">大水理论</span> 与 <span class="serif-accent">大睡理论</span>。
+          在算力与梯度之外，认真践行 <span class="serif-italic">大水理论</span> 与 <span class="serif-italic">大睡理论</span>。
         </p>
 
         <div class="hero-actions">
