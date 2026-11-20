@@ -1,6 +1,6 @@
 # 博客维护说明
 
-本站以 `content/posts/*.md` 为文章原稿。`site/` 存放网页源文件，构建脚本会生成文章 HTML 和博客清单到 `dist/`。博客园可使用同一份 Markdown 手动发表。
+本站以 `content/posts/*.md` 为文章原稿。`site/` 存放网页源文件，构建脚本会生成文章 HTML 和博客清单到 `site/`。博客园可使用同一份 Markdown 手动发表。
 
 ## 当前功能
 
@@ -54,30 +54,30 @@ python -m pip install -r requirements.txt
 python scripts/build.py
 ```
 
-然后可以直接双击 `dist/index.html` 或 `dist/blog.html` 预览。当前网站支持这种本地打开方式；注意应打开构建生成的 `dist/`，而不是 `site/` 中的源文件。
+双击 `site/index.html` 或 `site/blog.html` 即可预览。
 
 如需通过本地 HTTP 地址预览，再运行：
 
 ```powershell
-python -m http.server 9000 --bind 127.0.0.1 --directory dist
+python -m http.server 9000 --bind 127.0.0.1 --directory site
 ```
 
-浏览器打开 `http://127.0.0.1:9000/`，检查首页、博客列表和文章正文。每次修改 Markdown 后重新运行 `python scripts/build.py` 并刷新页面。`dist/` 是生成结果，不提交到 Git。若在本地预览中删除或改名了文章，旧页面可能仍留在本机的 `dist/` 中；GitHub Actions 每次从全新检出的源码构建，不会把旧页面继续发布。
+浏览器打开 `http://127.0.0.1:9000/`，检查首页、博客列表和文章正文。每次修改 Markdown 后重新运行 `python scripts/build.py` 并刷新页面。构建也会清理已删除、改名或转为草稿的文章页面。
 
 若想用虚拟文章查看分页效果，可以单独生成本地预览站点：
 
 ```powershell
 python scripts/build.py --preview --preview-posts 75
-python -m http.server 9001 --bind 127.0.0.1 --directory dist-preview
+python -m http.server 9001 --bind 127.0.0.1 --directory preview/output
 ```
 
-浏览器打开 `http://127.0.0.1:9001/blog.html`。自动生成的虚拟文章统一归入“临时预览”分类，标题带有“临时测试”；75 篇足以查看多页及省略号。也可以双击 `dist-preview/blog.html` 查看页面内分页。预览结果只写入被 Git 忽略的 `dist-preview/`，正式构建和 GitHub Pages 工作流仍使用 `dist/`。结束预览后，按 Ctrl+C 停止本地服务器即可。
+浏览器打开 `http://127.0.0.1:9001/blog.html`。自动生成的虚拟文章统一归入“临时预览”分类，标题带有“临时测试”；75 篇足以查看多页及省略号。也可以双击 `preview/output/blog.html` 查看页面内分页。预览结果只写入被 Git 忽略的 `preview/output/`，正式构建和 GitHub Pages 工作流仍使用 `site/`。结束预览后，按 Ctrl+C 停止本地服务器即可。
 
 长期使用的虚拟文章、项目数据和页面替换素材放在 [`preview/`](preview/README.md)。只需要这些自定义素材时运行 `python scripts/build.py --preview`；添加或修改素材后重新构建。
 
 ## 发布到 GitHub Pages
 
-仓库的 `Settings → Pages → Build and deployment → Source` 选择 **GitHub Actions**。推送 `main` 分支后，`.github/workflows/pages.yml` 会自动安装依赖、执行构建，并把 `dist/` 发布为网站。本地 `main` 已关联远程仓库 `https://github.com/TomorrowlandD/tomorrowlandd.github.io.git`，推送后可在仓库 Actions 页面查看发布结果。
+仓库的 `Settings → Pages → Build and deployment → Source` 选择 **GitHub Actions**。推送 `main` 分支后，`.github/workflows/pages.yml` 会自动安装依赖、执行构建，并把 `site/` 发布为网站。本地 `main` 已关联远程仓库 `https://github.com/TomorrowlandD/tomorrowlandd.github.io.git`，推送后可在仓库 Actions 页面查看发布结果。
 
 博客园由你手动复制同一份 Markdown 并发布。本站构建与 GitHub Pages 发布不需要博客园账号或授权令牌。
 
@@ -85,20 +85,21 @@ python -m http.server 9001 --bind 127.0.0.1 --directory dist-preview
 
 修改文章 Markdown 中的 `category` 字段即可。分类数量、文章计数在构建后自动更新。
 
-首页仅展示博客简介和入口，具体分类在博客页管理。
+首页展示最近的笔记，完整列表和分类在博客页。
 
 ## 文件用途
 
 - `site/index.html`：个人主页及博客入口。
-- `site/blog.html`：博客页面和样式。
+- `site/blog.html`：博客列表和专题导读的页面结构。
+- `site/blog.css`：博客列表页的配色、排版和手机布局。
 - `site/about.html`：关于页。
 - `site/figures/`：网页使用的图片。
 - `site/projects-data.js`：项目清单。
 - `content/posts/*.md`：文章原稿，也是文章信息的唯一维护入口。
-- `scripts/build.py`：把 Markdown 转为文章 HTML，同时生成 `dist/blog-data.js`。
+- `scripts/build.py`：把 Markdown 转为文章 HTML，同时生成 `site/blog-data.js`。
 - `templates/article.html`：文章详情页模板。
 - `site/article.css`：文章正文样式。
-- `dist/`：本地构建结果，也是发布到 GitHub Pages 的文件夹。
+- `site/`：本地编辑、预览及 GitHub Pages 发布的网站目录。
 - `site/blog.js`：文章列表、分类、搜索、页码分页和网址状态逻辑。
 
-构建会在 `dist/` 中生成博客列表数据。请预览 `dist/` 网站，不要手动编辑生成结果。
+构建自动更新 `site/blog-data.js` 和 `site/posts/`，修改文章请编辑 Markdown 原稿。

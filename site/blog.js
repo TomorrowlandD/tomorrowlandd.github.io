@@ -46,6 +46,7 @@
       title: cleanText(post.title),
       date: cleanText(post.date),
       category: cleanText(post.category),
+      excerpt: cleanText(post.excerpt),
       tags: Array.isArray(post.tags) ? post.tags.map(cleanText).filter(Boolean) : [],
       url: articleUrl(post.url),
     }))
@@ -95,6 +96,30 @@
   }
 
   const categoryButtons = [];
+  const seriesPosts = posts.filter(post => post.category === 'Agent');
+  const readingPath = [
+    ['agent-loop', 'Loop'], ['function-calling', 'Function Calling'],
+    ['context-engineering', 'Context'], ['agent-memory', 'Memory'], ['agent-sandbox', 'Sandbox'],
+  ];
+  const pathList = document.getElementById('series-path');
+  const steps = [];
+  for (const [slug, label] of readingPath) {
+    const url = new URL('./posts/' + slug + '.html', location.href).href;
+    const post = seriesPosts.find(item => item.url === url);
+    if (!post) continue;
+    const step = element('a', 'path-step', label);
+    step.href = post.url;
+    step.title = post.title;
+    if (steps.length) pathList.append(element('span', 'path-arrow', '›'));
+    pathList.append(step);
+    steps.push(step);
+  }
+  if (steps.length) {
+    document.getElementById('series-count').textContent = 'SERIES · ' + seriesPosts.length + ' 篇';
+    document.getElementById('series-start').href = steps[0].href;
+    document.getElementById('agent-series').hidden = false;
+  }
+
   function addCategory(name, label, count) {
     const button = element('button', 'category-button');
     button.type = 'button';
@@ -149,14 +174,15 @@
     addPage('下一页', currentPage + 1, currentPage === totalPages);
   }
 
-  function renderArticle(post) {
+  function renderArticle(post, position) {
     const item = element('li');
-    const article = element('article', 'article-card');
-    const meta = element('div', 'article-meta');
-    const date = element('time', '', post.date.replaceAll('-', '.'));
+    const article = element('article', 'article-item');
+    const meta = element('div', 'article-meta-stack');
+    const date = element('time', 'read-time', post.date.replaceAll('-', '.'));
     date.dateTime = post.date;
-    meta.append(element('span', 'article-category', post.category), date);
-    const heading = element('h3');
+    for (const tag of new Set([post.category, ...post.tags])) meta.append(element('span', 'sub-tag', tag));
+    meta.append(date);
+    const heading = element('h3', 'article-title');
     const link = element('a', '', post.title);
     link.href = post.url;
     if (new URL(post.url).origin !== location.origin) {
@@ -164,12 +190,12 @@
       link.rel = 'noopener noreferrer';
     }
     heading.append(link);
-    article.append(meta, heading);
-    if (post.tags.length) {
-      const tags = element('div', 'article-tags');
-      post.tags.forEach(tag => tags.append(element('span', '', tag)));
-      article.append(tags);
-    }
+    const body = element('div', 'article-body');
+    body.append(heading);
+    if (post.excerpt) body.append(element('p', 'article-excerpt', post.excerpt));
+    const number = element('span', 'article-num', String(position).padStart(2, '0'));
+    number.setAttribute('aria-hidden', 'true');
+    article.append(number, body, meta);
     item.append(article);
     return item;
   }
@@ -192,7 +218,8 @@
       + (totalPages ? ` · 第 ${currentPage} / ${totalPages} 页` : '');
     if (totalPages) resultCount.append(element('span', 'result-range', `本页显示第 ${start + 1}–${start + visible.length} 篇文章`));
     clearSearch.hidden = search.value.length === 0;
-    articleList.replaceChildren(...visible.map(renderArticle));
+    articleList.start = start + 1;
+    articleList.replaceChildren(...visible.map((post, index) => renderArticle(post, start + index + 1)));
     emptyState.hidden = matches.length !== 0;
     renderPagination(totalPages);
     resetFilters.hidden = !keywords.length && selectedCategory === null;
@@ -211,6 +238,14 @@
 
   search.disabled = false;
   searchSubmit.disabled = false;
+  document.getElementById('quick-search-btn').addEventListener('click', () => search.focus());
+  document.addEventListener('keydown', event => {
+    if (event.key === '/' && !event.ctrlKey && !event.altKey && !event.metaKey
+        && !event.target.closest('input, textarea, [contenteditable="true"]')) {
+      event.preventDefault();
+      search.focus();
+    }
+  });
   search.addEventListener('input', () => { currentPage = 1; update(); });
   document.getElementById('search-form').addEventListener('submit', event => {
     event.preventDefault();

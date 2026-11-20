@@ -1,7 +1,7 @@
 """Test header navigation on every generated page with Chrome DevTools.
 
 Run after ``python scripts/build.py``. Requires Chrome and ``websocket-client``.
-The browser profile is left in the ignored ``dist/`` directory.
+The browser uses a temporary profile outside the website.
 """
 
 from __future__ import annotations
@@ -11,6 +11,7 @@ import json
 import os
 import shutil
 import subprocess
+import tempfile
 import time
 from pathlib import Path
 from urllib.request import urlopen
@@ -19,7 +20,7 @@ from websocket import create_connection
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DIST = ROOT / "dist"
+SITE = ROOT / "site"
 TARGETS = {
     "Home": "index.html",
     "About": "about.html",
@@ -39,7 +40,8 @@ class Browser:
         if not Path(chrome).is_file():
             raise RuntimeError("Chrome not found; set CHROME_PATH.")
 
-        profile = DIST / f"navigation-chrome-profile-{os.getpid()}"
+        self.profile = tempfile.TemporaryDirectory(prefix="navigation-chrome-", ignore_cleanup_errors=True)
+        profile = Path(self.profile.name)
         self.process = subprocess.Popen(
             [chrome, "--headless=new", "--disable-gpu", "--no-first-run",
              "--disable-extensions", "--disable-background-networking",
@@ -117,11 +119,13 @@ class Browser:
             self.process.wait(timeout=5)
         except subprocess.TimeoutExpired:
             self.process.kill()
+            self.process.wait()
+        self.profile.cleanup()
 
 
 def main() -> None:
-    pages = [DIST / name for name in ("index.html", "about.html", "publications.html", "projects.html", "blog.html")]
-    pages.extend(sorted((DIST / "posts").glob("*.html")))
+    pages = [SITE / name for name in ("index.html", "about.html", "publications.html", "projects.html", "blog.html")]
+    pages.extend(sorted((SITE / "posts").glob("*.html")))
     if any(not page.is_file() for page in pages):
         raise SystemExit("Build the site before testing navigation.")
 
@@ -137,7 +141,7 @@ def main() -> None:
                 "width": width, "height": 900, "deviceScaleFactor": 1, "mobile": False,
             })
             for page in pages:
-                name = str(page.relative_to(DIST))
+                name = str(page.relative_to(SITE))
                 browser.visit(page.as_uri())
                 links = browser.evaluate("""[...document.querySelectorAll('header nav a')].map(a => {
                     const r = a.getBoundingClientRect();
@@ -195,7 +199,7 @@ def main() -> None:
                     except RuntimeError:
                         # A page load can discard the execution context before Chrome responds.
                         pass
-                    expected_url = (DIST / target.split("#")[0]).as_uri()
+                    expected_url = (SITE / target.split("#")[0]).as_uri()
                     if "#" in target:
                         expected_url += "#" + target.split("#", 1)[1]
                     if not browser.wait_url(expected_url):

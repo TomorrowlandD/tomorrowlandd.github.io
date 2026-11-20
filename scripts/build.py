@@ -20,11 +20,6 @@ SITE = ROOT / "site"
 CONTENT = ROOT / "content" / "posts"
 PREVIEW = ROOT / "preview"
 SLUG = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
-SOURCE_FILES = (
-    "index.html", "about.html", "blog.html", "blog.js",
-    "publications.html", "projects.html", "collection-pages.css",
-    "projects.js", "projects-data.js", "publications.js", "publications-data.js", "article.js",
-)
 
 
 def fail(path: Path, message: str) -> ValueError:
@@ -75,10 +70,19 @@ def parse_post(path: Path) -> dict | None:
     }
 
 
-def render_post(post: dict) -> str:
+def render_post(post: dict) -> tuple[str, str]:
     escaped = {key: html.escape(str(post[key]), quote=True) for key in ("title", "date", "category")}
     parser = MarkdownIt("commonmark", {"html": False}).enable("table").enable("strikethrough")
     tokens = parser.parse(post["body"])
+    excerpt = ""
+    for index, token in enumerate(tokens):
+        if token.type == "paragraph_open":
+            words = (child.content if child.type != "softbreak" else " "
+                     for child in tokens[index + 1].children or []
+                     if child.type in ("text", "code_inline", "softbreak"))
+            excerpt = "".join(words).strip()
+            if excerpt:
+                break
     toc_items = []
     section_count = 0
     for index, token in enumerate(tokens):
@@ -95,14 +99,15 @@ def render_post(post: dict) -> str:
         )
     body = parser.renderer.render(tokens, parser.options, {})
     tags = "".join(f"<span>{html.escape(tag)}</span>" for tag in post["tags"])
-    return Template((ROOT / "templates" / "article.html").read_text(encoding="utf-8")).substitute(
+    page = Template((ROOT / "templates" / "article.html").read_text(encoding="utf-8")).substitute(
         **escaped, tags=tags, body=body, toc="\n".join(toc_items), section_count=section_count
     )
+    return page, excerpt if len(excerpt) <= 100 else excerpt[:99] + "…"
 
 
 def build(preview_posts: int = 0, preview: bool = False) -> None:
     preview = preview or preview_posts > 0
-    output = ROOT / ("dist-preview" if preview else "dist")
+    output = PREVIEW / "output" if preview else SITE
     posts: list[dict] = []
     slugs: set[str] = set()
     sources = [CONTENT, *([PREVIEW / "posts"] if preview else [])]
@@ -130,25 +135,29 @@ def build(preview_posts: int = 0, preview: bool = False) -> None:
             "body": "## 临时预览文章\n\n此文章只用于本地检查博客分页、分类和搜索。\n",
         })
 
-    output.mkdir(exist_ok=True)
-    for name in SOURCE_FILES + ("article.css",):
-        shutil.copy2(SITE / name, output / name)
-    if (SITE / "figures").exists():
-        shutil.copytree(SITE / "figures", output / "figures", dirs_exist_ok=True)
+    if preview:
+        generated = {"posts", "blog-data.js", "images"}
+        shutil.copytree(SITE, output, dirs_exist_ok=True,
+                        ignore=lambda folder, names: generated.intersection(names) if Path(folder) == SITE else set())
     if (ROOT / "content" / "images").exists():
         shutil.copytree(ROOT / "content" / "images", output / "images", dirs_exist_ok=True)
     (output / "posts").mkdir(exist_ok=True)
 
     index = []
     for post in posts:
-        (output / "posts" / f"{post['slug']}.html").write_text(render_post(post), encoding="utf-8")
+        page, excerpt = render_post(post)
+        (output / "posts" / f"{post['slug']}.html").write_text(page, encoding="utf-8")
         index.append({key: post[key] for key in ("title", "date", "category", "tags")}
-                     | {"url": f"./posts/{post['slug']}.html"})
+                     | {"url": f"./posts/{post['slug']}.html", "excerpt": excerpt})
     index.sort(key=lambda item: item["date"], reverse=True)
     categories = ["Agent", *(post["category"] for post in index if post["category"] != "Agent")]
     data = json.dumps({"categories": list(dict.fromkeys(categories)), "posts": index}, ensure_ascii=False, indent=2)
     safe_data = data.replace("<", "\\u003c")
     (output / "blog-data.js").write_text(f"window.BLOG_DATA = {safe_data};\n", encoding="utf-8")
+    # This directory contains only pages generated from Markdown.
+    for page in (output / "posts").glob("*.html"):
+        if page.stem not in slugs:
+            page.unlink()
     if preview and (PREVIEW / "overrides").exists():
         for source in (PREVIEW / "overrides").rglob("*"):
             if source.is_file():
@@ -160,7 +169,7 @@ def build(preview_posts: int = 0, preview: bool = False) -> None:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="构建个人主页和 Markdown 博客")
-    parser.add_argument("--preview", action="store_true", help="使用 preview/ 中的测试素材，输出到 dist-preview/")
+    parser.add_argument("--preview", action="store_true", help="使用 preview/ 中的测试素材，输出到 preview/output/")
     parser.add_argument("--preview-posts", type=int, default=0, metavar="数量",
                         help="另外生成指定数量的临时分页文章，并启用预览模式")
     args = parser.parse_args()

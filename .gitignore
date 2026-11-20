@@ -5,10 +5,12 @@ desktop.ini
 .vscode/
 .idea/
 
-# 依赖与构建产物（未来若引入构建工具）
+# 依赖与生成文件
 node_modules/
-dist/
-dist-preview/
+/site/posts/
+/site/blog-data.js
+/site/images/
+/preview/output/
 __pycache__/
 *.pyc
 

@@ -7,7 +7,7 @@ const http = require('node:http');
 const { pathToFileURL } = require('node:url');
 const { chromium } = require('playwright');
 
-const root = path.resolve(__dirname, '../dist');
+const root = path.resolve(__dirname, '../site');
 const errors = [];
 const mime = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8' };
 const server = http.createServer(async (req, res) => {
@@ -166,12 +166,14 @@ function fixture(count) {
     }
     await layout.close();
     const real = await open(null);
-    assert.equal(await real.locator('#article-list > li').count(), 1);
-    assert.match((await titles(real))[0], /SubAgent/);
-    assert.ok(!(await real.locator('#pagination').isVisible()));
-    await real.locator('#article-list h3 a').click();
-    assert.ok(await real.locator('#post-content .prose').isVisible());
-    assert.equal(await real.locator('.summary').count(), 0);
+    const count = await real.evaluate(() => window.BLOG_DATA.posts.length);
+    assert.equal(await real.locator('#article-list > li').count(), Math.min(10, count));
+    assert.equal(await real.locator('#pagination').isVisible(), count > 10);
+    if (count) {
+      await real.locator('#article-list h3 a').first().click();
+      assert.ok(await real.locator('#post-content .prose').isVisible());
+      assert.equal(await real.locator('.summary').count(), 0);
+    }
     await real.close();
     assert.deepEqual(errors, []);
     console.log('PASS: desktop/mobile widths, real article navigation, zero browser script errors');

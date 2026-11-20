@@ -4,39 +4,70 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="xkgc__ 的项目实践页面。">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="theme-color" content="#F7F6F2">
     <title>Projects · xkgc__</title>
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%232563eb'/%3E%3Cpath d='m20 20 24 24m0-24L20 44' stroke='white' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23D94F2A'/%3E%3Cpath d='m20 20 24 24m0-24L20 44' stroke='white' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="./editorial.css">
     <link rel="stylesheet" href="./collection-pages.css">
+    <link rel="stylesheet" href="./dark-theme.css">
+    <script defer src="./theme.js"></script>
   </head>
-  <body>
+  <body id="top">
     <a class="skip-link" href="#main">跳到主要内容</a>
-    <header class="header">
-      <div class="container header-inner">
-        <a class="brand" href="./index.html" aria-label="xkgc__，返回主页"><span class="brand-mark" aria-hidden="true">×</span>xkgc__</a>
-        <nav class="navigation" aria-label="主导航" lang="en">
-          <a href="./index.html">Home</a>
-          <a href="./about.html">About</a>
-          <a href="./publications.html">Publications</a>
-          <a href="./projects.html" aria-current="page">Projects</a>
-          <a href="./blog.html">Blog</a>
-          <a class="nav-contact" href="./index.html#contact">Contact <span aria-hidden="true">↗</span></a>
-        </nav>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a href="./index.html" class="brand" aria-label="xkgc__ 返回主页">
+        <span class="brand-mark" aria-hidden="true">×</span>
+        <span>xkgc__</span>
+      </a>
+
+      <nav class="nav-links" aria-label="主导航">
+        <a class="nav-link" href="./index.html">Home</a>
+        <a class="nav-link" href="./about.html">About</a>
+        <a class="nav-link" href="./publications.html">Publications</a>
+        <a class="nav-link" href="./projects.html" aria-current="page">Projects</a>
+        <a class="nav-link" href="./blog.html">Blog</a>
+        <a class="nav-link" href="./index.html#contact">Contact</a>
+      </nav>
+
+      <div class="topbar-tools">
+        <button type="button" class="tool-btn icon-only" id="theme-toggle-btn" aria-label="切换明暗主题" title="切换明暗主题">
+          <svg id="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg id="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
       </div>
-    </header>
+    </div>
+  </header>
     <main class="container" id="main">
-      <div class="page-content">
-        <a class="back-link" href="./index.html#projects"><span aria-hidden="true">←</span> 返回首页的项目板块</a>
+      <section class="page-intro" aria-labelledby="page-title">
         <p class="eyebrow">PRACTICAL WORK</p>
-        <h1>Projects</h1>
-        <p class="lead">这里将集中展示项目实践。</p>
-        <section class="placeholder" aria-labelledby="projects-placeholder-title">
-          <p class="placeholder-label">COMING SOON</p>
+        <div class="hero-title-row">
+          <h1 class="page-title" id="page-title">项目实践</h1>
+          <span class="page-title-sub serif-italic" lang="en">Projects</span>
+        </div>
+        <p class="page-lead">这里将集中展示项目实践。</p>
+      </section>
+      <section class="placeholder" aria-labelledby="projects-placeholder-title">
           <h2 id="projects-placeholder-title">项目内容待更新</h2>
           <p>之后会在这里整理项目简介、我的工作，以及可访问的代码或演示链接。</p>
-        </section>
-      </div>
+        <a class="back-link" href="./index.html#projects">返回首页的项目板块</a>
+      </section>
     </main>
-    <footer><div class="container footer-inner"><a href="./index.html">返回个人主页 <span aria-hidden="true">↗</span></a></div></footer>
+  <footer class="site-footer"><div class="container footer-inner">
+    <span class="mono">© xkgc__</span>
+    <div class="footer-links"><a class="footer-link" href="./index.html">返回主页</a><a class="footer-link" href="#top">返回顶部</a></div>
+  </div></footer>
   </body>
 </html>

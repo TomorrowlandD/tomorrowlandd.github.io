@@ -1,76 +1,36 @@
 # xkgc__ 个人主页
 
-个人介绍、论文展示、项目展示和技术博客组成的静态网站，已通过 GitHub Pages 发布到 [tomorrowlandd.github.io](https://tomorrowlandd.github.io/)。博客文章以 Markdown 为唯一原稿：构建时自动生成本站的文章页面、分类和文章列表。博客园使用同一份原稿，由作者手动预览和发表。
+## 从这里开始
 
-目前页面和自动发布流程已搭建，`content/posts/` 中有 12 篇 `draft: false` 的 Agent 文章，覆盖工具调用、执行循环、记忆、上下文工程、运行模式、任务管理、沙箱及多 Agent 协作。本地 `main` 已关联并推送到 [GitHub 仓库](https://github.com/TomorrowlandD/tomorrowlandd.github.io)。
+**改首页、看首页，都打开 [site/index.html](site/index.html)。** 修改 HTML、CSS 或 JS 后，保存并刷新浏览器就能看到效果。
 
-## 项目结构
-
-```text
-site/                       网站源文件
-  index.html                首页
-  about.html                关于页
-  publications.html         论文独立页面（当前为占位）
-  projects.html             项目独立页面（当前为占位）
-  collection-pages.css      论文与项目页面的共用样式
-  blog.html                 博客列表页
-  blog.js                   分类、搜索和列表交互
-  publications-data.js      论文展示数据
-  projects-data.js          项目展示数据
-  figures/                  页面使用的图片
-content/
-  posts/                    Markdown 文章与草稿模板
-  images/                   文章图片，需要时创建
-templates/article.html      文章详情页模板
-scripts/build.py            生成静态网站的脚本
-preview/                    仅供本地测试的虚拟素材与使用说明
-requirements.txt            构建脚本的 Python 依赖
-.github/workflows/pages.yml GitHub Pages 自动构建与部署
-dist/                       构建结果，由脚本生成，不提交 Git
-dist-preview/               虚拟素材预览结果，不提交 Git
-```
-
-日常更新的入口：
-
-| 想更新什么 | 修改哪里 |
+| 想做什么 | 从哪里开始 |
 | --- | --- |
-| 新增或修改博客文章 | `content/posts/` 中对应的 Markdown |
-| 添加文章图片 | `content/images/` |
-| 更新首页论文展示 | `site/publications-data.js` |
-| 更新首页项目展示 | `site/projects-data.js` |
-| 编辑论文、项目独立页面 | `site/publications.html`、`site/projects.html` |
-| 修改个人介绍或联系方式 | `site/index.html`、`site/about.html` |
-| 调整所有文章的阅读页 | `templates/article.html`、`site/article.css` |
+| 改首页文字或按钮 | [site/index.html](site/index.html) |
+| 改首页配色、排版或交互 | [site/home.css](site/home.css)、[site/home.js](site/home.js) |
+| 改个人经历 | [site/about.html](site/about.html) |
+| 更新项目或论文 | [项目数据](site/projects-data.js)、[论文数据](site/publications-data.js) |
+| 写博客 | 在 [content/posts/](content/posts/) 编辑 Markdown，文章图片放在 `content/images/` |
+| 改文章阅读页 | [文章模板](templates/article.html)、[阅读样式](site/article.css) |
 
-构建脚本从 Markdown 读取标题、日期、分类和标签，生成 `dist/posts/*.html` 及 `dist/blog-data.js`。文章正文中的二级、三级标题会自动形成右侧目录；阅读进度随滚动更新。不要手工修改 `dist/` 中的文件。
+## 本地预览
 
-## 本地运行
-
-准备 Python 3.10 或更新版本。在项目根目录打开 PowerShell，首次使用时安装依赖：
+首次使用时，在项目根目录安装依赖并生成博客。
 
 ```powershell
 python -m pip install -r requirements.txt
-```
-
-构建网站：
-
-```powershell
 python scripts/build.py
 ```
 
-构建后，可以在文件管理器里直接双击 `dist/index.html` 打开首页，点击“博客”阅读文章；也可以直接双击 `dist/blog.html`。当前网站的脚本和链接在这种方式下可以正常工作。不要直接打开 `site/blog.html`，因为它所需的 `blog-data.js` 只在构建时生成。
+双击 [site/index.html](site/index.html) 即可浏览整个网站。后续修改文章、文章模板或文章图片后，再运行一次 `python scripts/build.py`。构建只更新 `site/posts/`、`site/blog-data.js` 和文章图片目录 `site/images/`。这些文件由脚本维护，Git 会忽略它们。
 
-逐页复测顶部导航时，安装可选的 `websocket-client`，并在构建后运行 `python scripts/test-navigation.py`。该脚本使用本机 Chrome，检查首页、关于页、论文页、项目页、博客页和所有已生成文章页在 1440、760、390、320px 宽度下的导航显示，并实际点击桌面和手机宽度下的所有导航链接。可用 `CHROME_PATH` 指定 Chrome 路径；浏览器临时配置保留在被忽略的 `dist/` 中。
-
-需要用虚拟文章、项目数据或页面替换素材做长期本地测试时，参见 [本地虚拟预览说明](preview/README.md)。预览构建输出到被 Git 忽略的 `dist-preview/`，不会改变正式构建结果。
-
-如果需要用本地 HTTP 地址预览，再运行：
+如果习惯通过本地网址预览，可以运行以下命令，再打开 [本地首页](http://127.0.0.1:9000/)。
 
 ```powershell
-python -m http.server 9000 --bind 127.0.0.1 --directory dist
+python -m http.server 9000 --bind 127.0.0.1 --directory site
 ```
 
-浏览器打开 [http://127.0.0.1:9000/](http://127.0.0.1:9000/)。停止预览服务器可按 `Ctrl+C`。修改文章后，重新运行 `python scripts/build.py`，再刷新浏览器；服务器运行期间可在另一个终端执行构建命令。若 9000 在其他电脑上被占用，可换成一个未被占用且未被系统保留的端口，并同步修改浏览器地址。
+需要测试分页或虚拟文章时，使用[独立的测试预览](preview/README.md)。要检查全站导航，在构建后运行 `python scripts/test-navigation.py`，需本机 Chrome 和 Python 的 `websocket-client` 包，可用 `CHROME_PATH` 指定浏览器路径。
 
 ## 新增文章
 
@@ -83,7 +43,7 @@ python -m http.server 9000 --bind 127.0.0.1 --directory dist
 
 ## 发布到 GitHub Pages
 
-本站的 Pages 发布来源已设置为 **GitHub Actions**。以后将修改提交并推送到 `main`，就会触发[发布工作流](.github/workflows/pages.yml)：安装依赖、运行构建脚本，并发布 `dist/`。公开网址为 [https://tomorrowlandd.github.io/](https://tomorrowlandd.github.io/)；可在仓库的 **Actions** 页面查看每次发布结果。
+本站的 Pages 发布来源已设置为 **GitHub Actions**。以后将修改提交并推送到 `main`，就会触发[发布工作流](.github/workflows/pages.yml)：安装依赖、运行构建脚本，并发布 `site/`。公开网址为 [https://tomorrowlandd.github.io/](https://tomorrowlandd.github.io/)；可在仓库的 **Actions** 页面查看每次发布结果。
 
 本站无需数据库或常驻服务器。博客园不由 GitHub 工作流自动发布：把同一份 Markdown 复制到博客园并检查排版即可。若文章使用 `content/images/` 中的相对图片地址，博客园还需要单独上传图片或替换为双方都可访问的绝对地址。
 

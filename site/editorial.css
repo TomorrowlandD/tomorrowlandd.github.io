@@ -1,0 +1,392 @@
+/* ==========================================================================
+   1. 设计系统变量 (Warm Editorial × Swiss-Tech Lab)
+   ========================================================================== */
+:root {
+  color-scheme: light;
+  --bg-page: #F7F6F2;
+  --bg-card: #FFFFFF;
+  --bg-card-soft: #FAF9F5;
+  --bg-tint: #EFECE6;
+  --bg-glass: rgba(247, 246, 242, 0.84);
+
+  --ink: #1A1918;
+  --ink-secondary: #3E3C38;
+  --muted: #6E6A63;
+  --muted-soft: #746f67;
+
+  --border: #E6E3DC;
+  --border-strong: #D4CFC5;
+
+  --accent: #D94F2A;
+  --accent-soft: #FDF0EC;
+  --accent-border: rgba(217, 79, 42, 0.28);
+
+  --sage: #2F7D57;
+  --sage-soft: rgba(47, 125, 87, 0.11);
+
+  --code-bg: #F2EFE9;
+
+  --shadow-sm: 0 2px 8px rgba(26, 25, 24, 0.03), 0 1px 2px rgba(26, 25, 24, 0.04);
+  --shadow-md: 0 12px 30px -12px rgba(26, 25, 24, 0.1), 0 2px 6px rgba(26, 25, 24, 0.04);
+  --shadow-lg: 0 28px 60px -16px rgba(26, 25, 24, 0.24);
+
+  --font-sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  --font-serif: Georgia, "Songti SC", "Noto Serif SC", serif;
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-full: 9999px;
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ==========================================================================
+   2. 基础样式与排印
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-page);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 260ms var(--ease), color 260ms var(--ease);
+
+}
+
+::selection {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button, input {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+a:focus-visible, button:focus-visible, input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.serif-italic {
+  font-family: var(--font-serif);
+  font-style: italic;
+}
+
+/* 黄金阅读宽度容器 */
+.container {
+  width: min(920px, calc(100% - 48px));
+  margin-inline: auto;
+}
+
+.skip-link {
+  position: absolute;
+  left: 16px;
+  top: -80px;
+  z-index: 100;
+  padding: 10px 16px;
+  background: var(--ink);
+  color: var(--bg-page);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+}
+.skip-link:focus { top: 16px; }
+
+/* ==========================================================================
+   3. 顶部吸顶玻璃导航栏
+   ========================================================================== */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--bg-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  transition: background-color 260ms var(--ease), border-color 260ms var(--ease);
+}
+
+.topbar-inner {
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+.brand-mark {
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  background: var(--accent);
+  color: #FFFFFF;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1;
+  transition: transform 200ms var(--ease);
+}
+
+.brand:hover .brand-mark {
+  transform: rotate(-8deg) scale(1.05);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.nav-link {
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 13.5px;
+  color: var(--muted);
+  transition: color 180ms var(--ease), background-color 180ms var(--ease);
+  white-space: nowrap;
+}
+
+.nav-link:hover {
+  color: var(--ink);
+  background: var(--bg-tint);
+}
+
+.nav-link[aria-current="page"] {
+  color: var(--accent);
+  background: var(--accent-soft);
+  font-weight: 600;
+}
+
+.topbar-tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tool-btn {
+  height: 34px;
+  padding: 0 10px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 12.5px;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 180ms var(--ease), color 180ms var(--ease), transform 180ms var(--ease);
+}
+
+.tool-btn:hover {
+  border-color: var(--border-strong);
+  color: var(--ink);
+  transform: translateY(-1px);
+}
+
+.tool-btn.icon-only {
+  width: 34px;
+  padding: 0;
+}
+
+.kbd-cap {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1;
+  padding: 3px 6px;
+  border-radius: 5px;
+  background: var(--bg-tint);
+  border: 1px solid var(--border);
+  color: var(--ink-secondary);
+}
+
+/* ==========================================================================
+   4. 页面标题
+   ========================================================================== */
+main {
+  flex: 1;
+  padding-bottom: 72px;
+}
+
+.page-intro {
+  padding: 48px 0 30px;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+
+.hero-title-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 14px;
+}
+
+.page-title {
+  margin: 0;
+  font-size: clamp(34px, 5vw, 46px);
+  line-height: 1.18;
+  letter-spacing: -0.035em;
+  font-weight: 800;
+}
+
+.page-title-sub {
+  font-size: clamp(20px, 2.8vw, 26px);
+  color: var(--muted-soft);
+  font-weight: 400;
+}
+
+.page-lead {
+  margin: 12px 0 0;
+  font-size: 15.5px;
+  color: var(--muted);
+  max-width: 560px;
+}
+
+/* ==========================================================================
+   8. 轻量页脚 (Footer)
+   ========================================================================== */
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 24px 0 36px;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.footer-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--muted);
+  transition: color 180ms var(--ease);
+}
+
+.footer-link:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 720px) {
+  .container {
+    width: calc(100% - 32px);
+  }
+
+  .topbar-inner {
+    flex-wrap: wrap;
+    padding: 10px 0;
+    gap: 8px;
+  }
+
+  .nav-links {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+    scrollbar-width: none;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .nav-link { padding: 4px; }
+
+  .nav-links::-webkit-scrollbar {
+    display: none;
+  }
+
+  .page-intro {
+    padding: 32px 0 22px;
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+  }
+}
+[hidden] { display: none !important; }
+#icon-sun, [data-theme="dark"] #icon-moon { display: none; }
+[data-theme="dark"] #icon-sun { display: block; }
+
+@media (max-width: 380px) {
+  .nav-links { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}

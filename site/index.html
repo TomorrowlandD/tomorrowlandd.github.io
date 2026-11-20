@@ -1,323 +1,202 @@
-<!doctype html>
-<html lang="zh-CN">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="xkgc__ 的个人主页：研0，记录技术学习、实践与思考。">
-    <meta name="theme-color" content="#ffffff">
-    <title>xkgc__ · 个人主页</title>
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%232563eb'/%3E%3Cpath d='m20 20 24 24m0-24L20 44' stroke='white' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E">
-    <style>
-      :root {
-        color-scheme: light;
-        --ink: #171a20;
-        --muted: #656c78;
-        --line: #e7e9ee;
-        --blue: #2563eb;
-        --wash: #f6f8fb;
-      }
-      * { box-sizing: border-box; }
-      [hidden] { display: none !important; }
-      html { scroll-behavior: smooth; scroll-padding-top: 24px; }
-      body {
-        margin: 0;
-        color: var(--ink);
-        background: #fff;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
-        line-height: 1.7;
-        -webkit-font-smoothing: antialiased;
-      }
-      ::selection { background: #e1eaff; }
-      a { color: inherit; text-decoration: none; }
-      button { font: inherit; }
-      a, button { -webkit-tap-highlight-color: transparent; }
-      a:focus-visible, button:focus-visible { outline: 3px solid #8fb2ff; outline-offset: 5px; }
-      svg { display: block; }
-      .container { width: min(1080px, calc(100% - 64px)); margin-inline: auto; }
-      .skip-link { position: absolute; left: 20px; top: -80px; z-index: 5; padding: 10px 16px; background: var(--ink); color: #fff; }
-      .skip-link:focus { top: 12px; }
-      .header { border-bottom: 1px solid var(--line); }
-      .header-inner { min-height: 82px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-      .brand { display: inline-flex; align-items: center; gap: 11px; font: 700 21px ui-monospace, Consolas, monospace; letter-spacing: -.8px; }
-      .brand-mark { width: 27px; height: 27px; display: grid; place-items: center; background: var(--blue); border-radius: 8px; color: #fff; font-size: 21px; font-weight: 400; }
-      .navigation { display: flex; align-items: center; gap: 30px; font-size: 14px; color: var(--muted); }
-      .navigation a { white-space: nowrap; padding-block: 12px; transition: color .16s ease; }
-      .navigation a:hover { color: var(--blue); }
-      .navigation .nav-contact { color: var(--ink); }
-      .hero { display: grid; grid-template-columns: 1.6fr 1fr; align-items: center; gap: 70px; padding-block: 78px 76px; }
-      .eyebrow { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: 13px; letter-spacing: .04em; }
-      .welcome-spark { width: 13px; height: 13px; flex: 0 0 13px; color: var(--blue); }
-      h1 { margin: 21px 0 20px; font-size: clamp(40px, 4.7vw, 62px); line-height: 1.24; letter-spacing: -.045em; font-weight: 750; }
-      h1 span { color: var(--blue); font-family: ui-monospace, Consolas, monospace; letter-spacing: -.065em; }
-      .intro { max-width: 440px; color: var(--muted); font-size: 16px; margin: 0; line-height: 1.95; }
-      .hero-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
-      .tag-chip { padding: 3px 11px; background: #edf3ff; color: #2456b7; border-radius: 7px; font-size: 13px; }
-      .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 13px; margin-top: 29px; }
-      .button { display: inline-flex; justify-content: center; align-items: center; gap: 18px; min-height: 44px; padding: 9px 19px; border-radius: 10px; font-size: 14px; font-weight: 550; transition: background .16s ease, transform .16s ease; }
-      .button:hover { transform: translateY(-2px); }
-      .button-primary { color: white; background: var(--ink); }
-      .button-primary:hover { background: #303744; }
-      .button-secondary { border: 1px solid var(--line); background: white; }
-      .button-secondary:hover { background: var(--wash); }
-      .identity-scene { position: relative; min-height: 288px; display: grid; place-items: center; isolation: isolate; }
-      .identity-scene::before { content: ""; position: absolute; width: 232px; height: 232px; border-radius: 50%; background: #edf3ff; right: 7px; top: 5px; z-index: -2; }
-      .identity-scene::after { content: ""; position: absolute; width: 12px; height: 12px; background: #f1bd91; border-radius: 50%; left: 23px; top: 26px; }
-      .identity-card { width: 246px; padding: 27px 25px 22px; background: #fff; border: 1px solid #e2e6ed; border-radius: 22px; transform: rotate(-5deg); box-shadow: 0 18px 40px -22px #243c6838; }
-      .card-label { font: 10px ui-monospace, Consolas, monospace; color: #737d8e; letter-spacing: .16em; }
-      .monogram { font: 500 95px ui-monospace, Consolas, monospace; color: var(--blue); letter-spacing: -.12em; line-height: 1.35; padding: 12px 0 19px; }
-      .identity-caption { border-top: 1px solid var(--line); padding-top: 14px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--muted); }
-      .identity-caption strong { color: var(--ink); font-family: ui-monospace, Consolas, monospace; font-size: 14px; }
-      .little-star { position: absolute; right: 6px; bottom: 25px; color: #7f9aca; font-size: 42px; font-family: Georgia, serif; }
-      .blog-section { display: grid; grid-template-columns: 1fr 1.7fr; align-items: start; gap: 42px; padding-block: 42px 56px; border-top: 1px solid var(--line); }
-      .section-kicker { margin: 0 0 7px; color: #737d8e; font: 11px ui-monospace, Consolas, monospace; letter-spacing: .13em; }
-      h2 { margin: 0; font-size: 25px; line-height: 1.4; letter-spacing: -.04em; }
-      .section-intro { margin: 10px 0 0; color: var(--muted); font-size: 14px; line-height: 1.75; }
-      .blog-entry { display: block; min-height: 138px; background: var(--wash); border: 1px solid #edf0f4; border-radius: 15px; padding: 24px; transition: background .16s ease, border-color .16s ease; }
-      .blog-entry:hover { background: #f0f5ff; border-color: #c9d9fb; }
-      .blog-entry-top { display: flex; align-items: center; gap: 12px; margin-bottom: 11px; }
-      .blog-entry-icon { color: #70839f; }
-      .blog-entry-arrow { margin-left: auto; color: var(--blue); font-size: 20px; }
-      h3 { margin: 0; font-size: 15px; font-weight: 600; }
-      .blog-entry p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.85; }
-      .publications-section, .projects-section { display: grid; grid-template-columns: 1fr 1.7fr; align-items: start; gap: 42px; padding-block: 42px 56px; border-top: 1px solid var(--line); }
-      .publication-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
-      .publication-list:not(:empty), .project-list:not(:empty) { margin-top: 14px; }
-      .publication-list:empty, .project-list:empty { display: none; }
-      .publication-card { background: var(--wash); border: 1px solid #edf0f4; border-radius: 15px; padding: 22px 24px; }
-      .publication-meta { margin: 0 0 8px; color: #737d8e; font-size: 12px; }
-      .publication-title { margin: 0; font-size: 17px; font-weight: 600; line-height: 1.5; overflow-wrap: anywhere; }
-      .publication-authors, .publication-venue { margin: 7px 0 0; color: var(--muted); font-size: 14px; line-height: 1.7; overflow-wrap: anywhere; }
-      .publication-links { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 12px; color: var(--blue); font-size: 13px; }
-      .publication-links a:hover { text-decoration: underline; }
-      .project-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
-      .project-card { background: var(--wash); border: 1px solid #edf0f4; border-radius: 15px; padding: 22px 24px; transition: background .16s ease, border-color .16s ease; }
-      .project-card:hover { background: #f0f5ff; border-color: #c9d9fb; }
-      .project-top { display: flex; align-items: center; gap: 10px; margin-bottom: 11px; }
-      .project-type { padding: 2px 8px; background: #edf3ff; color: #2456b7; border-radius: 5px; font-size: 12px; }
-      .project-status { padding: 1px 8px; background: #fff; border: 1px solid var(--line); border-radius: 5px; color: var(--muted); font-size: 11px; }
-      .project-link { margin-left: auto; color: var(--blue); font-size: 13px; }
-      .project-link:hover { text-decoration: underline; }
-      .project-title { margin: 0; font-size: 17px; font-weight: 600; line-height: 1.5; overflow-wrap: anywhere; }
-      .project-summary { margin: 7px 0 0; color: var(--muted); font-size: 14px; line-height: 1.85; }
-      .project-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; color: #737d8e; font-size: 12px; overflow-wrap: anywhere; }
-      .contact { border-top: 1px solid var(--line); padding-block: 37px 40px; display: grid; grid-template-columns: 1fr 1.7fr; align-items: start; gap: 42px; }
-      .contact-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; min-width: 0; }
-      .contact-row { display: flex; align-items: center; gap: 12px; min-height: 44px; }
-      .contact-link { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; min-width: 0; color: #50545d; font-size: 16px; border-radius: 4px; }
-      a.contact-link:hover { color: var(--blue); }
-      .contact-icon { width: 21px; height: 21px; flex: 0 0 21px; }
-      .email-icon { color: #53565b; }
-      .scholar-icon { color: #69b9fa; }
-      .github-icon { color: #202124; }
-      .cnblogs-icon { object-fit: cover; border-radius: 50%; }
-      .contact-text { display: grid; gap: 1px; min-width: 0; }
-      .contact-detail { color: var(--muted); font-size: 13px; overflow-wrap: anywhere; }
-      .contact-pending { flex-wrap: wrap; column-gap: 12px; row-gap: 3px; }
-      .link-status { color: var(--muted); font-size: 11px; padding: 1px 7px; border-radius: 5px; background: var(--wash); white-space: nowrap; }
-      .copy-button { flex-shrink: 0; width: 42px; height: 42px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 10px; background: white; color: var(--muted); cursor: pointer; }
-      .copy-button:hover { background: var(--wash); color: var(--blue); }
-      .toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 12px); width: max-content; max-width: calc(100vw - 32px); padding: 11px 18px; border-radius: 10px; background: var(--ink); color: white; font-size: 13px; text-align: center; opacity: 0; pointer-events: none; transition: opacity .16s, transform .16s; }
-      .toast.visible { opacity: 1; transform: translate(-50%, 0); }
-      @media (max-width: 760px) {
-        .container { width: calc(100% - 40px); }
-        .header-inner { min-height: 72px; gap: 14px; }
-        .navigation { gap: 20px; font-size: 13px; }
-        .hero { gap: 25px; padding-block: 54px; }
-        h1 { font-size: 43px; }
-        .identity-card { width: 190px; padding: 23px 19px 17px; }
-        .identity-scene { min-height: 240px; }
-        .identity-scene::before { width: 170px; height: 170px; }
-        .monogram { font-size: 75px; }
-        .identity-caption { gap: 8px; font-size: 10px; }
-        .blog-section, .publications-section, .projects-section { gap: 24px; }
-        .contact { grid-template-columns: 1fr; gap: 18px; }
-      }
-      @media (max-width: 540px) {
-        .brand { font-size: 18px; gap: 8px; }
-        .brand-mark { width: 24px; height: 24px; border-radius: 7px; }
-        .header-inner { flex-wrap: wrap; padding-block: 10px; gap: 0 14px; }
-        .navigation { width: 100%; justify-content: space-between; flex-wrap: wrap; gap: 0 12px; }
-        .hero { grid-template-columns: 1fr; padding-block: 48px 42px; gap: 30px; }
-        h1 { font-size: 44px; }
-        .intro { font-size: 15px; }
-        .identity-scene { display: none; }
-        .blog-section, .publications-section, .projects-section { grid-template-columns: 1fr; padding-block: 32px 36px; gap: 19px; }
-        .blog-entry { min-height: 142px; padding: 22px; }
-        h2 { font-size: 23px; }
-        .contact { padding-block: 30px; }
-      }
-      @media (prefers-reduced-motion: reduce) {
-        html { scroll-behavior: auto; }
-        *, *::before, *::after { transition: none !important; }
-        .button:hover { transform: none; }
-      }
-      @media (max-width: 380px) {
-        .header-inner { flex-wrap: wrap; padding-block: 10px; gap: 0 14px; }
-        .navigation { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 10px; margin-left: 0; }
-      }
-    </style>
-    <script src="./publications-data.js" defer></script>
-    <script src="./publications.js" defer></script>
-    <script src="./projects-data.js" defer></script>
-    <script src="./projects.js" defer></script>
-  </head>
-  <body id="top">
-    <a class="skip-link" href="#main">跳到主要内容</a>
-    <header class="header">
-      <div class="container header-inner">
-        <a class="brand" href="#top" aria-label="xkgc__，返回页首"><span class="brand-mark" aria-hidden="true">×</span>xkgc__</a>
-        <nav class="navigation" aria-label="主导航" lang="en">
-          <a class="nav-about" href="./about.html">About</a>
-          <a href="./publications.html">Publications</a>
-          <a href="./projects.html">Projects</a>
-          <a href="./blog.html">Blog</a>
-          <a class="nav-contact" href="#contact">Contact <span aria-hidden="true">↗</span></a>
-        </nav>
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="theme-color" content="#F7F6F2">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="xkgc__ 的个人主页：985 · 人工智能 · 研0，关注大模型 Agent、持续学习与后训练，践行大水理论与大睡理论。" />
+  <title>xkgc__ · 个人主页</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23151514'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' fill='%23D94F2A' font-family='monospace' font-weight='700' font-size='28'%3Exk_%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="./home.css">
+  <link rel="stylesheet" href="./dark-theme.css">
+  <script defer src="./blog-data.js"></script>
+  <script defer src="./publications-data.js"></script>
+  <script defer src="./publications.js"></script>
+  <script defer src="./projects-data.js"></script>
+  <script defer src="./projects.js"></script>
+  <script defer src="./theme.js"></script>
+  <script defer src="./home.js"></script>
+</head>
+<body id="top">
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a href="#top" class="brand" aria-label="xkgc__ 返回顶部">
+        <span class="brand-badge">xk_</span>
+        <span class="mono">xkgc__</span>
+      </a>
+
+      <nav class="nav-links" aria-label="主导航" lang="en">
+        <a class="nav-link" href="./about.html">About</a>
+        <a class="nav-link" href="./publications.html">Publications</a>
+        <a class="nav-link" href="./projects.html">Projects</a>
+        <a class="nav-link" href="./blog.html">Blog</a>
+        <a class="nav-link" href="#contact">Contact</a>
+      </nav>
+
+      <div class="header-controls">
+        <button type="button" class="cmd-trigger" id="open-cmd-btn" aria-label="打开命令面板">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <span>快速检索</span>
+          <span class="cmd-kbd" id="search-shortcut">Ctrl K</span>
+        </button>
+
+        <button type="button" class="icon-btn" id="theme-toggle-btn" aria-label="切换明暗主题" title="切换明暗主题">
+          <svg id="theme-icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" >
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg id="theme-icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
       </div>
-    </header>
-    <main id="main" class="container">
-      <section class="hero" aria-labelledby="intro-title">
-        <div>
-          <div class="eyebrow" lang="en"><svg class="welcome-spark" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1c.6 4.2 2.8 6.4 7 7-4.2.6-6.4 2.8-7 7-.6-4.2-2.8-6.4-7-7 4.2-.6 6.4-2.8 7-7Z"/></svg>Hey there! Welcome to my corner of the web ✨</div>
-          <h1 id="intro-title">你好，我是<br><span>xkgc__</span>。</h1>
-          <p class="intro">985 · 人工智能 · 研0<br>关注大模型 Agent、持续学习与后训练。<br>践行薄肌理论，大睡理论</p>
-          <div class="hero-tags" aria-label="研究方向">
-            <span class="tag-chip">Agent</span>
-            <span class="tag-chip">Continual Learning</span>
-            <span class="tag-chip">Post-training</span>
-          </div>
-          <div class="hero-actions">
-            <a class="button button-primary" href="./blog.html">阅读博客 <span aria-hidden="true">→</span></a>
-            <a class="button button-secondary" href="./about.html">关于我 <span aria-hidden="true">↗</span></a>
-            <a class="button button-secondary" href="mailto:tomorrowland_todo@163.com">联系我 <span aria-hidden="true">↗</span></a>
-          </div>
+    </div>
+  </header>
+  <main id="main" class="container">
+    <section class="hero-section" id="research">
+      <div class="hero-header">
+        <div class="status-pill">
+          <span class="pulse-dot" aria-hidden="true"></span>
+          <span class="mono">欢迎来到我的互联网一角</span>
         </div>
-        <div class="identity-scene" aria-hidden="true">
-          <div class="identity-card">
-            <div class="card-label">A LITTLE SPACE OF MY OWN</div>
-            <div class="monogram">xk_</div>
-            <div class="identity-caption"><strong>xkgc__</strong><span>我的互联网一角</span></div>
-          </div>
-          <span class="little-star">✳</span>
-        </div>
-      </section>
-      <section class="publications-section" id="publications" aria-labelledby="publications-title">
-        <div lang="en">
-          <p class="section-kicker">ACADEMIC OUTPUT</p>
-          <h2 id="publications-title">Publications</h2>
-          <p class="section-intro">Papers and research updates, collected here as they take shape.</p>
-        </div>
-        <div>
-          <a class="blog-entry" href="./publications.html" aria-label="进入论文页面">
-            <div class="blog-entry-top">
-              <svg class="blog-entry-icon" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>
-              <h3>进入论文页面</h3>
-              <span class="blog-entry-arrow" aria-hidden="true">→</span>
-            </div>
-            <p>论文与研究成果将在这里陆续更新。</p>
+
+        <h1 class="hero-title">
+          你好，我是 <span class="handle">xkgc__</span>
+        </h1>
+
+        <p class="hero-subtitle">
+          <strong>吉林大学 · 人工智能</strong>，关注大模型 Agent、持续学习与后训练。<br />
+          在算力与梯度之外，认真践行 <span class="serif-accent">大水理论</span> 与 <span class="serif-accent">大睡理论</span>。
+        </p>
+
+        <div class="hero-actions">
+          <a href="./blog.html" class="btn btn-primary">
+            <span>阅读笔记</span>
           </a>
-          <ul class="publication-list" id="publication-list"></ul>
+          <a href="./about.html" class="btn btn-secondary">关于我</a>
+          <button type="button" class="btn btn-secondary" id="hero-copy-email">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            <span>复制邮箱</span>
+          </button>
         </div>
-      </section>
-      <section class="projects-section" id="projects" aria-labelledby="projects-title">
-        <div lang="en">
-          <p class="section-kicker">PRACTICAL WORK</p>
-          <h2 id="projects-title">Projects</h2>
-          <p class="section-intro">Projects and experiments, from ideas to implementation.</p>
-        </div>
-        <div>
-          <a class="blog-entry" href="./projects.html" aria-label="进入项目页面">
-            <div class="blog-entry-top">
-              <svg class="blog-entry-icon" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-              <h3>进入项目页面</h3>
-              <span class="blog-entry-arrow" aria-hidden="true">→</span>
-            </div>
-            <p>项目实践将在这里陆续更新。</p>
-          </a>
-          <ul class="project-list" id="project-list"></ul>
-        </div>
-      </section>
-      <section class="blog-section" id="blog" aria-labelledby="blog-title">
-        <div lang="en">
-          <p class="section-kicker">BLOG &amp; NOTES</p>
-          <h2 id="blog-title">Blog</h2>
-          <p class="section-intro">Notes on what I build, learn, and think about.</p>
-        </div>
-        <a class="blog-entry" href="./blog.html" aria-label="进入博客，阅读技术笔记与实践记录">
-          <div class="blog-entry-top">
-            <svg class="blog-entry-icon" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>
-            <h3>进入博客</h3>
-            <span class="blog-entry-arrow" aria-hidden="true">→</span>
+      </div>
+
+      <div class="bento-grid">
+        <section class="bento-card bento-research" aria-labelledby="research-heading">
+          <h2 id="research-heading" class="card-kicker">Research Focus · 研究方向</h2>
+          <div class="research-tabs" role="group" aria-label="选择研究方向">
+            <button type="button" class="research-tab active" aria-pressed="true" data-topic="agent">LLM Agent</button>
+            <button type="button" class="research-tab" aria-pressed="false" data-topic="cl">Continual Learning</button>
+            <button type="button" class="research-tab" aria-pressed="false" data-topic="post">Post-training</button>
           </div>
-          <p>分享技术笔记、实践经验，以及学习过程中的思考。</p>
+          <div class="research-panel" aria-live="polite">
+            <span class="research-panel-label mono">CORE QUESTION · 核心关注</span>
+            <p class="research-question" id="research-question">当任务跨越多轮对话和工具调用，Agent 怎样记住关键信息、发现错误，再继续执行？</p>
+            <div class="keyword-list" id="research-keywords"><span class="keyword-chip">Tool Use</span><span class="keyword-chip">Agent Memory</span><span class="keyword-chip">Self-Reflection</span></div>
+          </div>
+        </section>
+        <section class="bento-card bento-now" aria-labelledby="now-heading">
+          <div>
+            <h2 class="card-kicker" id="now-heading"><span>Now · 近况</span><span>UTC+8</span></h2>
+            <div class="clock-row"><span class="clock-time" id="beijing-clock">北京时间</span><span class="clock-loc">BEIJING · CN</span></div>
+          </div>
+          <ul class="now-list"><li>吉林大学 · 人工智能硕士研究生</li><li><a href="./blog.html">技术写作 · AI Agent 系列笔记</a></li></ul>
+          <button type="button" class="principle-box" id="principle-toggle"><span><span class="principle-tag">LIFE PRINCIPLE · 生活原则</span><span class="principle-text">大水理论</span></span><span class="principle-switch-hint">切换 ↻</span></button>
+        </section>
+      </div>
+    </section>
+    <section class="section-block" id="blog" aria-labelledby="notes-heading">
+      <div class="section-head">
+        <div><span class="section-index">Selected Notes</span><h2 class="section-title" id="notes-heading">笔记与思考</h2></div>
+        <a class="btn btn-secondary" href="./blog.html">全部笔记</a>
+      </div>
+      <div class="notes-list" id="notes-list"></div>
+    </section>
+    <section class="section-block" aria-labelledby="lab-heading">
+      <div class="section-head"><div><span class="section-index">Lab &amp; Output</span><h2 class="section-title" id="lab-heading">项目与研究记录</h2></div></div>
+      <div class="collections">
+        <div id="projects"><a class="collection-entry" href="./projects.html"><span class="section-index">Projects</span><h3>项目实践</h3><p>代码、工具与实验记录</p></a><ul class="collection-list" id="project-list"></ul></div>
+        <div id="publications"><a class="collection-entry" href="./publications.html"><span class="section-index">Publications</span><h3>论文与研究成果</h3><p>论文、预印本与相关资料</p></a><ul class="collection-list" id="publication-list"></ul></div>
+      </div>
+    </section>
+    <section class="section-block" id="contact" aria-labelledby="contact-heading">
+      <div class="section-head"><div><span class="section-index">Get in Touch</span><h2 class="section-title" id="contact-heading">保持联系</h2></div></div>
+      <div class="contact-strip">
+        <div class="contact-card">
+          <div class="contact-info">
+            <div class="contact-icon-wrap contact-icon-email" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="4" width="20" height="16" rx="2" fill="var(--bg-card)"></rect>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+            </div>
+            <div style="min-width: 0;">
+              <span class="contact-label">EMAIL</span>
+              <a href="mailto:tomorrowland_todo@163.com" class="contact-value">tomorrowland_todo@163.com</a>
+            </div>
+          </div>
+          <button type="button" class="copy-pill" id="contact-copy-email">复制</button>
+        </div>
+
+        <a href="https://github.com/TomorrowlandD" target="_blank" rel="noopener noreferrer" class="contact-card">
+          <div class="contact-info">
+            <div class="contact-icon-wrap" aria-hidden="true">
+              <svg width="38" height="38" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+              </svg>
+            </div>
+            <div>
+              <span class="contact-label">GITHUB</span>
+              <span class="contact-value">@TomorrowlandD</span>
+            </div>
+          </div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--muted-soft);">
+            <line x1="7" y1="17" x2="17" y2="7"></line>
+            <polyline points="7 7 17 7 17 17"></polyline>
+          </svg>
         </a>
-      </section>
-      <section class="contact" id="contact" aria-labelledby="contact-title">
-        <div lang="en">
-          <p class="section-kicker">GET IN TOUCH</p>
-          <h2 id="contact-title">Contact</h2>
-          <p class="section-intro">Let's connect over research, technology, and new ideas.</p>
-        </div>
-        <ul class="contact-list" aria-label="联系与个人主页">
-          <li class="contact-row">
-            <a class="contact-link" href="mailto:tomorrowland_todo@163.com">
-              <svg class="contact-icon email-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 4h18a1 1 0 0 1 1 1v.5l-10 7-10-7V5a1 1 0 0 1 1-1Zm-1 3.9 9.43 6.6a1 1 0 0 0 1.14 0L22 7.9V19a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7.9Z"/></svg>
-              <span class="contact-text"><span>Email</span><span class="contact-detail">tomorrowland_todo@163.com</span></span>
-            </a>
-            <button class="copy-button" id="copy-email" type="button" aria-label="复制邮箱地址" title="复制邮箱地址">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M15 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h3"/></svg>
-            </button>
-          </li>
-          <li class="contact-row">
-            <!-- 创建 Google Scholar 主页后，将下面的 span 改成带真实地址的 a。 -->
-            <span class="contact-link contact-pending">
-              <svg class="contact-icon scholar-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 12 5-12 5L2 7.83V16H0V7l12-5Z"/><path d="M5 11v7c0 1.66 3.13 3 7 3s7-1.34 7-3v-7l-7 2.92L5 11Z"/></svg>
-              <span>Google Scholar</span><span class="link-status">待添加</span>
-            </span>
-          </li>
-          <li class="contact-row">
-            <a class="contact-link" href="https://github.com/TomorrowlandD" target="_blank" rel="noopener noreferrer" aria-label="GitHub：TomorrowlandD，在新标签页打开">
-              <svg class="contact-icon github-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297C5.37.297 0 5.67 0 12.297c0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.043-1.61-4.043-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.729.083-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.418-1.305.762-1.605-2.665-.305-5.467-1.334-5.467-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.62-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-              <span>GitHub</span>
-            </a>
-          </li>
-          <li class="contact-row">
-            <a class="contact-link" href="https://www.cnblogs.com/Tomorrowland" target="_blank" rel="noopener noreferrer" aria-label="博客园：Tomorrowland，在新标签页打开">
-              <img class="contact-icon cnblogs-icon" src="./figures/cnblogs-logo.png" alt="" loading="lazy">
-              <span>博客园</span>
-            </a>
-          </li>
-        </ul>
-      </section>
-    </main>
-    <div class="toast" id="copy-status" role="status" aria-live="polite" aria-atomic="true"></div>
-    <script>
-      const copyButton = document.getElementById('copy-email');
-      const copyStatus = document.getElementById('copy-status');
-      let messageTimer;
-      copyButton.addEventListener('click', async () => {
-        let copied = false;
-        const email = 'tomorrowland_todo@163.com';
-        try {
-          await navigator.clipboard.writeText(email);
-          copied = true;
-        } catch {
-          // 某些浏览器直接打开本地文件时没有 Clipboard API。
-          const temporaryInput = document.createElement('textarea');
-          temporaryInput.value = email;
-          temporaryInput.setAttribute('readonly', '');
-          temporaryInput.style.cssText = 'position:fixed;left:-9999px;top:0';
-          document.body.append(temporaryInput);
-          temporaryInput.select();
-          try { copied = document.execCommand('copy'); } catch { copied = false; }
-          temporaryInput.remove();
-          copyButton.focus({ preventScroll: true });
-        }
-        copyStatus.textContent = copied ? '邮箱已复制' : '未能自动复制，请选中邮箱地址手动复制';
-        copyStatus.classList.add('visible');
-        clearTimeout(messageTimer);
-        messageTimer = setTimeout(() => copyStatus.classList.remove('visible'), 4000);
-      });
-    </script>
-  </body>
+
+        <a href="https://www.cnblogs.com/Tomorrowland" target="_blank" rel="noopener noreferrer" class="contact-card">
+          <div class="contact-info">
+            <div class="contact-icon-wrap" aria-hidden="true">
+              <img src="./figures/cnblogs-logo.png" width="38" height="38" alt="">
+            </div>
+            <div>
+              <span class="contact-label">CNBLOGS</span>
+              <span class="contact-value">博客园 · Tomorrowland</span>
+            </div>
+          </div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--muted-soft);">
+            <line x1="7" y1="17" x2="17" y2="7"></line>
+            <polyline points="7 7 17 7 17 17"></polyline>
+          </svg>
+        </a>
+        <div class="contact-card"><div><span class="contact-label">GOOGLE SCHOLAR</span><span class="contact-value">主页待添加</span></div></div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="container footer-inner"><span class="mono">© xkgc__</span><a class="back-to-top" href="#top">返回顶部</a></div>
+  </footer>
+  <dialog id="quick-search" aria-labelledby="search-title">
+    <div class="search-heading"><h2 id="search-title">快速检索</h2><button class="copy-pill" type="button" id="close-search">关闭</button></div>
+    <input id="search-input" type="search" aria-label="搜索页面或笔记" placeholder="搜索页面或笔记…" autofocus>
+    <ul id="search-results"></ul>
+  </dialog>
+  <div id="copy-status" class="toast" role="status"></div>
+</body>
 </html>
