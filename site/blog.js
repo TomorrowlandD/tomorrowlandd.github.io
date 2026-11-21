@@ -33,7 +33,7 @@
     try {
       const url = new URL(value, window.location.href);
       const webLink = url.protocol === 'https:' || url.protocol === 'http:';
-      const localFile = location.protocol === 'file:' && url.protocol === 'file:' && !url.host;
+      const localFile = location.protocol === 'file:' && url.protocol === 'file:' && url.host === location.host;
       return webLink || localFile ? url.href : null;
     } catch {
       return null;
