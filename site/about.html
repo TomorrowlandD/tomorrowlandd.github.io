@@ -43,7 +43,7 @@
           <h1 class="page-title" id="page-title">关于我</h1>
           <span class="page-title-sub serif-italic" lang="en">About</span>
         </div>
-        <p class="page-lead">我的背景、研究兴趣与教育经历。</p>
+        <p class="page-lead">我的背景、研究方向、教育经历与生活切片。</p>
       </section>
       <div class="about-layout">
         <section class="about-block" aria-labelledby="bio-heading">
@@ -86,11 +86,57 @@
             <p>期待开启第一段实习，未来将在这里记录实践与收获。</p>
           </div>
         </section>
+        <section class="about-block" aria-labelledby="hobbies-heading">
+          <h2 id="hobbies-heading">个人兴趣</h2>
+          <p>在算力与梯度之外，偶尔打打《王者荣耀》。</p>
+          <div class="hobby-gallery">
+            <button type="button" aria-haspopup="dialog" aria-label="放大查看单排截图">
+              <img src="./figures/hok-solo.jpg" alt="王者荣耀 S45 赛季单排截图" loading="lazy">
+            </button>
+            <button type="button" aria-haspopup="dialog" aria-label="放大查看巅峰赛截图">
+              <img src="./figures/hok-peak.png" alt="王者荣耀 S45 赛季巅峰赛截图" loading="lazy">
+            </button>
+            <button type="button" aria-haspopup="dialog" aria-label="放大查看连胜截图">
+              <img src="./figures/hok-streak.jpg" alt="王者荣耀 S45 赛季连胜截图" loading="lazy">
+            </button>
+          </div>
+          <p class="hobby-caption">S45赛季情况</p>
+        </section>
+        <section class="about-block" aria-labelledby="exploring-heading">
+          <h2 id="exploring-heading">未来探索</h2>
+          <ul class="interest-list">
+            <li><strong>摄影与影像</strong> 计划通过大疆 Pocket 3 学习摄影，记录日常与旅途。</li>
+          </ul>
+        </section>
       </div>
     </main>
   <footer class="site-footer"><div class="container footer-inner">
     <span class="mono">© xkgc__</span>
     <div class="footer-links"><a class="footer-link" href="./index.html">返回主页</a><a class="footer-link" href="#top">返回顶部</a></div>
   </div></footer>
+    <dialog class="hobby-lightbox" aria-label="王者荣耀赛季截图预览">
+      <button type="button" class="hobby-lightbox-close" autofocus>关闭</button>
+      <img alt="">
+    </dialog>
+    <script>
+      const gallery = document.querySelector('.hobby-gallery');
+      const lightbox = document.querySelector('.hobby-lightbox');
+      const preview = lightbox.querySelector('img');
+      const closeButton = lightbox.querySelector('button');
+
+      gallery.addEventListener('click', (event) => {
+        const button = event.target.closest('button');
+        if (!button) return;
+        const image = button.querySelector('img');
+        preview.src = image.currentSrc || image.src;
+        preview.alt = image.alt;
+        lightbox.showModal();
+      });
+
+      closeButton.addEventListener('click', () => lightbox.close());
+      lightbox.addEventListener('click', (event) => {
+        if (event.target === lightbox) lightbox.close();
+      });
+    </script>
   </body>
 </html>
